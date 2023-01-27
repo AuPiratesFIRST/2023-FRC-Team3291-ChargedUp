@@ -153,6 +153,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     SmartDashboard.putNumber("X axis rate", xAxisRate);
     SmartDashboard.putNumber("Y axis rate", yAxisRate);
+    SmartDashboard.putNumber("zAngle", zAngle);
+    SmartDashboard.putNumber("xAngle", xAngle);
     SmartDashboard.putBoolean("Autobalance Y mode", autoBalanceYMode);
     SmartDashboard.putBoolean("Autobalance X mode", autoBalanceXMode);
     SmartDashboard.putNumber("Roll angle degrees", rollAngleDegrees);
