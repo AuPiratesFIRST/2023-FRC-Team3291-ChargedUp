@@ -7,8 +7,12 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.IndexerBackward;
+import frc.robot.commands.IndexerFoward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.IntakeSubsytstem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -26,6 +30,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystems driveTrainSubsystem = new DriveTrainSubsystems();
+  private Indexer indexsubsystem = new Indexer();
+  private IntakeSubsytstem intakeSubsytstem = new IntakeSubsytstem();
 
   public CommandJoystick joystick00 = new CommandJoystick(4);
   // public CommandJoystick joystick01 = new CommandJoystick(Constants.Joystick.tankRightPort);
@@ -33,20 +39,13 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
+  private IndexerFoward indexerFowardCommand = new IndexerFoward(indexsubsystem);
+  private IndexerBackward indexerBackwardCommand = new IndexerBackward(indexsubsystem);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-
-    driveTrainSubsystem.setDefaultCommand(
-      new RunCommand(
-        () ->
-        driveTrainSubsystem.tankDrive(
-          joystick00.getRawAxis(1),
-          joystick00.getRawAxis(3)
-        ),
-      driveTrainSubsystem)
-    );
   }
 
   /**
@@ -62,10 +61,24 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
+        
+
+    driveTrainSubsystem.setDefaultCommand(
+      new RunCommand(
+        () ->
+        driveTrainSubsystem.tankDrive(
+          joystick00.getRawAxis(1),
+          joystick00.getRawAxis(3)
+        ),
+      driveTrainSubsystem)
+    );
+
+    joystick00.button(3).whileTrue(indexerFowardCommand);
+    joystick00.button(4).whileTrue(indexerBackwardCommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+   // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
@@ -78,3 +91,4 @@ public class RobotContainer {
     return Autos.exampleAuto(m_exampleSubsystem);
   }
 }
+
