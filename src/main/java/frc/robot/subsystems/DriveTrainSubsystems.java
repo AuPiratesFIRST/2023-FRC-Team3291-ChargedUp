@@ -97,8 +97,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
     double pitchAngleDegrees = navx_device.getPitch();
     double rollAngleDegrees = navx_device.getRoll();
 
-    double xAngle = rollAngleDegrees * 6.36 + 30;
-    double zAngle = pitchAngleDegrees * 6.36 + 30; 
+    double xPower = rollAngleDegrees * (0.4/11) + 0.25; 
+    double zPower = pitchAngleDegrees * (0.4/11) + 0.25; 
  
     if ( !autoBalanceXMode && 
       (Math.abs(rollAngleDegrees) >= 
@@ -131,7 +131,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
      */
     if ( autoBalanceXMode ) {
       double rollAngleRadians = rollAngleDegrees * (Math.PI / 180.0);
-      xAxisRate = ((Math.sin(rollAngleRadians) * -1) * (xAngle))/100;
+      xAxisRate = ((Math.sin(rollAngleRadians) * -1) * (xPower))/100;
       if (xAxisRate > 0.7){
         xAxisRate = 0.7;
       if (xAxisRate < 0.3){
@@ -142,7 +142,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     if ( autoBalanceYMode ) {
       double pitchAngleRadians = pitchAngleDegrees * (Math.PI / 180.0);
-      yAxisRate = ((Math.sin(pitchAngleRadians) * -1) * (zAngle))/100;
+      yAxisRate = ((Math.sin(pitchAngleRadians) * -1) * (zPower))/100;
       if (yAxisRate > 0.7){
         yAxisRate = 0.7;
       }
@@ -153,8 +153,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     SmartDashboard.putNumber("X axis rate", xAxisRate);
     SmartDashboard.putNumber("Y axis rate", yAxisRate);
-    SmartDashboard.putNumber("zAngle", zAngle);
-    SmartDashboard.putNumber("xAngle", xAngle);
+    SmartDashboard.putNumber("zPower", zPower);
+    SmartDashboard.putNumber("xPower", xPower);
     SmartDashboard.putBoolean("Autobalance Y mode", autoBalanceYMode);
     SmartDashboard.putBoolean("Autobalance X mode", autoBalanceXMode);
     SmartDashboard.putNumber("Roll angle degrees", rollAngleDegrees);
