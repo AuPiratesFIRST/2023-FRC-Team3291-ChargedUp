@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.platform.can.PlatformCAN;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -62,6 +62,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
   public RelativeEncoder encoder1 = motorController01.getEncoder();
   public RelativeEncoder encoder2 = motorController02.getEncoder();
   public RelativeEncoder encoder3 = motorController03.getEncoder();
+
+  
 
   private MotorControllerGroup leftMotors = new MotorControllerGroup(
     this.motorControler00,
@@ -125,6 +127,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     double YradiansPerAngle = (((((minSpeedMax - minSpeedFlat)/(maxAngle - minAngle)) * rollAngleDegrees)+minSpeedFlat) * -1);
     double XradiansPerAngle = (((minSpeedMax - minSpeedFlat)/(maxAngle - minAngle)) * pitchAngleDegrees)+minSpeedFlat;
     double rotationsNeeded = encoder0.getPosition()+ rotationsToBalance;
+    double radiansToBrake = XradiansPerAngle - breakAdj;
 
     //double xPower = rollAngleDegrees * (0.4/11) + 0.25; 
     //double zPower = pitchAngleDegrees * (0.4/11) + 0.25; 
@@ -161,8 +164,10 @@ public class DriveTrainSubsystems extends SubsystemBase {
     if ( autoBalanceXMode ) {
       //double rollAngleRadians = rollAngleDegrees * (Math.PI / 180.0);
       //xAxisRate = Math.sin(rollAngleRadians);
-      double radiansToBrake = XradiansPerAngle - breakAdj;
       encoder0.setPosition(rotationsNeeded);
+      encoder1.setPosition(rotationsNeeded);
+      encoder2.setPosition(rotationsNeeded);
+      encoder3.setPosition(rotationsNeeded);
       if (xAxisRate > 0.7){
         xAxisRate = 0.7;
       if (xAxisRate < 0.3){
@@ -174,6 +179,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
     if ( autoBalanceYMode ) {
       //double pitchAngleRadians = pitchAngleDegrees * (Math.PI / 180.0);
       encoder0.setPosition(rotationsNeeded);
+      encoder1.setPosition(rotationsNeeded);
+      encoder2.setPosition(rotationsNeeded);
+      encoder3.setPosition(rotationsNeeded);
       if (yAxisRate > 0.7){
         yAxisRate = 0.7;
       }
