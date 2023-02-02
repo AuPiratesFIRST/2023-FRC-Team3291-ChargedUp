@@ -13,7 +13,7 @@ public class IndexerSubsystem extends SubsystemBase {
   public CANSparkMax indexercontroller;
   /** Creates a new Indexer. */ 
 
-  public IndexerSubsystem() {indexercontroller = new CANSparkMax(5, MotorType.kBrushless);
+  public IndexerSubsystem() {indexercontroller = new CANSparkMax(10, MotorType.kBrushless);
   }
 
   public void forward (){

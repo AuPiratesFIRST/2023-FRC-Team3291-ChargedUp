@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.platform.can.PlatformCAN;
+//import com.ctre.phoenix.platform.can.PlatformCAN;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax;
@@ -12,12 +12,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+//import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.RelativeEncoder;
 
 
 public class DriveTrainSubsystems extends SubsystemBase {
@@ -118,7 +118,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     double minSpeedFlat = 0.3;
     double maxAngle = 15;
     double minSpeedMax = 0.7;
-    double breakAdj = 0.05;
+    //double breakAdj = 0.05;
 
     double rotationsPerInch = 1/(diameter * Math.PI);
     double distanceToEdge =  platformWidth - (platformWidth - robotLength)/2;
@@ -126,7 +126,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     double YradiansPerAngle = (((((minSpeedMax - minSpeedFlat)/(maxAngle - minAngle)) * rollAngleDegrees)+minSpeedFlat) * -1);
     double XradiansPerAngle = (((minSpeedMax - minSpeedFlat)/(maxAngle - minAngle)) * pitchAngleDegrees)+minSpeedFlat;
     double rotationsNeeded = encoder0.getPosition()+ rotationsToBalance;
-    double radiansToBrake = XradiansPerAngle - breakAdj;
+    //double radiansToBrake = XradiansPerAngle - breakAdj;
 
     //double xPower = rollAngleDegrees * (0.4/11) + 0.25; 
     //double zPower = pitchAngleDegrees * (0.4/11) + 0.25; 
