@@ -11,7 +11,7 @@ import frc.robot.commands.IndexerBackward;
 import frc.robot.commands.IndexerFoward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsytstem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,7 +30,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystems driveTrainSubsystem = new DriveTrainSubsystems();
-  private Indexer indexsubsystem = new Indexer();
+  private IndexerSubsystem indexsubsystem = new IndexerSubsystem();
   private IntakeSubsytstem intakeSubsytstem = new IntakeSubsytstem();
 
   public CommandJoystick joystick00 = new CommandJoystick(4);

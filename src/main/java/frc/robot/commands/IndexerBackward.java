@@ -5,12 +5,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.IndexerSubsystem;
 
 public class IndexerBackward extends CommandBase {
-    public Indexer indexersubsystem;
+    public IndexerSubsystem indexersubsystem;
   /** Creates a new IndexerBackward. */
- public IndexerBackward(Indexer indexer) {
+ public IndexerBackward(IndexerSubsystem indexer) {
     // Use addRequirements() here to declare subsystem dependencies.
   indexersubsystem = indexer;
   }

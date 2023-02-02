@@ -34,7 +34,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
   static final double kOffBalanceAngleThresholdDegrees = 10;
   static final double kOonBalanceAngleThresholdDegrees  = 5;
   
-  public MotorController motorControler00 = new CANSparkMax(
+  public MotorController motorController00 = new CANSparkMax(
     Constants.DriveTrain.canMotorDeviceId01,
     MotorType.kBrushless
   );
@@ -49,14 +49,20 @@ public class DriveTrainSubsystems extends SubsystemBase {
   MotorType.kBrushless 
   );
 
+  public MotorController motorController03 = new CANSparkMax(
+    Constants.DriveTrain.canMotorDeviceId04,
+    MotorType.kBrushless
+  );
+  
+ 
   private MotorControllerGroup leftMotors = new MotorControllerGroup(
-    this.motorControler00,
+    this.motorController00,
     this.motorController01
   );
 
   private MotorControllerGroup rightMotors = new MotorControllerGroup(
     this.motorController02,
-    this.motorController01   
+    this.motorController03   
   );
 
   DifferentialDrive m_drive = new DifferentialDrive(leftMotors, rightMotors);  

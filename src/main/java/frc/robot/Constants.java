@@ -15,10 +15,10 @@ package frc.robot;
 public final class Constants {
   
   public final class DriveTrain {
-    public final static int canMotorDeviceId01 = 11;
-    public final static int canMotorDeviceId02 = 12;
-    public final static int canMotorDeviceId03 = 9;
-    public final static int canMotorDeviceId04 = 10;
+    public final static int canMotorDeviceId01 = 7;
+    public final static int canMotorDeviceId02 = 8;
+    public final static int canMotorDeviceId03 = 6;
+    public final static int canMotorDeviceId04 = 5;
   }
 
   public final class Joystick {
