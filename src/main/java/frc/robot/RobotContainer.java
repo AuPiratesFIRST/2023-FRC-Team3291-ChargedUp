@@ -33,7 +33,7 @@ public class RobotContainer {
   private IndexerSubsystem indexsubsystem = new IndexerSubsystem();
   private IntakeSubsytstem intakeSubsytstem = new IntakeSubsytstem();
 
-  public CommandJoystick joystick00 = new CommandJoystick(4);
+  public CommandJoystick joystick00 = new CommandJoystick(0);
   // public CommandJoystick joystick01 = new CommandJoystick(Constants.Joystick.tankRightPort);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
