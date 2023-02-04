@@ -66,7 +66,7 @@ public class RobotContainer {
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () ->
-        driveTrainSubsystem.tankDrive(
+        driveTrainSubsystem.drive(
           joystick00.getRawAxis(1),
           joystick00.getRawAxis(3)
         ),

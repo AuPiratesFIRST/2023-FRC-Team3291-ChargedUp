@@ -19,6 +19,24 @@ public final class Constants {
     public final static int canMotorDeviceId02 = 8;
     public final static int canMotorDeviceId03 = 6;
     public final static int canMotorDeviceId04 = 5;
+
+    /*****
+     * Custom DriveTrain
+     */
+    public static final double kDefaultDeadband = 0.03;
+    public static final double kDefaultMaxOutput = 1.0;
+
+    /******
+     * Autobalance
+     */
+    public final static double wheelDiameter = 8.0;
+    public final static double platformWidth = 48.0;
+    public final static double robotLength = 28.0;
+    public final static double minAngle = 0.0;
+    public final static double maxAngle = 15.0;
+    public final static double minMovementSpeed = 0.3;
+    public final static double maxMovementSpeed = 0.7;
+    public final static double brakeAdjustment = 0.05;
   }
 
   public final class Joystick {

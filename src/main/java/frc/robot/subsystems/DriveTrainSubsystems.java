@@ -4,25 +4,55 @@
 
 package frc.robot.subsystems;
 
-//import com.ctre.phoenix.platform.can.PlatformCAN;
+import com.ctre.phoenix.platform.can.PlatformCAN;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-//import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-//import com.revrobotics.RelativeEncoder;
+import com.revrobotics.RelativeEncoder;
 
 
 public class DriveTrainSubsystems extends SubsystemBase {
   public final static int RIGHT = 1;
   public final static int LEFT = -1;
+
+  double diameter = 8;
+  double platformWidth = 48;
+  double robotLength = 28;
+  double minAngle = 0;
+  double minMovementSpeed = 0.3;
+  double maxAngle = 15;
+  double maxMovementSpeed = 0.7;
+
+  public double kDefaultDeadband = 0.02;
+  public double kDefaultMaxOutput = 1.0;
+
+  public double rotationsPerInch = 1/(diameter * Math.PI);
+  public double distanceToEdge =  platformWidth - (platformWidth - robotLength)/2;
+  public double rotationsToBalance =  distanceToEdge * rotationsPerInch;
+  public double slope = (maxMovementSpeed - minMovementSpeed) / (maxAngle - minAngle);
+
+  public double radiansPerAngle;
+
+  public double rotationsNeededRight;
+  public double rotationsNeededLeft;
+
+  public double invert = -1;
+  
+  double breakAdj = 0.05;
+
 
 
     /*
@@ -60,26 +90,18 @@ public class DriveTrainSubsystems extends SubsystemBase {
   ); 
   
   public RelativeEncoder encoder0 = motorController00.getEncoder();
-  public RelativeEncoder encoder1 = motorController01.getEncoder();
   public RelativeEncoder encoder2 = motorController02.getEncoder();
-  public RelativeEncoder encoder3 = motorController03.getEncoder();
 
-  private MotorControllerGroup leftMotors = new MotorControllerGroup(
-    this.motorController00,
-    this.motorController01
-  );
-
-  private MotorControllerGroup rightMotors = new MotorControllerGroup(
-    this.motorController02,
-    this.motorController03   
-  );
-
-  DifferentialDrive m_drive = new DifferentialDrive(leftMotors, rightMotors);  
+  public SparkMaxPIDController pidController00;
 
   /** Creates a new DriveTrainSubsystems. */
   public DriveTrainSubsystems() {
-    
-    leftMotors.setInverted(true);
+
+    motorController01.follow(motorController00);
+    motorController03.follow(motorController02);
+
+    motorController00.getPIDController();
+    motorController02.getPIDController();
   }
 
   @Override
@@ -87,127 +109,64 @@ public class DriveTrainSubsystems extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void tankDrive(double leftSpeed, double rightSpeed) {
-  
-    double speed = 0.70;
+  public void drive(double joystickLeftSpeed, double joystickRightSpeed) {
+    double m_deadbad = Constants.DriveTrain.kDefaultDeadband;
+    double m_maxOutput = Constants.DriveTrain.kDefaultMaxOutput;
 
-    leftSpeed = leftSpeed * speed;
-    rightSpeed = rightSpeed * speed;
+    double leftSpeed = MathUtil.applyDeadband(joystickLeftSpeed, m_deadbad);
+    double rightSpeed = MathUtil.applyDeadband(joystickRightSpeed, m_deadbad);
 
-    SmartDashboard.putNumber("leftSpeed", leftSpeed);
-    SmartDashboard.putNumber("rightSpeed", rightSpeed);
+    leftSpeed = MathUtil.clamp(leftSpeed, -1.0, 1.0);
+    rightSpeed = MathUtil.clamp(rightSpeed, -1.0, 1.0);
 
-    m_drive.tankDrive(leftSpeed, rightSpeed);
-
+    motorController00.set(leftSpeed * m_maxOutput);
+    motorController02.set(rightSpeed * m_maxOutput);
   }
 
-  public boolean autoBalance() {
-    boolean status = true;
+  public void autoBalanceInitialize() {
+    rotationsNeededLeft = encoder0.getPosition() + rotationsToBalance;
+    rotationsNeededRight = encoder2.getPosition() + rotationsToBalance;
+  }
 
-    double xAxisRate = 0.0;
-    double yAxisRate = 0.0; 
+  public void autoBalance() {
+    double brakeAdjustment = Constants.DriveTrain.brakeAdjustment;
 
-    // Retrieve robot angle in 3D space
     double pitchAngleDegrees = navx_device.getPitch();
     double rollAngleDegrees = navx_device.getRoll();
 
-    double diameter = 8;
-    double platformWidth = 48;
-    double robotLength = 28;
-    double minAngle = 0;
-    double minSpeedFlat = 0.3;
-    double maxAngle = 15;
-    double minSpeedMax = 0.7;
-    //double breakAdj = 0.05;
+    rollAngleDegrees = MathUtil.applyDeadband(rollAngleDegrees, 0.05);
 
-    double rotationsPerInch = 1/(diameter * Math.PI);
-    double distanceToEdge =  platformWidth - (platformWidth - robotLength)/2;
-    double rotationsToBalance =  distanceToEdge * rotationsPerInch;
-    double YradiansPerAngle = (((((minSpeedMax - minSpeedFlat)/(maxAngle - minAngle)) * rollAngleDegrees)+minSpeedFlat) * -1);
-    double XradiansPerAngle = (((minSpeedMax - minSpeedFlat)/(maxAngle - minAngle)) * pitchAngleDegrees)+minSpeedFlat;
-    double rotationsNeeded = encoder0.getPosition()+ rotationsToBalance;
-    //double radiansToBrake = XradiansPerAngle - breakAdj;
+    if (rollAngleDegrees != 0.0) {
+      double radiansPerAngle = slope * rollAngleDegrees;
 
-    //double xPower = rollAngleDegrees * (0.4/11) + 0.25; 
-    //double zPower = pitchAngleDegrees * (0.4/11) + 0.25; 
- 
-    if ( !autoBalanceXMode && 
-      (Math.abs(rollAngleDegrees) >= 
-        Math.abs(kOffBalanceAngleThresholdDegrees))
-    ) {
-      autoBalanceXMode = true;
-    } else if ( autoBalanceXMode && 
-      (Math.abs(rollAngleDegrees) <= 
-        Math.abs(kOonBalanceAngleThresholdDegrees))
-    ) {
-      autoBalanceXMode = false;
-    }
-
-    if ( !autoBalanceYMode && 
-      (Math.abs(pitchAngleDegrees) >= 
-        Math.abs(kOffBalanceAngleThresholdDegrees))
-    ) {
-      autoBalanceYMode = true;
-    } else if ( autoBalanceYMode && 
-      (Math.abs(pitchAngleDegrees) <= 
-        Math.abs(kOonBalanceAngleThresholdDegrees))
-    ) {
-      autoBalanceYMode = false;
-    }
-
-    /* 
-     * Control drive system automatically, 
-     * driving in reverse direction of pitch/roll angle,
-     * with a magnitude based upon the angle
-     */
-    if ( autoBalanceXMode ) {
-      //double rollAngleRadians = rollAngleDegrees * (Math.PI / 180.0);
-      //xAxisRate = Math.sin(rollAngleRadians);
-      encoder0.setPosition(rotationsNeeded);
-      encoder1.setPosition(rotationsNeeded);
-      encoder2.setPosition(rotationsNeeded);
-      encoder3.setPosition(rotationsNeeded);
-      if (xAxisRate > 0.7){
-        xAxisRate = 0.7;
-      if (xAxisRate < 0.3){
-        xAxisRate = 0.3;
+      double direction = 1.0;
+      if (rollAngleDegrees < 0.0) {
+        direction = -1.0;
       }
+
+      radiansPerAngle = radiansPerAngle + (minMovementSpeed * direction);
+
+      try {
+        double encoder0Position = encoder0.getPosition();
+        double encoder2Position = encoder2.getPosition();
+
+        double leftSpeed = radiansPerAngle;
+        if (encoder0Position >= rotationsNeededLeft) {
+          leftSpeed = radiansPerAngle - (brakeAdjustment * direction);
+        }
+
+        double rightSpeed = radiansPerAngle;
+        if (encoder2Position >= rotationsNeededRight) {
+          rightSpeed = radiansPerAngle - (brakeAdjustment * direction);
+        }
+
+        drive(leftSpeed, rightSpeed);
+      } catch(RuntimeException ex) {
+        String err_string = "Drive system error: " + ex.getMessage();
+        DriverStation.reportError(err_string, true);
       }
+
+      Timer.delay(0.005);
     }
-
-    if ( autoBalanceYMode ) {
-      //double pitchAngleRadians = pitchAngleDegrees * (Math.PI / 180.0);
-      encoder0.setPosition(rotationsNeeded);
-      encoder1.setPosition(rotationsNeeded);
-      encoder2.setPosition(rotationsNeeded);
-      encoder3.setPosition(rotationsNeeded);
-      if (yAxisRate > 0.7){
-        yAxisRate = 0.7;
-      }
-      if (yAxisRate< 0.3){
-        yAxisRate = 0.3;
-      }
-    }
-
-    SmartDashboard.putNumber("X axis rate", xAxisRate);
-    SmartDashboard.putNumber("Y axis rate", yAxisRate);
-    SmartDashboard.putBoolean("Autobalance Y mode", autoBalanceYMode);
-    SmartDashboard.putBoolean("Autobalance X mode", autoBalanceXMode);
-    SmartDashboard.putNumber("Roll angle degrees", rollAngleDegrees);
-    SmartDashboard.putNumber("Pitch angle degrees", pitchAngleDegrees);
-
-    try {
-       m_drive.arcadeDrive(YradiansPerAngle, XradiansPerAngle);
-
-    } catch(RuntimeException ex) {
-      String err_string = "Drive system error:  " + ex.getMessage();
-      DriverStation.reportError(err_string, true);
-      status = false;
-    }
-    
-    Timer.delay(0.005);
-
-    return status;
   }
-
 }
