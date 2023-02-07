@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutobalanceCommand;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IndexerBackward;
@@ -41,6 +42,7 @@ public class RobotContainer {
 
   private IndexerFoward indexerFowardCommand = new IndexerFoward(indexsubsystem);
   private IndexerBackward indexerBackwardCommand = new IndexerBackward(indexsubsystem);
+  private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -73,6 +75,7 @@ public class RobotContainer {
       driveTrainSubsystem)
     );
 
+    joystick00.button(2).whileTrue(autobalanceCommand);
     joystick00.button(3).whileTrue(indexerFowardCommand);
     joystick00.button(4).whileTrue(indexerBackwardCommand);
 

@@ -150,14 +150,18 @@ public class DriveTrainSubsystems extends SubsystemBase {
         double encoder0Position = encoder0.getPosition();
         double encoder2Position = encoder2.getPosition();
 
-        double leftSpeed = radiansPerAngle;
+        double leftSpeed;
         if (encoder0Position >= rotationsNeededLeft) {
           leftSpeed = radiansPerAngle - (brakeAdjustment * direction);
+        } else {
+          leftSpeed = radiansPerAngle;
         }
 
-        double rightSpeed = radiansPerAngle;
+        double rightSpeed;
         if (encoder2Position >= rotationsNeededRight) {
           rightSpeed = radiansPerAngle - (brakeAdjustment * direction);
+        } else {
+          rightSpeed = radiansPerAngle;
         }
 
         drive(leftSpeed, rightSpeed);
