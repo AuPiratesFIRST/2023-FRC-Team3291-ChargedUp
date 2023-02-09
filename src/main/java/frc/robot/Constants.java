@@ -39,6 +39,13 @@ public final class Constants {
     public final static double brakeAdjustment = 0.05;
   }
 
+  public final class Intake {
+
+    public final static int canMotorDeviceId05 = 9;
+    public final static int canMotorDeviceId06 = 10;
+
+  }
+
   public final class Joystick {
     public final static int tankLeftPort    = 0;
     public final static int tankRightPort   = 1;
