@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -17,6 +18,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -29,31 +31,64 @@ import frc.robot.Constants;
 import com.revrobotics.RelativeEncoder;
 
 public class IntakeSubsytstem extends SubsystemBase {
-public TalonFX intakecontroller;
+public VictorSPX flipper;
 
-public CANSparkMax motorController00 = new CANSparkMax(
-  Constants.Intake.canMotorDeviceId05,
-  MotorType.kBrushless
-);
+public CANSparkMax intakeController0;
 
-public CANSparkMax motorController01 = new CANSparkMax(
-  Constants.Intake.canMotorDeviceId06,
-  MotorType.kBrushless
-);
+public CANSparkMax intakeController1; 
+
+DigitalInput flipSwitch = new DigitalInput(0);
+DigitalInput objectSwitch = new DigitalInput(1);
+
+//public CANSparkMax intakeController0;
 
   /** Creates a new IntakeSubsytstem. */
   public IntakeSubsytstem() {
+    flipper = new TalonFX(45);
 
-    intakecontroller = new TalonFX(45);
+    intakeController0 = new CANSparkMax(
+      Constants.DriveTrain.canMotorDeviceId01,
+      MotorType.kBrushless
+    );
+
+    intakeController1 = intakeController0 = new CANSparkMax(
+      Constants.DriveTrain.canMotorDeviceId01,
+      MotorType.kBrushless
+    );
+
     
+
   }
 
   public void forward() {
-    intakecontroller.set(ControlMode.PercentOutput, 0.5);
+    intakeController0.set(0.5);
+    intakeController1.set(-0.5);
+  
   }
 
   public void backward() {
-    intakecontroller.set(ControlMode.PercentOutput, -0.5);
+    intakeController0.set(-0.5);
+    intakeController1.set(0.5);
+
+  }
+
+  public void flip(){
+
+    if(flipSwitch.get()){
+
+      flipper.
+
+    }
+
+  }
+
+  public void flip2(){
+
+    if(objectSwitch.get()){
+
+      if(flipSwitch)
+
+    }
 
   }
 
