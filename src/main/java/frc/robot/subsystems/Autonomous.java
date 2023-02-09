@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -73,7 +74,28 @@ public class Autonomous extends SubsystemBase {
 
     encoderSetting = runToPosition;
 
+    motorController00.setMode (encoderSetting);
+    
+    motorController02.setMode(encoderSetting);
 
+    motorController00.setPower(speed);
+    motorController02.setPower(speed);
+
+    double DistanceInInches = 112;
+    while  (motorController00.isBusy()
+    && motorController00.isBusy()
+    && motorController02.isBusy()
+    )  {
+    
+    }
+
+    motorController00.setPower(STOPPOWER);
+    motorController02.setPower(STOPPOWER);
+    
+    encoderSetting = stopAndReset; 
+
+    motorController00.setMode(encoderSetting);
+    motorController02.setMode(encoderSetting);
   }
 
   

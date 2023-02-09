@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import javax.management.RuntimeOperationsException;
+
 import com.ctre.phoenix.platform.can.PlatformCAN;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.RelativeEncoder;
@@ -173,4 +175,72 @@ public class DriveTrainSubsystems extends SubsystemBase {
       Timer.delay(0.005);
     }
   }
+
+  public void moveForwardOrBack(int distanceInInches, double speed){
+
+    int frontleftPosition = motorController00.getCurrentPosition();
+    int backLeftPosition = motorController00.getCurrentPosition();
+    int frontRightPosition = motorController02.getCurrentPosition();
+    int backRightPosition = motorController02.getCurrentPosition();
+    double movement = distanceInInches * movementInInches;
+
+    frontleftPosition += movement;
+    backLeftPosition += movement;
+    frontRightPosition += movement;
+    backRightPosition += movement;
+
+    motorController00.setTargetPosition(frontleftPosition);
+    motorController00.setTargetPosition(backLeftPosition);
+    motorController02.setTargetPosition(frontRightPosition);
+    motorController02.setTargetPosition(backRightPosition);
+
+    encoderSetting = runToPosition;
+
+    motorController00.setMode (encoderSetting);
+    
+    motorController02.setMode(encoderSetting);
+
+    motorController00.setPower(speed);
+    motorController02.setPower(speed);
+
+    double DistanceInInches = 112;
+    while  (motorController00.isBusy()
+    && motorController00.isBusy()
+    && motorController02.isBusy()
+    )  {
+    
+    }
+
+    motorController00.setPower(STOPPOWER);
+    motorController02.setPower(STOPPOWER);
+    
+    encoderSetting = stopAndReset; 
+
+    motorController00.setMode(encoderSetting);
+    motorController02.setMode(encoderSetting);
+
+
+    private void strafeLeftOrRight (int distanceInInches, double speed) 
+    int backLeftPosition = motorController00.getCurrentPosition();
+    int frontRightPosition = motorController02.getCurrentPosition();
+    
+    double movement = distanceInInches 112 movementInInches;
+    
+    motorController00 += movement;
+    backLeftPosition -= movement;
+    motorController02 -= movement;
+    frontRightPosition += movement;
+
+    motorController00.setTargetPosition(frontleftPosition);
+    motorController02.setTargetPosition(frontrightPosition);
+
+    enconderSetting = runToPostion;
+
+    motorController00.setMode(encoderSetting);
+    motorController02.setMode(encoderSetting);
+    
+    motorController00.setPower(0.5);
+    motorController02.setPower(0.5);
+        
+  
 }
