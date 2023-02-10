@@ -231,8 +231,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
     motorController02 -= movement;
     frontRightPosition += movement;
 
-    motorController00.setTargetPosition(frontleftPosition);
-    motorController02.setTargetPosition(frontrightPosition);
+    motorController00.setTargetPosition(motorController00);
+    motorController02.setTargetPosition(motorController02);
 
     enconderSetting = runToPostion;
 
