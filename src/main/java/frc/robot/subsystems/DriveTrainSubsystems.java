@@ -4,26 +4,36 @@
 
 package frc.robot.subsystems;
 
+import javax.management.RuntimeOperationsException;
+
+import com.ctre.phoenix.platform.can.PlatformCAN;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import com.revrobotics.RelativeEncoder;
 
 
 public class DriveTrainSubsystems extends SubsystemBase {
   public final static int RIGHT = 1;
   public final static int LEFT = -1;
 
+  double cpr = 1;
+  double robotRadius = 21.5;
+  double wheelDiameter = 8;
   double diameter = 6;
   double platformWidth = 48;
   double robotLength = 28;
@@ -32,18 +42,14 @@ public class DriveTrainSubsystems extends SubsystemBase {
   double maxAngle = 15;
   double maxMovementSpeed = 0.4;
 
-  public IdleMode encoderSetting;
-  // private IdleMode stopAndReset = DCMotor.RunMode.STOP_AND_RESET_ENCODER;
-  // private IdleMode runToPosition = .RunMode.RUN_TO_POSITION;
- // private IdleMode runUsingEncoder = .RunMode.RUN_USING_ENCODER;
-
   public double kDefaultDeadband = 0.02;
   public double kDefaultMaxOutput = 1.0;
 
-  public double rotationsPerInch = 1/(diameter * Math.PI);
+  public double movementPerInch = cpr/(wheelDiameter * Math.PI);
   public double distanceToEdge =  platformWidth - (platformWidth - robotLength)/2;
-  public double rotationsToBalance =  (distanceToEdge * rotationsPerInch)*10;
+  public double rotationsToBalance =  (distanceToEdge * Math.PI)*10;
   public double slope = (maxMovementSpeed - minMovementSpeed) / (maxAngle - minAngle);
+  public double robotPerDegree = (( robotRadius / (wheelDiameter / 2)) * cpr) / 360;
 
   public double radiansPerAngle;
 
@@ -208,33 +214,30 @@ public class DriveTrainSubsystems extends SubsystemBase {
     }
   }
 
-     private void moveForwardOrBack(int distanceInInches, double speed) {
-        // Get current motor positions
-
-        double motorController0Position = encoder0.getPosition();
-        double motorController2Position = encoder2.getPosition();
-        double movement = distanceInInches * rotationsPerInch;
-
-        motorController0Position += movement;
-        motorController2Position += movement;
-
-        encoder0.setPosition(motorController0Position);
-        encoder2.setPosition(motorController2Position);
-
-        motorController00.set(speed);
-        motorController02.set(speed);
-        
-        while(encoder0.getPosition() <= motorController0Position && encoder2.getPosition() <= motorController2Position){
-
-          encoder0.setPosition(motorController0Position);
-          encoder2.setPosition(motorController2Position);
-
-
-        }
-
-        motorController00.set(0.0);
-        motorController02.set(0.0);
+  public void moveForwardOrBack(int distanceInInches, double speed){
+/*
+    double motorController0Position = encoder0.getPosition();
+    double motorController2Position = encoder2.getPosition();
+    double movement = distanceInInches * rotationsPerInch;
     
+
+    motorController0Position += movement;
+    motorController2Position += movement;
+
+    encoder0.setPosition(motorController0Position);
+    encoder2.setPosition(motorController2Position);
+
+    motorController00.set(speed);
+    motorController02.set(speed);
+
+    while(encoder0.getPosition() <= motorController0Position && encoder2.getPosition() <= motorController2Position){
+      encoder0.setPosition(motorController0Position);
+      encoder2.setPosition(motorController2Position);
+    }
+
+    motorController00.set(0.0);
+    motorController02.set(0.0);
+    */
     /*encoderSetting = stopAndReset; 
 
     motorController00.setMode(encoderSetting);
@@ -243,59 +246,21 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
 
-    private void strafeLeftOrRight (int distanceInInches, double speed){ 
-    double motorController0Position = encoder0.getPosition();
-    double motorController2Position = encoder2.getPosition();
-    double movement = distanceInInches * rotationsPerInch;
+    private void strafeLeftOrRight (int movementindegrees, double speed) { 
+   /* 
+      double backLeftPosition = encoder0.getPosition();
+    double frontRightPosition =  /*encoder2.getPosition();
     
-    motorController0Position += movement;
-    motorController2Position -= movement;
-
-
-    encoder0.setPosition(motorController0Position);
-    encoder2.setPosition(motorController2Position);
-
-    motorController00.set(speed);
-    motorController02.set(speed);
-
-    while (encoder0.getPosition() <= motorController0Position && encoder2.getPosition() <= motorController2Position){
-
-      encoder0.setPosition(motorController0Position);
-      encoder2.setPosition(motorController2Position);
-
-    }
+    double movement = DistanceInInches  * rotationsPerInch;
     
-  }
+    encoder0.setPosition(frontRightPosition);
+    encoder2 = movement;
 
 
-    /** 
-     * rotateLeftOrRight()
-     * 
-     * Rotate angle left or right
-     * 
-     * @params int rotateAngle Postive value rotates right, negative rotates left
-     * @params double speed Range 0.0 to 1.0
-     */
-    /*private void rotateLeftOrRight(int rotateAngle, double speed) {
+    encoder0.setPosition(backLeftPosition);
+    encoder2.setPosition(frontRightPosition);
 
-        // Get current motor positions
-        double motorController0Position = encoder0.getPosition();
-        double motorController2Position = encoder2.getPosition();
-        double movement = rotateAngle * movementPerDegree;
-
-        // Apply movement
-        motorController0Position += movement;
-        motorController2Position -= movement;
-
-        // Set location to move to
-        encoder0.setPosition(motorController0Position);
-        encoder2.setPosition(motorController2Position);
-        
-        // Start moving robot by setting motor speed
-        motorController00.set(speed);
-        motorController02.set(speed);
-        
-        while (encoder0.getPosition() <= motorController0Position && encoder2.getPosition() <= motorController2Position){
+    //enconderSetting = runToPostion;
 
           encoder0.setPosition(motorController0Position);
           encoder2.setPosition(motorController2Position);
@@ -308,4 +273,3 @@ public class DriveTrainSubsystems extends SubsystemBase {
     };*/
 
 }
-
