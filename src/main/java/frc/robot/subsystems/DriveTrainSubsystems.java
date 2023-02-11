@@ -4,26 +4,22 @@
 
 package frc.robot.subsystems;
 
-import javax.management.RuntimeOperationsException;
-
-import com.ctre.phoenix.platform.can.PlatformCAN;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.jni.CANSparkMaxJNI;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.revrobotics.RelativeEncoder;
 
 
 public class DriveTrainSubsystems extends SubsystemBase {
@@ -37,6 +33,11 @@ public class DriveTrainSubsystems extends SubsystemBase {
   double minMovementSpeed = 0.3;
   double maxAngle = 15;
   double maxMovementSpeed = 0.7;
+
+  public IdleMode encoderSetting;
+  // private IdleMode stopAndReset = DCMotor.RunMode.STOP_AND_RESET_ENCODER;
+  // private IdleMode runToPosition = .RunMode.RUN_TO_POSITION;
+ // private IdleMode runUsingEncoder = .RunMode.RUN_USING_ENCODER;
 
   public double kDefaultDeadband = 0.02;
   public double kDefaultMaxOutput = 1.0;
@@ -176,71 +177,166 @@ public class DriveTrainSubsystems extends SubsystemBase {
     }
   }
 
-  public void moveForwardOrBack(int distanceInInches, double speed){
+   private void moveForwardOrBack(int distanceInInches, double speed) {
+        // Get current motor positions
+        double frontLeftPosition = encoder0.getPosition();
+        double frontRightPosition = encoder2.getPosition();
+        double movement = distanceInInches * rotationsPerInch;
 
-    int frontleftPosition = motorController00.getCurrentPosition();
-    int backLeftPosition = motorController00.getCurrentPosition();
-    int frontRightPosition = motorController02.getCurrentPosition();
-    int backRightPosition = motorController02.getCurrentPosition();
-    double movement = distanceInInches * movementInInches;
+        // Apply movement
+        frontLeftPosition += movement;
+        backLeftPosition += movement;
+        frontRightPosition += movement;
+        backRightPosition += movement;
 
-    frontleftPosition += movement;
-    backLeftPosition += movement;
-    frontRightPosition += movement;
-    backRightPosition += movement;
+        // Set location to move to
+        encoder0.setPosition(frontLeftPosition);
+        encoder2.setPosition(frontRightPosition);
 
-    motorController00.setTargetPosition(frontleftPosition);
-    motorController00.setTargetPosition(backLeftPosition);
-    motorController02.setTargetPosition(frontRightPosition);
-    motorController02.setTargetPosition(backRightPosition);
+        encoderSetting = runToPosition;
 
-    encoderSetting = runToPosition;
+        motorController00.setIdleMode(encoderSetting);
+        motorController02.setIdleMode(encoderSetting);
+        
+        // Start moving robot by setting motor speed
+        double motorController00.setPower(speed);
+        int motorController02.setPower(speed);
 
-    motorController00.setMode (encoderSetting);
-    
-    motorController02.setMode(encoderSetting);
+        // while (motorController00.isBusy()
+           // && motorController02.isBusy()
+         {
+            sendTelemetry();
+           // idle();
+        }
 
-    motorController00.setPower(speed);
-    motorController02.setPower(speed);
+        motorController00.setPower(STOPPOWER);
+        motorController02.setPower(STOPPOWER);
+        
+        encoderSetting = stopAndReset;
 
-    double DistanceInInches = 112;
-    while  (motorController00.isBusy()
-    && motorController00.isBusy()
-    && motorController02.isBusy()
-    )  {
-    
+        motorController00.setMode(encoderSetting);
+        motorController02.setMode(encoderSetting);
     }
 
-    motorController00.setPower(STOPPOWER);
-    motorController02.setPower(STOPPOWER);
-    
-    encoderSetting = stopAndReset; 
+    private void setPower(double speed) {
+  }
 
-    motorController00.setMode(encoderSetting);
-    motorController02.setMode(encoderSetting);
+    /** 
+     * strafeRightLeft()
+     * 
+     * Strafe robot left or right 
+     * @param stopAndReset 
+     * 
+     * @params int distanceInInches Postive value moves right, negative value left
+     * @params double speed Range 0.0 to 1.0
+     */
+    private void strafeLeftOrRight(int distanceInInches, double speed, IdleMode stopAndReset) {
 
+        // Get current motor positions
+        double frontLeftPosition = encoder0.getPosition();
+        double frontRightPosition = encoder2.getPosition();
+        double movement = distanceInInches * rotationsPerInch;
 
-    private void strafeLeftOrRight (int distanceInInches, double speed) 
-    int backLeftPosition = motorController00.getCurrentPosition();
-    int frontRightPosition = motorController02.getCurrentPosition();
-    
-    double movement = distanceInInches 112 movementInInches;
-    
-    motorController00 += movement;
-    backLeftPosition -= movement;
-    motorController02 -= movement;
-    frontRightPosition += movement;
+        // Apply movement
+        frontLeftPosition += movement;
+        frontRightPosition -= movement;
 
-    motorController00.setTargetPosition(frontleftPosition);
-    motorController02.setTargetPosition(frontrightPosition);
+        // Set location to move to
+        encoder0.setPosition(frontLeftPosition);
+        encoder2.setPosition(frontRightPosition);;
 
-    enconderSetting = runToPostion;
+        encoderSetting = runToPosition;
 
-    motorController00.setMode(encoderSetting);
-    motorController02.setMode(encoderSetting);
-    
-    motorController00.setPower(0.5);
-    motorController02.setPower(0.5);
+        motorController00.setIdleMode(encoderSetting);
+        motorController02.setIdleMode(encoderSetting);
         
+        // Start moving robot by setting motor speed
+        motorController00.setPower(speed);
+        motorController02.setPower(speed);
+
+        while (motorController00.isBusy()
+            && motorController02.isBusy()
+        ) {
+            sendTelemetry();
+            //idle();
+        }
+
+        motorController00.setPower(STOPPOWER);
+        motorController02.setPower(STOPPOWER);
+        
+        encoderSetting = stopAndReset;
+
+        motorController00.setIdleMode(encoderSetting);
+        motorController02.setIdleMode(encoderSetting);
+    }
+
+    /** 
+     * rotateLeftOrRight()
+     * 
+     * Rotate angle left or right
+     * 
+     * @params int rotateAngle Postive value rotates right, negative rotates left
+     * @params double speed Range 0.0 to 1.0
+     */
+    private void rotateLeftOrRight(int rotateAngle, double speed) {
+
+        // Get current motor positions
+        double frontLeftPosition = encoder0.getPosition();
+        double frontRightPosition = encoder2.getPosition();
+        double movement = rotateAngle * movementPerDegree;
+
+        // Apply movement
+        frontLeftPosition += movement;
+        frontRightPosition -= movement;
+
+        // Set location to move to
+        encoder0.setPosition(frontLeftPosition);
+        encoder2.setPosition(frontRightPosition);
+
+        encoderSetting = runToPosition;
+        encoder0.setIdleMode(encoderSetting);
+        encoder2.setIdleMode(encoderSetting);
+        
+        // Start moving robot by setting motor speed
+        motorController00.setPower(speed);
+        motorController02.setPower(speed);
+
+        while (encoder0.getPosition ()
+            && backLeftWheel.isBusy()
+            && frontRightWheel.isBusy()
+            && backRightWheel.isBusy()
+        ) {
+            sendTelemetry();
+            //idle();
+        }
+
+        motorController00.setPower(STOPPOWER);
+        motorController02.setPower(STOPPOWER);
+        
+        encoderSetting = stopAndReset;
+
+        encoder0.setIdleMode(encoderSetting);
+        encoder2.setIdleMode(encoderSetting);
+
+    }
+
+    private void sendTelemetry() {
+        telemetry.addData(
+            "Target", 
+            "%7d :%7d :%7d :%7d", 
+            frontLeftPosition, 
+            frontRightPosition, 
+            backLeftPosition, 
+            backRightPosition);
+        telemetry.addData(
+            "Actual", 
+            "%7d :%7d :%7d :%7d", 
+            encoder0.getPosition(),
+            encoder2.getPosition(), 
+            );
+
+        telemetry.update();
+    }
+}
   
 }

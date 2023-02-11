@@ -14,7 +14,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+
+
 public class Autonomous extends SubsystemBase {
+
+  double diameter = 8;
+  double platformWidth = 48;
+  double robotLength = 28;
+  double minAngle = 0;
+  double minMovementSpeed = 0.3;
+  double maxAngle = 15;
+  double maxMovementSpeed = 0.7;
+
+  public double kDefaultDeadband = 0.02;
+  public double kDefaultMaxOutput = 1.0;
+
+  public double rotationsPerInch = 1/(diameter * Math.PI);
+  public double distanceToEdge =  platformWidth - (platformWidth - robotLength)/2;
+  public double rotationsToBalance =  distanceToEdge * rotationsPerInch;
+  public double slope = (maxMovementSpeed - minMovementSpeed) / (maxAngle - minAngle);
+
+  public double radiansPerAngle;
+
+  public double rotationsNeededRight;
+  public double rotationsNeededLeft;
+
+  public double invert = -1;
 
   public CANSparkMax motorController00 = new CANSparkMax(
     Constants.DriveTrain.canMotorDeviceId01,
@@ -56,30 +81,22 @@ public class Autonomous extends SubsystemBase {
 
   public void moveForwardOrBack(int distanceInInches, double speed){
 
-    int frontleftPosition = motorController00.getCurrentPosition();
-    int backLeftPosition = motorController00.getCurrentPosition();
-    int frontRightPosition = motorController02.getCurrentPosition();
-    int backRightPosition = motorController02.getCurrentPosition();
-    double movement = distanceInInches * movementInInches;
+    double frontleftPosition = encoder0.getPosition();
+    double frontRightPosition = encoder2.getPosition();
+    double backLeftPosition = encoder0.getPosition();
+    double backRightPosition = encoder2.getPosition();
+    double movement = distanceInInches * rotationsPerInch;
 
     frontleftPosition += movement;
     backLeftPosition += movement;
     frontRightPosition += movement;
     backRightPosition += movement;
 
-    motorController00.setTargetPosition(frontleftPosition);
-    motorController00.setTargetPosition(backLeftPosition);
-    motorController02.setTargetPosition(frontRightPosition);
-    motorController02.setTargetPosition(backRightPosition);
+    encoder0.setPosition(frontleftPosition);
+    encoder2.setPosition(frontRightPosition);
 
-    encoderSetting = runToPosition;
-
-    motorController00.setMode (encoderSetting);
-    
-    motorController02.setMode(encoderSetting);
-
-    motorController00.setPower(speed);
-    motorController02.setPower(speed);
+    motorController00.set(speed);
+    motorController02.set(speed);
 
     double DistanceInInches = 112;
     while  (motorController00.isBusy()
@@ -97,6 +114,7 @@ public class Autonomous extends SubsystemBase {
     motorController00.setMode(encoderSetting);
     motorController02.setMode(encoderSetting);
   }
+
 
   
   @Override
