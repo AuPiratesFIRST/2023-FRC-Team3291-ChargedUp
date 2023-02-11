@@ -221,7 +221,33 @@ public class DriveTrainSubsystems extends SubsystemBase {
     /*encoderSetting = stopAndReset; 
 
     motorController00.setMode(encoderSetting);
+    motorController02.setMode(encoderSetting);*/
+
+  }
+
+
+    private void strafeLeftOrRight (int distanceInInches, double speed){ 
+    int backLeftPosition = motorController00.getCurrentPosition();
+    int frontRightPosition = motorController02.getCurrentPosition();
+    
+    double movement = distanceInInches 112 movementInInches;
+    
+    motorController00 += movement;
+    motorController02 -= movement;
+
+
+    motorController00.setTargetPosition(frontleftPosition);
+    motorController02.setTargetPosition(frontrightPosition);
+
+    enconderSetting = runToPostion;
+
+    motorController00.setMode(encoderSetting);
     motorController02.setMode(encoderSetting);
+    
+    motorController00.setPower(0.5);
+    motorController02.setPower(0.5);
+        }
+
 
     /** 
      * rotateLeftOrRight()
