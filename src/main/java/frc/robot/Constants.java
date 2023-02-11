@@ -43,6 +43,7 @@ public final class Constants {
 
     public final static int canMotorDeviceId05 = 9;
     public final static int canMotorDeviceId06 = 10;
+    public final static double wheelPower = 0.5;
 
   }
 

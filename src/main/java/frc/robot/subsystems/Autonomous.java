@@ -48,57 +48,12 @@ public class Autonomous extends SubsystemBase {
     motorController03.follow(motorController02);
 
     encoder0.setPosition(0);
-    encoder2.setPosition(0)
+    encoder2.setPosition(0);
 
-    motorController00
+    //motorController00
 
   }
 
-  public void moveForwardOrBack(int distanceInInches, double speed){
-
-    int frontleftPosition = motorController00.getCurrentPosition();
-    int backLeftPosition = motorController00.getCurrentPosition();
-    int frontRightPosition = motorController02.getCurrentPosition();
-    int backRightPosition = motorController02.getCurrentPosition();
-    double movement = distanceInInches * movementInInches;
-
-    frontleftPosition += movement;
-    backLeftPosition += movement;
-    frontRightPosition += movement;
-    backRightPosition += movement;
-
-    motorController00.setTargetPosition(frontleftPosition);
-    motorController00.setTargetPosition(backLeftPosition);
-    motorController02.setTargetPosition(frontRightPosition);
-    motorController02.setTargetPosition(backRightPosition);
-
-    encoderSetting = runToPosition;
-
-    motorController00.setMode (encoderSetting);
-    
-    motorController02.setMode(encoderSetting);
-
-    motorController00.setPower(speed);
-    motorController02.setPower(speed);
-
-    double DistanceInInches = 112;
-    while  (motorController00.isBusy()
-    && motorController00.isBusy()
-    && motorController02.isBusy()
-    )  {
-    
-    }
-
-    motorController00.setPower(STOPPOWER);
-    motorController02.setPower(STOPPOWER);
-    
-    encoderSetting = stopAndReset; 
-
-    motorController00.setMode(encoderSetting);
-    motorController02.setMode(encoderSetting);
-  }
-
-  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

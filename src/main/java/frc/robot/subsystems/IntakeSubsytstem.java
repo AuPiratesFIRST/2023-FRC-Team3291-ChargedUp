@@ -5,92 +5,115 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import com.ctre.phoenix.platform.can.PlatformCAN;
-import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 public class IntakeSubsytstem extends SubsystemBase {
-public VictorSPX flipper;
 
-public CANSparkMax intakeController0;
+  public double position0 = 0;
+  //find the actual vaue later when you can. 
+  //I feel like using the length of the intake doubled as the diameter could work, 
+  //and then you use the same formula for the wheels? Just thinking about circles.
+  public double position1 = 60;
 
-public CANSparkMax intakeController1; 
+  //I think I can use a Talon but Mr.Cameron says it'll be a Victor, so let's just creat two versions, bam
+  public VictorSPX flipper;
 
-DigitalInput flipSwitch = new DigitalInput(0);
-DigitalInput objectSwitch = new DigitalInput(1);
+  public CANSparkMax intakeController0;
 
-//public CANSparkMax intakeController0;
+  public CANSparkMax intakeController1; 
+
+  DigitalInput flipSwitch = new DigitalInput(0);
+  DigitalInput objectSwitch = new DigitalInput(1);  
+
+  RelativeEncoder flipEncoder;
+
+  double wheelPower = Constants.Intake.wheelPower;
+
+  //public CANSparkMax intakeController0;
 
   /** Creates a new IntakeSubsytstem. */
   public IntakeSubsytstem() {
-    flipper = new TalonFX(45);
+    flipper = new VictorSPX(45);
 
     intakeController0 = new CANSparkMax(
       Constants.DriveTrain.canMotorDeviceId01,
       MotorType.kBrushless
     );
 
-    intakeController1 = intakeController0 = new CANSparkMax(
+    intakeController1 = new CANSparkMax(
       Constants.DriveTrain.canMotorDeviceId01,
       MotorType.kBrushless
     );
 
-    
+    intakeController0.setInverted(true);
+
+    //public RelativeEncoder flipEncoder = flipper.getEncoder()
 
   }
 
   public void forward() {
-    intakeController0.set(0.5);
-    intakeController1.set(-0.5);
+    intakeController0.set(wheelPower);
+    intakeController1.set(wheelPower);
   
   }
 
   public void backward() {
-    intakeController0.set(-0.5);
-    intakeController1.set(0.5);
+    intakeController0.set(wheelPower);
+    intakeController1.set(wheelPower);
 
   }
 
-  public void flip(){
+  public void flipUp(){
 
-    if(flipSwitch.get()){
+    flipper.set(ControlMode.Position, position1);
+    flipper.set(VictorSPXControlMode.PercentOutput, 0.5);
+  }
 
-      flipper.
+  public void flipDown(){
 
-    }
+    if (flipEncoder.getPosition() >= position1){
+      flipper.set(VictorSPXControlMode.PercentOutput, 0.0);
+      intakeController0.set(wheelPower);
+      intakeController1.set(wheelPower);
+
+      flipper.set(ControlMode.Position, position0);
+      flipper.set(VictorSPXControlMode.PercentOutput, -0.5);
+    } 
 
   }
 
-  public void flip2(){
+  /*public void flip2(){
 
     if(objectSwitch.get()){
 
-      if(flipSwitch)
+      flipper.set(ControlMode.Position, position0);
+      flipper.set(VictorSPXControlMode.PercentOutput, 0.5);
+
+      if(flipSwitch.get()){
+
+        intakeController0.set(-0.5);
+        intakeController1.set(0.5);
+        //find a way to make it continue for 1 second without throwing an error
+      
+        flipper.set(ControlMode.Position, position0);
+        flipper.set(VictorSPXControlMode.PercentOutput, 0.5);
 
     }
 
-  }
+    } else {
+      flipper.set(ControlMode.Position, position0);
+      flipper.set(VictorSPXControlMode.PercentOutput, 0);
+    }
+
+  }*/
 
   @Override
   public void periodic() {
