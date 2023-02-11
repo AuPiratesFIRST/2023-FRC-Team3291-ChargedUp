@@ -44,12 +44,12 @@ public class IntakeSubsytstem extends SubsystemBase {
     flipper = new VictorSPX(45);
 
     intakeController0 = new CANSparkMax(
-      Constants.DriveTrain.canMotorDeviceId01,
+      Constants.Intake.canMotorDeviceId05,
       MotorType.kBrushless
     );
 
     intakeController1 = new CANSparkMax(
-      Constants.DriveTrain.canMotorDeviceId01,
+      Constants.Intake.canMotorDeviceId06,
       MotorType.kBrushless
     );
 

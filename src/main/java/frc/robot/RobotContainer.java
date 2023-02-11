@@ -16,7 +16,6 @@ import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsytstem;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -80,7 +79,7 @@ public class RobotContainer {
       driveTrainSubsystem)
     );
 
-    joystick00.button(2).whileTrue(AutoBalanceCommand);
+    joystick00.button(2).whileTrue(autobalanceCommand);
     joystick00.button(3).whileTrue(indexerFowardCommand);
     joystick00.button(4).whileTrue(indexerBackwardCommand);
     joystick00.button(5).whileTrue(intakeForwardcommand);
