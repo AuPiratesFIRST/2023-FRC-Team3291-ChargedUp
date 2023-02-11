@@ -10,6 +10,8 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.IndexerBackward;
 import frc.robot.commands.IndexerFoward;
+import frc.robot.commands.IntakeBackward;
+import frc.robot.commands.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -28,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  private static final Command AutoBalanceCommand = null;
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystems driveTrainSubsystem = new DriveTrainSubsystems();
@@ -42,6 +45,8 @@ public class RobotContainer {
 
   private IndexerFoward indexerFowardCommand = new IndexerFoward(indexsubsystem);
   private IndexerBackward indexerBackwardCommand = new IndexerBackward(indexsubsystem);
+  private IntakeForward intakeForwardcommand = new IntakeForward(intakeSubsytstem);
+  private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -57,7 +62,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
    * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
+   * joysticks}
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
@@ -75,9 +80,11 @@ public class RobotContainer {
       driveTrainSubsystem)
     );
 
-    joystick00.button(2).whileTrue(autobalanceCommand);
+    joystick00.button(2).whileTrue(AutoBalanceCommand);
     joystick00.button(3).whileTrue(indexerFowardCommand);
     joystick00.button(4).whileTrue(indexerBackwardCommand);
+    joystick00.button(5).whileTrue(intakeForwardcommand);
+    joystick00.button(6).whileTrue(intakeBackwardcommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
