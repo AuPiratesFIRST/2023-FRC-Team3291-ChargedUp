@@ -23,7 +23,7 @@ public final class Constants {
     /*****
      * Custom DriveTrain
      */
-    public static final double kDefaultDeadband = 0.03;
+    public static final double kDefaultDeadband = 0.05;
     public static final double kDefaultMaxOutput = 1.0;
 
     /******
