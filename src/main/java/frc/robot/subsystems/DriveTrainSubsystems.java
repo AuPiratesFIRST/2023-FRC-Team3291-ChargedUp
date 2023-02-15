@@ -31,7 +31,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
   public final static int RIGHT = 1;
   public final static int LEFT = -1;
 
-  double cpr = 1;
+  double cpr = 12.75;
   double robotRadius = 21.5;
   double wheelDiameter = 8;
   double diameter = 6;
@@ -47,7 +47,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
   public double movementPerInch = cpr/(wheelDiameter * Math.PI);
   public double distanceToEdge =  platformWidth - (platformWidth - robotLength)/2;
-  public double rotationsToBalance =  (distanceToEdge * Math.PI)*10;
+  public double rotationsToBalance =  distanceToEdge * Math.PI;
   public double slope = (maxMovementSpeed - minMovementSpeed) / (maxAngle - minAngle);
   public double robotPerDegree = (( robotRadius / (wheelDiameter / 2)) * cpr) / 360;
 
@@ -67,7 +67,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     /*
    * Auto-balancing taken from: https://github.com/kauailabs/navxmxp/blob/master/roborio/java/navXMXP_Java_AutoBalance/src/org/usfirst/frc/team2465/robot/Robot.java
    */
-  private AHRS navx_device = new AHRS(SerialPort.Port.kUSB);
+  private AHRS navx_device;
   boolean autoBalanceXMode;
   boolean autoBalanceYMode; 
     
@@ -132,9 +132,6 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     motorController00.set(leftSpeed * m_maxOutput);
     motorController02.set(rightSpeed * m_maxOutput);
-
-    SmartDashboard.putNumber("Drive encoder Left", encoder0.getPosition());
-    SmartDashboard.putNumber("Drive encoder Right", encoder2.getPosition());
   }
 
   public void autoBalanceInitialize() {
@@ -158,30 +155,20 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     double differenceLeft = encoder0.getPosition() - rotationsInitLeft;
     double differenceRight = encoder2.getPosition() - rotationsInitRight;
-    
+
     if (rollAngleDegrees != 0.0) {
       double radiansPerAngle = slope * rollAngleDegrees;
-      SmartDashboard.putNumber("radiansPerAngle", radiansPerAngle);
 
       double direction = 1.0;
       if (rollAngleDegrees < 0.0) {
         direction = -1.0;
       }
 
-      SmartDashboard.putNumber("direction", direction);
-
       radiansPerAngle = radiansPerAngle + (minMovementSpeed * direction);
-      SmartDashboard.putNumber("radiansPerAngle2", radiansPerAngle);
+
       try {
         double encoder0Position = encoder0.getPosition();
         double encoder2Position = encoder2.getPosition();
-
-        SmartDashboard.putNumber("enc0Pos", encoder0Position);
-        SmartDashboard.putNumber("enc2Pos", encoder2Position);
-        SmartDashboard.putNumber("rotationsInitLeft", rotationsInitLeft);
-        SmartDashboard.putNumber("rotationinitRight", rotationsInitRight);
-        SmartDashboard.putNumber("Difference left", differenceLeft);
-        SmartDashboard.putNumber("Difference right", differenceRight);
 
         double leftSpeed;
         if (Math.abs(differenceLeft) >= rotationsToBalance) {
@@ -201,10 +188,6 @@ public class DriveTrainSubsystems extends SubsystemBase {
         }
 
         drive(leftSpeed, rightSpeed);
-
-        SmartDashboard.putNumber("rightSpeed", rightSpeed);
-        SmartDashboard.putNumber("leftSpeed", leftSpeed);
-
       } catch(RuntimeException ex) {
         String err_string = "Drive system error: " + ex.getMessage();
         DriverStation.reportError(err_string, true);
@@ -218,7 +201,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 /*
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
-    double movement = distanceInInches * rotationsPerInch;
+    double movement = distanceInInches * cpr;
     
 
     motorController0Position += movement;
@@ -237,7 +220,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     motorController00.set(0.0);
     motorController02.set(0.0);
-    */
+    
     /*encoderSetting = stopAndReset; 
 
     motorController00.setMode(encoderSetting);
@@ -246,30 +229,38 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
 
-    private void strafeLeftOrRight (int movementindegrees, double speed) { 
-   /* 
-      double backLeftPosition = encoder0.getPosition();
-    double frontRightPosition =  /*encoder2.getPosition();
+    private void rotateLeftOrRight (int rotateAngle, double speed, double perDegree) { 
+      
+      double motorController0Position = encoder0.getPosition();
+      double motorController2Position = encoder2.getPosition();
+      double movement = rotateAngle * perDegree;
+
+      motorController0Position += movement;
+      motorController2Position += movement;
+
+      // Set location to move to
+      encoder0.setPosition(motorController0Position);
+      encoder2.setPosition(motorController2Position);
+
+      // Start moving robot by setting motor speed
+      motorController00.set(speed);
+      motorController02.set(speed);
     
-    double movement = DistanceInInches  * rotationsPerInch;
+      motorController0Position = encoder0.getPosition();
+      motorController2Position =  encoder2.getPosition();
     
-    encoder0.setPosition(frontRightPosition);
-    encoder2 = movement;
+      movement = DistanceInInches  * cpr;
 
+      motorController0Position += movement;
+      motorController2Position += movement;
+    
+      encoder0.setPosition(motorController0Position);
+      encoder2.setPosition(motorController2Position);
+    
+      motorController00.set(0.5);
+      motorController02.set(0.5);
 
-    encoder0.setPosition(backLeftPosition);
-    encoder2.setPosition(frontRightPosition);
+  }
 
-    //enconderSetting = runToPostion;
-
-          encoder0.setPosition(motorController0Position);
-          encoder2.setPosition(motorController2Position);
-
-        }
-
-        motorController00.set(0.0);
-        motorController02.set(0.0);
-
-    };*/
-
+  
 }
