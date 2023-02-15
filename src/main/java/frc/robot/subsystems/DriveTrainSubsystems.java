@@ -31,10 +31,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
   public final static int RIGHT = 1;
   public final static int LEFT = -1;
 
-  double cpr = 12.75;
+  double cpr = 10.53;
   double robotRadius = 21.5;
-  double wheelDiameter = 8;
-  double diameter = 6;
+  double wheelDiameter = 6;
   double platformWidth = 48;
   double robotLength = 28;
   double minAngle = 0;
@@ -47,7 +46,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
   public double movementPerInch = cpr/(wheelDiameter * Math.PI);
   public double distanceToEdge =  platformWidth - (platformWidth - robotLength)/2;
-  public double rotationsToBalance =  (distanceToEdge * Math.PI);
+  public double rotationsToBalance =  (distanceToEdge * movementPerInch);
   public double slope = (maxMovementSpeed - minMovementSpeed) / (maxAngle - minAngle);
   public double robotPerDegree = (( robotRadius / (wheelDiameter / 2)) * cpr) / 360;
 
@@ -97,19 +96,11 @@ public class DriveTrainSubsystems extends SubsystemBase {
   Constants.DriveTrain.canMotorDeviceId04,
   MotorType.kBrushless
   ); 
-
-  public CANSparkMax motorController05 = new CANSparkMax(
-    14,
-    MotorType.kBrushless
-  );
   
   public RelativeEncoder encoder0 = motorController00.getEncoder();
   public RelativeEncoder encoder2 = motorController02.getEncoder();
 
   public SparkMaxPIDController pidController00;
-
-  public SparkMaxPIDController pidController05;
-  public RelativeEncoder encoder05;
 
   /** Creates a new DriveTrainSubsystems. */
   public DriveTrainSubsystems() {
@@ -122,10 +113,11 @@ public class DriveTrainSubsystems extends SubsystemBase {
     motorController00.getPIDController();
     motorController02.getPIDController();
 
-    encoder05 = motorController05.getEncoder();
-    pidController05 = motorController05.getPIDController();
-
-    SmartDashboard.putNumber("SetPoint", encoder05.getPosition());
+    SmartDashboard.putNumber("movementPerInch", movementPerInch);
+    SmartDashboard.putNumber("distanceToEdge", distanceToEdge);
+    SmartDashboard.putNumber("rotationsToBalance", rotationsToBalance);
+    SmartDashboard.putNumber("slope", slope);
+    SmartDashboard.putNumber("robotPerDegre", robotPerDegree);
   }
 
   @Override
@@ -133,7 +125,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void drive(double joystickLeftSpeed, double joystickRightSpeed) {/* 
+  public void drive(double joystickLeftSpeed, double joystickRightSpeed) {
     double m_deadbad = Constants.DriveTrain.kDefaultDeadband;
     double m_maxOutput = Constants.DriveTrain.kDefaultMaxOutput;
 
@@ -143,8 +135,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
     leftSpeed = MathUtil.clamp(leftSpeed, -1.0, 1.0);
     rightSpeed = MathUtil.clamp(rightSpeed, -1.0, 1.0);
 
-   // motorController00.set(leftSpeed * m_maxOutput);
-   // motorController02.set(rightSpeed * m_maxOutput);*/
+   motorController00.set(leftSpeed * m_maxOutput);
+   motorController02.set(rightSpeed * m_maxOutput);
   }
 
   public void autoBalanceInitialize() {
@@ -153,6 +145,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
     //encoder2.setPosition(0.0);
     rotationsInitLeft = encoder0.getPosition();
     rotationsInitRight = encoder2.getPosition();
+    SmartDashboard.putNumber("Left init position", rotationsInitLeft);
+    SmartDashboard.putNumber("Right init position", rotationsInitRight);
   }
 
   public void autoBalance() {
@@ -162,18 +156,29 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     rollAngleDegrees = MathUtil.applyDeadband(rollAngleDegrees, 0.1);
 
+    SmartDashboard.putNumber("rollAngleDegress", rollAngleDegrees);
+
     double differenceLeft = encoder0.getPosition() - rotationsInitLeft;
     double differenceRight = encoder2.getPosition() - rotationsInitRight;
+
+    SmartDashboard.putNumber("differenceLeft", differenceLeft);
+    SmartDashboard.putNumber("differenceRight", differenceRight);
     
     if (rollAngleDegrees != 0.0) {
       double radiansPerAngle = slope * rollAngleDegrees;
+
+      SmartDashboard.putNumber("radiansPerAngle", radiansPerAngle);
 
       double direction = 1.0;
       if (rollAngleDegrees < 0.0) {
         direction = -1.0;
       }
 
+      SmartDashboard.putNumber("direction", direction);
+
       radiansPerAngle = radiansPerAngle + (minMovementSpeed * direction);
+
+      SmartDashboard.putNumber("calcRadiansPerAngle", radiansPerAngle);
       try {
         double leftSpeed;
         if (Math.abs(differenceLeft) >= rotationsToBalance) {
@@ -189,24 +194,19 @@ public class DriveTrainSubsystems extends SubsystemBase {
           rightSpeed = radiansPerAngle;
         }
 
+        SmartDashboard.putNumber("rightSpeed1", rightSpeed);
+        SmartDashboard.putNumber("leftSpeed1", leftSpeed);
+
         leftSpeed = MathUtil.clamp(leftSpeed, -maxMovementSpeed, maxMovementSpeed);
         rightSpeed = MathUtil.clamp(rightSpeed, -maxMovementSpeed, maxMovementSpeed);
 
-        //drive(leftSpeed, rightSpeed);
+        drive(leftSpeed, rightSpeed);
 
-        SmartDashboard.putNumber("rightSpeed", rightSpeed);
-        SmartDashboard.putNumber("leftSpeed", leftSpeed);
+        SmartDashboard.putNumber("rightSpeed2", rightSpeed);
+        SmartDashboard.putNumber("leftSpeed2", leftSpeed);
 
         SmartDashboard.putNumber("Encoder left position", encoder0.getPosition());
         SmartDashboard.putNumber("Encoder right position", encoder2.getPosition());
-
-        double rotations = SmartDashboard.getNumber("rotations", encoder05.getPosition());
-        pidController05.setP(0.001);
-        pidController05.setOutputRange(-1, 1);
-        pidController05.setReference(rotations, CANSparkMax.ControlType.kPosition);
-       
-        //motorController05.set(0.1);
-        SmartDashboard.putNumber("encoder05", encoder05.getPosition());
       
       } catch(RuntimeException ex) {
         String err_string = "Drive system error: " + ex.getMessage();
