@@ -149,7 +149,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     SmartDashboard.putNumber("Right init position", rotationsInitRight);
   }
 
-  public static void autoBalance() {
+  public void autoBalance() {
     double brakeAdjustment = Constants.DriveTrain.brakeAdjustment;
 
     double rollAngleDegrees = navx_device.getRoll();
@@ -227,7 +227,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     }
   }
 
-  public static void moveForwardOrBack(int distanceInInches, double speed){
+  public void moveForwardOrBack(int distanceInInches, double speed){
 
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
