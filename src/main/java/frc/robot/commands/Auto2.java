@@ -7,24 +7,21 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystems;
 
-public class Autos extends CommandBase {
-  public DriveTrainSubsystems driveTrainSubsystems;
-  /** Creates a new AutobalanceCommand. */
-  public Autos(DriveTrainSubsystems drivetrainsubsystems) {
-    driveTrainSubsystems = drivetrainsubsystems;
-    // Use addRequirements() here to declare subsystem dedpendencies.
+public class Auto2 extends CommandBase {
+  /** Creates a new Auto2. */
+  public Auto2(DriveTrainSubsystems driveTrainSubsystems) {
+    // Use addRequirements() here to declare subsystem dependencies.
+  driveTrainSubsystems = driveTrainSubsystems;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    DriveTrainSubsystems.autoBalance();
+    DriveTrainSubsystems.move();
   }
 
   // Called once the command ends or is interrupted.
