@@ -5,28 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrainSubsystems;
-import frc.robot.subsystems.ExampleSubsystem;
 
-public class Autos extends CommandBase {
-  public DriveTrainSubsystems driveTrainSubsystems;
-  /** Creates a new AutobalanceCommand. */
-  public Autos(DriveTrainSubsystems drivetrainsubsystems) {
-    driveTrainSubsystems = drivetrainsubsystems;
-    // Use addRequirements() here to declare subsystem dedpendencies.
+public class MoveForward extends CommandBase {
+  /** Creates a new MoveForwardOrBack. */
+  public MoveForward(subsystem, distance, speed) {
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

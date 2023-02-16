@@ -218,11 +218,10 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
   public void moveForwardOrBack(int distanceInInches, double speed){
-/*
+
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
-    double movement = distanceInInches * rotationsPerInch;
-    
+    double movement = distanceInInches * movementPerInch;
 
     motorController0Position += movement;
     motorController2Position += movement;
@@ -240,21 +239,15 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     motorController00.set(0.0);
     motorController02.set(0.0);
-    */
-    /*encoderSetting = stopAndReset; 
-
-    motorController00.setMode(encoderSetting);
-    motorController02.setMode(encoderSetting);*/
-
   }
 
 
     private void strafeLeftOrRight (int movementindegrees, double speed) { 
-   /* 
-      double backLeftPosition = encoder0.getPosition();
-    double frontRightPosition =  /*encoder2.getPosition();
+   
+    double backLeftPosition = encoder0.getPosition();
+    double frontRightPosition =  encoder2.getPosition();
     
-    double movement = DistanceInInches  * rotationsPerInch;
+    double movement = DistanceInInches  * movementPerInch;
     
     encoder0.setPosition(frontRightPosition);
     encoder2 = movement;
@@ -273,7 +266,4 @@ public class DriveTrainSubsystems extends SubsystemBase {
         motorController00.set(0.0);
         motorController02.set(0.0);
 
-    };*/
-
-}
-}
+    };
