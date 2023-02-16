@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystems;
 
 public class Auto1 extends CommandBase {
-  /** Creates a new Auto1. */
+  // Creates a new Auto1.
   public Auto1(DriveTrainSubsystems driveTrainSubsystems) {
     driveTrainSubsystems = driveTrainSubsystems;
     // Use addRequirements() here to declare subsystem dependencies.

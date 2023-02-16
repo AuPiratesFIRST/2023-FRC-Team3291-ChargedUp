@@ -5,10 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Constants;
+import frc.robot.subsystems.DriveTrainSubsystems;
 
 public class MoveForward extends CommandBase {
-  /** Creates a new MoveForwardOrBack. */
-  public MoveForward(subsystem, distance, speed) {
+  public DriveTrainSubsystems driveTrainSubsystems;
+  /** Creates a new MoveForward. */
+  public MoveForward() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

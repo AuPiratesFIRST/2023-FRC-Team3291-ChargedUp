@@ -4,27 +4,18 @@
 
 package frc.robot.subsystems;
 
-import javax.management.RuntimeOperationsException;
-
-import com.ctre.phoenix.platform.can.PlatformCAN;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.revrobotics.RelativeEncoder;
 
 
 public class DriveTrainSubsystems extends SubsystemBase {
@@ -284,9 +275,13 @@ public class DriveTrainSubsystems extends SubsystemBase {
       motorController00.set(0.5);
       motorController02.set(0.5);
 
+          while(encoder0.getPosition() <= motorController0Position && encoder2.getPosition() <= motorController2Position){
+      encoder0.setPosition(motorController0Position);
+      encoder2.setPosition(motorController2Position);
+    }
+
+    motorController00.set(0.0);
+    motorController02.set(0.0);
+
   }
-
-        motorController00.set(0.0);
-        motorController02.set(0.0);
-
     };
