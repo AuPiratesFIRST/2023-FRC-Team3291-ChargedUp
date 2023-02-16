@@ -66,7 +66,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     /*
    * Auto-balancing taken from: https://github.com/kauailabs/navxmxp/blob/master/roborio/java/navXMXP_Java_AutoBalance/src/org/usfirst/frc/team2465/robot/Robot.java
    */
-  private AHRS navx_device = new AHRS(SerialPort.Port.kUSB);
+  private AHRS navx_device;
   boolean autoBalanceXMode;
   boolean autoBalanceYMode; 
     
@@ -180,6 +180,16 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
       SmartDashboard.putNumber("calcRadiansPerAngle", radiansPerAngle);
       try {
+        double encoder0Position = encoder0.getPosition();
+        double encoder2Position = encoder2.getPosition();
+
+        SmartDashboard.putNumber("enc0Pos", encoder0Position);
+        SmartDashboard.putNumber("enc2Pos", encoder2Position);
+        SmartDashboard.putNumber("rotationsInitLeft", rotationsInitLeft);
+        SmartDashboard.putNumber("rotationinitRight", rotationsInitRight);
+        SmartDashboard.putNumber("Difference left", differenceLeft);
+        SmartDashboard.putNumber("Difference right", differenceRight);
+
         double leftSpeed;
         if (Math.abs(differenceLeft) >= rotationsToBalance) {
           leftSpeed = radiansPerAngle - (brakeAdjustment * direction);
@@ -219,6 +229,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
   public void moveForwardOrBack(int distanceInInches, double speed){
 
+
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
     double movement = distanceInInches * movementPerInch;
@@ -242,26 +253,38 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
 
-    private void strafeLeftOrRight (int movementindegrees, double speed) { 
-   
-    double backLeftPosition = encoder0.getPosition();
-    double frontRightPosition =  encoder2.getPosition();
+    private void rotateLeftOrRight (int rotateAngle, double speed, double perDegree) { 
+      
+      double motorController0Position = encoder0.getPosition();
+      double motorController2Position = encoder2.getPosition();
+      double movement = rotateAngle * perDegree;
+
+      motorController0Position += movement;
+      motorController2Position += movement;
+
+      // Set location to move to
+      encoder0.setPosition(motorController0Position);
+      encoder2.setPosition(motorController2Position);
+
+      // Start moving robot by setting motor speed
+      motorController00.set(speed);
+      motorController02.set(speed);
     
-    double movement = DistanceInInches  * movementPerInch;
+      motorController0Position = encoder0.getPosition();
+      motorController2Position =  encoder2.getPosition();
     
-    encoder0.setPosition(frontRightPosition);
-    encoder2 = movement;
+      movement = DistanceInInches  * cpr;
 
+      motorController0Position += movement;
+      motorController2Position += movement;
+    
+      encoder0.setPosition(motorController0Position);
+      encoder2.setPosition(motorController2Position);
+    
+      motorController00.set(0.5);
+      motorController02.set(0.5);
 
-    encoder0.setPosition(backLeftPosition);
-    encoder2.setPosition(frontRightPosition);
-
-    //enconderSetting = runToPostion;
-
-          encoder0.setPosition(motorController0Position);
-          encoder2.setPosition(motorController2Position);
-
-        }
+  }
 
         motorController00.set(0.0);
         motorController02.set(0.0);
