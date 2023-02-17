@@ -5,22 +5,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsytstem;
+import frc.robot.subsystems.DriveTrainSubsystems;
 
-public class IntakeForward extends CommandBase {
-  public IntakeSubsytstem intakesubsystem;
-  /** Creates a new IntakeForward. */
-  public IntakeForward(IntakeSubsytstem intake) {
+public class MoveBackward extends CommandBase {
+  public DriveTrainSubsystems driveTrainSubsystems;
+  public double distanceInInches;
+  public double speed;
+  /** Creates a new MoveBackward. */
+  public MoveBackward(DriveTrainSubsystems driveTrainSubsystem, double distance, double motorspeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-  intakesubsystem = intake; 
+    driveTrainSubsystems = driveTrainSubsystem;
+    distanceInInches = distance;
+    speed = -1 * motorspeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakesubsystem.forward();
+    driveTrainSubsystems.moveForwardOrBack(distanceInInches, speed);
   }
-
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
