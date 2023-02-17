@@ -19,8 +19,8 @@ import frc.robot.Constants;
 
 
 public class DriveTrainSubsystems extends SubsystemBase {
-  public final static int RIGHT = 1;
-  public final static int LEFT = -1;
+  public final static double RIGHT = 1;
+  public final static double LEFT = -1;
 
   double cpr = 10.53;
   double robotRadius = 21.5;
@@ -241,7 +241,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
 
-    private void rotateLeftOrRight (int rotateAngle, double speed, double perDegree) { 
+    public void rotateLeftOrRight (double rotateAngle, double speed, double perDegree) { 
       
       double motorController0Position = encoder0.getPosition();
       double motorController2Position = encoder2.getPosition();
