@@ -241,7 +241,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
 
-    private void rotateLeftOrRight (int rotateAngle, double speed, double perDegree) { 
+    public void rotateLeftOrRight (double rotateAngle, double speed, double perDegree) { 
       
       double motorController0Position = encoder0.getPosition();
       double motorController2Position = encoder2.getPosition();

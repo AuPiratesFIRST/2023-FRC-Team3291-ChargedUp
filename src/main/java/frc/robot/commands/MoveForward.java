@@ -5,24 +5,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystems;
 
 public class MoveForward extends CommandBase {
   public DriveTrainSubsystems driveTrainSubsystems;
+  public double distanceInInches;
+  public double speed;
   /** Creates a new MoveForward. */
-  public MoveForward(   ) {
+  public MoveForward( DriveTrainSubsystems driveTrainSubsystem, double distance, double motorspeed) {
     // Use addRequirements() here to declare subsystem dependencies.
+  driveTrainSubsystems = driveTrainSubsystem;
+  distanceInInches = distance;
+  speed = motorspeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+   driveTrainSubsystems.moveForwardOrBack(distanceInInches, speed);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+   
+  }
 
   // Called once the command ends or is interrupted.
   @Override
