@@ -225,18 +225,15 @@ public class DriveTrainSubsystems extends SubsystemBase {
     double motorController2Position = encoder2.getPosition();
     double movement = distanceInInches * movementPerInch;
 
-    motorController0Position += movement;
-    motorController2Position += movement;
-
-    encoder0.setPosition(motorController0Position);
-    encoder2.setPosition(motorController2Position);
+    double leftDifference = motorController0Position - motorController0Position;
+    double rightDifference = motorController2Position - motorController2Position;
 
     motorController00.set(speed);
     motorController02.set(speed);
 
-    while(encoder0.getPosition() <= motorController0Position && encoder2.getPosition() <= motorController2Position){
-      encoder0.setPosition(motorController0Position);
-      encoder2.setPosition(motorController2Position);
+    while(Math.abs(leftDifference) <= movement && Math.abs(rightDifference) <= movement){
+      leftDifference = encoder0.getPosition() - motorController0Position;
+      rightDifference = encoder2.getPosition() - motorController2Position;
     }
 
     motorController00.set(0.0);
@@ -267,7 +264,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
       movement = DistanceInInches  * cpr;
 
       motorController0Position += movement;
-      motorController2Position += movement;
+      motorController2Position -= movement;
     
       encoder0.setPosition(motorController0Position);
       encoder2.setPosition(motorController2Position);
