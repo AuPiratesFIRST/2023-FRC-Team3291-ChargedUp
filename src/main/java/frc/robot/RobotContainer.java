@@ -7,14 +7,17 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.IndexerBackward;
-import frc.robot.commands.IndexerFoward;
-import frc.robot.commands.IntakeBackward;
-import frc.robot.commands.IntakeForward;
+import frc.robot.commands.autonomous.Auto01;
+import frc.robot.commands.indexer.IndexerBackward;
+import frc.robot.commands.indexer.IndexerFoward;
+import frc.robot.commands.intake.IntakeBackward;
+import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsytstem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -47,6 +50,10 @@ public class RobotContainer {
   private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
+  private Auto01 auto01 = new Auto01(driveTrainSubsystem);
+
+  SendableChooser<Command> m_Chooser = new SendableChooser<>();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -63,10 +70,10 @@ public class RobotContainer {
    * joysticks}
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-        
+  
+    m_Chooser.setDefaultOption("Autonomous 01", auto01);
+    //m_Chooser.addOption("Autonomous 2 boogaloo", auto02);
+    SmartDashboard.putData("Auto choices", m_Chooser);
 
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
@@ -94,11 +101,9 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  /* 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_Chooser.getSelected();
   }
-  */
 }
 
