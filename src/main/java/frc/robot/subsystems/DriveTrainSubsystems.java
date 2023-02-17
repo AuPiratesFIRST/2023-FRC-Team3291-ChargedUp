@@ -218,7 +218,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     }
   }
 
-  public void moveForwardOrBack(int distanceInInches, double speed){
+  public void moveForwardOrBack(double distanceInInches, double speed){
 
 
     double motorController0Position = encoder0.getPosition();
@@ -245,40 +245,21 @@ public class DriveTrainSubsystems extends SubsystemBase {
       
       double motorController0Position = encoder0.getPosition();
       double motorController2Position = encoder2.getPosition();
-      double movement = rotateAngle * perDegree;
-
-      motorController0Position += movement;
-      motorController2Position += movement;
-
-      // Set location to move to
-      encoder0.setPosition(motorController0Position);
-      encoder2.setPosition(motorController2Position);
-
-      // Start moving robot by setting motor speed
+      double movement = rotateAngle * robotPerDegree;
+  
+      double leftDifference = motorController0Position - motorController0Position;
+      double rightDifference = motorController2Position - motorController2Position;
+  
       motorController00.set(speed);
-      motorController02.set(speed);
-    
-      motorController0Position = encoder0.getPosition();
-      motorController2Position =  encoder2.getPosition();
-    
-      movement = DistanceInInches  * cpr;
-
-      motorController0Position += movement;
-      motorController2Position -= movement;
-    
-      encoder0.setPosition(motorController0Position);
-      encoder2.setPosition(motorController2Position);
-    
-      motorController00.set(0.5);
-      motorController02.set(0.5);
-
-          while(encoder0.getPosition() <= motorController0Position && encoder2.getPosition() <= motorController2Position){
-      encoder0.setPosition(motorController0Position);
-      encoder2.setPosition(motorController2Position);
+      motorController02.set(-1 * speed);
+  
+      while(Math.abs(leftDifference) <= movement && Math.abs(rightDifference) <= movement){
+        leftDifference = encoder0.getPosition() - motorController0Position;
+        rightDifference = encoder2.getPosition() - motorController2Position;
+      }
+  
+      motorController00.set(0.0);
+      motorController02.set(0.0);
     }
 
-    motorController00.set(0.0);
-    motorController02.set(0.0);
-
   }
-    };
