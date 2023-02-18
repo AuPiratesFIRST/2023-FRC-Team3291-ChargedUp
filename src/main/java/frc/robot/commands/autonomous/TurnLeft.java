@@ -5,6 +5,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystems;
 
 public class TurnLeft extends CommandBase {
@@ -31,7 +32,9 @@ public class TurnLeft extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveTrainSubsystems.rotateLeftOrRight(0, Constants.STOPPOWER);
+  }
 
   // Returns true when the command should end.
   @Override

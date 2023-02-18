@@ -5,6 +5,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystems;
 
 public class MoveForward extends CommandBase {
@@ -28,7 +29,7 @@ public class MoveForward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   
+   driveTrainSubsystems.moveForwardOrBack(0, Constants.STOPPOWER);
   }
 
   // Called once the command ends or is interrupted.

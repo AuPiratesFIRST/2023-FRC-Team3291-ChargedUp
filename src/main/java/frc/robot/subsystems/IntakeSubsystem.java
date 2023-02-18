@@ -36,6 +36,10 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeController0.set(-wheelPower);
   }
 
+  public void stop(){
+    intakeController0.set(Constants.STOPPOWER);
+  }
+
 
 
 

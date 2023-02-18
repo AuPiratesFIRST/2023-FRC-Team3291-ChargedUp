@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class IndexerSubsystem extends SubsystemBase {
   public CANSparkMax indexercontroller;
@@ -24,6 +25,9 @@ public class IndexerSubsystem extends SubsystemBase {
 indexercontroller.set(-0.5);
   }
 
+  public void stop (){
+    indexercontroller.set(Constants.STOPPOWER);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
