@@ -11,12 +11,10 @@ public class TurnRight extends CommandBase {
   public DriveTrainSubsystems driveTrainSubsystems;
   public double rotateAngle;
   public double speed;
-  public double perDegree;
   /** Creates a new TurnRight. */
-  public TurnRight(DriveTrainSubsystems drive, double motorSpeed, double rotationOfTheAngle, double forDegree) {
+  public TurnRight(DriveTrainSubsystems drive, double motorSpeed, double rotationOfTheAngle) {
     driveTrainSubsystems = drive;
     speed = motorSpeed;
-    perDegree = forDegree;
     rotateAngle = rotationOfTheAngle;
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -24,7 +22,7 @@ public class TurnRight extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    driveTrainSubsystems.rotateLeftOrRight(rotateAngle, speed, perDegree);
+    driveTrainSubsystems.rotateLeftOrRight(rotateAngle, speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
