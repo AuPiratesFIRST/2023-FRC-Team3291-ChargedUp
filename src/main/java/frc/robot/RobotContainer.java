@@ -17,7 +17,8 @@ import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsytstem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LightingSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,7 +40,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystems driveTrainSubsystem = new DriveTrainSubsystems();
   private IndexerSubsystem indexsubsystem = new IndexerSubsystem();
-  private IntakeSubsytstem intakeSubsytstem = new IntakeSubsytstem();
+  private IntakeSubsystem intakeSubsytstem = new IntakeSubsystem();
   public LightingSubsystem lightingSubsystem = new LightingSubsystem();
 
   public CommandJoystick controller00 = new CommandJoystick(0);
@@ -55,7 +56,7 @@ public class RobotContainer {
   private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
-  private Auto01 auto01 = new Auto01(driveTrainSubsystem);
+  private Auto01 auto01 = new Auto01(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
   private Auto02 auto02 = new Auto02(driveTrainSubsystem, indexsubsystem);
   private Auto03 auto03 = new Auto03(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
 
