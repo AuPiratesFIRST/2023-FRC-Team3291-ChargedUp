@@ -5,6 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.autonomous.MoveBackward;
+import frc.robot.commands.autonomous.MoveForward;
+import frc.robot.commands.autonomous.TurnRight;
+import frc.robot.commands.intake.IntakeBackward;
+import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsytstem;
