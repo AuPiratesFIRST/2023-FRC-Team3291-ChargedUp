@@ -4,29 +4,29 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IndexerSubsystem extends SubsystemBase {
-  public CANSparkMax indexercontroller;
+  public TalonFX indexercontroller;
   /** Creates a new Indexer. */ 
 
   public IndexerSubsystem() {
-    indexercontroller = new CANSparkMax(10, MotorType.kBrushless);
+    indexercontroller = new TalonFX(Constants.Indexer.canMotorPort);
   }
 
   public void forward (){
-    indexercontroller.set(0.5);
+    indexercontroller.set(ControlMode.PercentOutput, 0.5);
   }
   public void backward (){
-indexercontroller.set(-0.5);
+indexercontroller.set(ControlMode.PercentOutput, -0.5);
   }
 
   public void stop (){
-    indexercontroller.set(Constants.STOPPOWER);
+    indexercontroller.set(ControlMode.PercentOutput, Constants.STOPPOWER);
   }
   @Override
   public void periodic() {

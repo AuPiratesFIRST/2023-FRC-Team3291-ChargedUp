@@ -15,10 +15,10 @@ package frc.robot;
 public final class Constants {
   
   public final class DriveTrain {
-    public final static int canMotorDeviceId01 = 7;
-    public final static int canMotorDeviceId02 = 8;
-    public final static int canMotorDeviceId03 = 6;
-    public final static int canMotorDeviceId04 = 5;
+    public final static int canMotorDeviceId01 = 7; //Front left
+    public final static int canMotorDeviceId02 = 8; //Back left
+    public final static int canMotorDeviceId03 = 6; //Front rgiht
+    public final static int canMotorDeviceId04 = 5; //Back right
 
     /*****
      * Custom DriveTrain
@@ -47,6 +47,10 @@ public final class Constants {
 
   }
 
+  public final class Indexer {
+
+    public final static int canMotorPort = 44;
+  }
   public final class Joystick {
     public final static int tankLeftPort    = 1;
     public final static int tankRightPort   = 2;
