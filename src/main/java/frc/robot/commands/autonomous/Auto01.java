@@ -16,10 +16,10 @@ public class Auto01 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveForward(driveTrainSubsystems, 0, 0)
-      // new MoveBackward(driveTrainSubsystems, 0, 0)
-      // new TurnLeft(driveTrainSubsystems, 0, 0)
-      // new TurnRight(driveTrainSubsystems, 0, 0)
+       new MoveForward(driveTrainSubsystems, 56.55, 0.1).withTimeout(1),
+       new TurnLeft(driveTrainSubsystems, 45, 0.1).withTimeout(1),
+       new MoveBackward(driveTrainSubsystems, 56.55, 0.1).withTimeout(1),
+       new TurnRight(driveTrainSubsystems, 45, 0.1).withTimeout(1)
     );
   }
 }

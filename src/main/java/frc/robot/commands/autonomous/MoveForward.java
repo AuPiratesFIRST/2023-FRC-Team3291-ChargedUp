@@ -16,7 +16,7 @@ public class MoveForward extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
   driveTrainSubsystems = driveTrainSubsystem;
   distanceInInches = distance;
-  speed = motorspeed;
+  speed = motorspeed * -1;
   }
 
   // Called when the command is initially scheduled.

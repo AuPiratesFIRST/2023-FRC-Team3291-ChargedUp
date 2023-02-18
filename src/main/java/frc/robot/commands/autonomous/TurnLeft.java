@@ -12,11 +12,10 @@ public class TurnLeft extends CommandBase {
   public double rotateAngle;
   public double speed;
   /** Creates a new TurnRight. */
-  public TurnLeft(DriveTrainSubsystems drive, double motorSpeed, double rotationOfTheAngle) {
+  public TurnLeft(DriveTrainSubsystems drive, double rotationOfTheAngle, double motorSpeed) {
     driveTrainSubsystems = drive;
     speed = motorSpeed;
     rotateAngle = rotationOfTheAngle;
-    motorSpeed = motorSpeed * -1;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
