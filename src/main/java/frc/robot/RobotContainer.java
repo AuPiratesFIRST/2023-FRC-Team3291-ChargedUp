@@ -8,6 +8,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.autonomous.Auto01;
+import frc.robot.commands.autonomous.Auto02;
+import frc.robot.commands.autonomous.Auto03;
 import frc.robot.commands.indexer.IndexerBackward;
 import frc.robot.commands.indexer.IndexerFoward;
 import frc.robot.commands.intake.IntakeBackward;
@@ -15,7 +17,8 @@ import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsytstem;
+import frc.robot.subsystems.LightingSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,7 +39,8 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystems driveTrainSubsystem = new DriveTrainSubsystems();
   private IndexerSubsystem indexsubsystem = new IndexerSubsystem();
-  private IntakeSubsystem intakeSubsytstem = new IntakeSubsystem();
+  private IntakeSubsytstem intakeSubsytstem = new IntakeSubsytstem();
+  public LightingSubsystem lightingSubsystem = new LightingSubsystem();
 
   public CommandJoystick controller00 = new CommandJoystick(0);
   public CommandJoystick joystick00 = new CommandJoystick(Constants.Joystick.tankLeftPort);
@@ -51,8 +55,9 @@ public class RobotContainer {
   private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
-  private Auto01 auto01 = new Auto01(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
-  
+  private Auto01 auto01 = new Auto01(driveTrainSubsystem);
+  private Auto02 auto02 = new Auto02(driveTrainSubsystem, indexsubsystem);
+  private Auto03 auto03 = new Auto03(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
 
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
 
@@ -74,7 +79,8 @@ public class RobotContainer {
   private void configureBindings() {
   
     m_Chooser.setDefaultOption("Autonomous 01", auto01);
-    //m_Chooser.addOption("Autonomous 2 boogaloo", auto02);
+    m_Chooser.addOption("Autonomous 02", auto02);
+    m_Chooser.addOption("Autonomous 03", auto03);
     SmartDashboard.putData("Auto choices", m_Chooser);
 /*
     driveTrainSubsystem.setDefaultCommand(
