@@ -2,28 +2,23 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrainSubsystems;
+import frc.robot.subsystems.IndexerSubsystem;
 
-public class TurnLeft extends CommandBase {
-  public DriveTrainSubsystems driveTrainSubsystems;
-  public double rotateAngle;
-  public double speed;
-  /** Creates a new TurnRight. */
-  public TurnLeft(DriveTrainSubsystems drive, double motorSpeed, double rotationOfTheAngle) {
-    driveTrainSubsystems = drive;
-    speed = motorSpeed;
-    rotateAngle = rotationOfTheAngle;
-    motorSpeed = motorSpeed * -1;
+public class IndexerBackward extends CommandBase {
+    public IndexerSubsystem indexersubsystem;
+  /** Creates a new IndexerBackward. */
+ public IndexerBackward(IndexerSubsystem indexer) {
     // Use addRequirements() here to declare subsystem dependencies.
+  indexersubsystem = indexer;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    driveTrainSubsystems.rotateLeftOrRight(rotateAngle, speed);
+    indexersubsystem.backward();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

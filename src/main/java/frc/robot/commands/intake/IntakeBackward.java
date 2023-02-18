@@ -2,23 +2,23 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsytstem;
 
-public class IndexerBackward extends CommandBase {
-    public IndexerSubsystem indexersubsystem;
-  /** Creates a new IndexerBackward. */
- public IndexerBackward(IndexerSubsystem indexer) {
+public class IntakeBackward extends CommandBase {
+  public IntakeSubsytstem intakeSubsytstem;
+  /** Creates a new IntakeBackward. */
+  public IntakeBackward(IntakeSubsytstem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-  indexersubsystem = indexer;
+  intakeSubsytstem = intake;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    indexersubsystem.backward();
+    intakeSubsytstem.backward();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

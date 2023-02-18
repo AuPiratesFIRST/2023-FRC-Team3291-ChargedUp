@@ -2,23 +2,27 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsytstem;
+import frc.robot.subsystems.DriveTrainSubsystems;
 
-public class IntakeBackward extends CommandBase {
-  public IntakeSubsytstem intakeSubsytstem;
-  /** Creates a new IntakeBackward. */
-  public IntakeBackward(IntakeSubsytstem intake) {
+public class TurnLeft extends CommandBase {
+  public DriveTrainSubsystems driveTrainSubsystems;
+  public double rotateAngle;
+  public double speed;
+  /** Creates a new TurnRight. */
+  public TurnLeft(DriveTrainSubsystems drive, double rotationOfTheAngle, double motorSpeed) {
+    driveTrainSubsystems = drive;
+    speed = motorSpeed;
+    rotateAngle = rotationOfTheAngle;
     // Use addRequirements() here to declare subsystem dependencies.
-  intakeSubsytstem = intake;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeSubsytstem.backward();
+    driveTrainSubsystems.rotateLeftOrRight(rotateAngle, speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

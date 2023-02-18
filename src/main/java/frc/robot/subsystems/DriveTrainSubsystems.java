@@ -219,8 +219,6 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
   public void moveForwardOrBack(double distanceInInches, double speed){
-
-
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
     double movement = distanceInInches * movementPerInch;

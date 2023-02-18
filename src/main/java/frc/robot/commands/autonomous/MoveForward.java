@@ -2,28 +2,34 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.DriveTrainSubsystems;
 
-public class IndexerFoward extends CommandBase {
-  public IndexerSubsystem indexersubsystem;
-  /** Creates a new IndexerFoward. */
-  public IndexerFoward(IndexerSubsystem indexer) {
+public class MoveForward extends CommandBase {
+  public DriveTrainSubsystems driveTrainSubsystems;
+  public double distanceInInches;
+  public double speed;
+  /** Creates a new MoveForward. */
+  public MoveForward( DriveTrainSubsystems driveTrainSubsystem, double distance, double motorspeed) {
     // Use addRequirements() here to declare subsystem dependencies.
-  indexersubsystem = indexer;
+  driveTrainSubsystems = driveTrainSubsystem;
+  distanceInInches = distance;
+  speed = motorspeed * -1;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    indexersubsystem.forward();
+   driveTrainSubsystems.moveForwardOrBack(distanceInInches, speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+   
+  }
 
   // Called once the command ends or is interrupted.
   @Override

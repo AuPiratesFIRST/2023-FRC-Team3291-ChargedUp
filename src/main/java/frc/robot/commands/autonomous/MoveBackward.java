@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystems;
@@ -16,7 +16,7 @@ public class MoveBackward extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     driveTrainSubsystems = driveTrainSubsystem;
     distanceInInches = distance;
-    speed = -1 * motorspeed;
+    speed = motorspeed;
   }
 
   // Called when the command is initially scheduled.
