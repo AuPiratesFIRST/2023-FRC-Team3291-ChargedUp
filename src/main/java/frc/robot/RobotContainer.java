@@ -16,6 +16,7 @@ import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsytstem;
+import frc.robot.subsystems.LightingSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,6 +38,7 @@ public class RobotContainer {
   private DriveTrainSubsystems driveTrainSubsystem = new DriveTrainSubsystems();
   private IndexerSubsystem indexsubsystem = new IndexerSubsystem();
   private IntakeSubsytstem intakeSubsytstem = new IntakeSubsytstem();
+  public LightingSubsystem lightingSubsystem = new LightingSubsystem();
 
   public CommandJoystick joystick00 = new CommandJoystick(0);
   // public CommandJoystick joystick01 = new CommandJoystick(Constants.Joystick.tankRightPort);
