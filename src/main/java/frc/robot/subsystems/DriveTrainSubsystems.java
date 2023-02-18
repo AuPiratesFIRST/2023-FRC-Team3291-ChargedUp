@@ -109,6 +109,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     SmartDashboard.putNumber("rotationsToBalance", rotationsToBalance);
     SmartDashboard.putNumber("slope", slope);
     SmartDashboard.putNumber("robotPerDegre", robotPerDegree);
+    SmartDashboard.putNumber("speedModifier", 1.0);
   }
 
   @Override
@@ -125,6 +126,11 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     leftSpeed = MathUtil.clamp(leftSpeed, -1.0, 1.0);
     rightSpeed = MathUtil.clamp(rightSpeed, -1.0, 1.0);
+
+    double speedModifier = SmartDashboard.getNumber("speedModifier", 1.0);
+
+    leftSpeed = leftSpeed * speedModifier;
+    rightSpeed = rightSpeed * speedModifier;
 
    motorController00.set(leftSpeed * m_maxOutput);
    motorController02.set(rightSpeed * m_maxOutput);

@@ -15,7 +15,7 @@ import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsytstem;
+import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,10 +36,11 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystems driveTrainSubsystem = new DriveTrainSubsystems();
   private IndexerSubsystem indexsubsystem = new IndexerSubsystem();
-  private IntakeSubsytstem intakeSubsytstem = new IntakeSubsytstem();
+  private IntakeSubsystem intakeSubsytstem = new IntakeSubsystem();
 
-  public CommandJoystick joystick00 = new CommandJoystick(0);
-  // public CommandJoystick joystick01 = new CommandJoystick(Constants.Joystick.tankRightPort);
+  public CommandJoystick controller00 = new CommandJoystick(0);
+  public CommandJoystick joystick00 = new CommandJoystick(Constants.Joystick.tankLeftPort);
+  public CommandJoystick joystick01 = new CommandJoystick(Constants.Joystick.tankRightPort);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -50,7 +51,8 @@ public class RobotContainer {
   private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
-  private Auto01 auto01 = new Auto01(driveTrainSubsystem);
+  private Auto01 auto01 = new Auto01(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
+  
 
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
 
@@ -74,22 +76,33 @@ public class RobotContainer {
     m_Chooser.setDefaultOption("Autonomous 01", auto01);
     //m_Chooser.addOption("Autonomous 2 boogaloo", auto02);
     SmartDashboard.putData("Auto choices", m_Chooser);
+/*
+    driveTrainSubsystem.setDefaultCommand(
+      new RunCommand(
+        () ->
+        driveTrainSubsystem.drive(
+          controller00.getRawAxis(1),
+          controller00.getRawAxis(3)
+        ),
+      driveTrainSubsystem)
+    );
+    */
 
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () ->
         driveTrainSubsystem.drive(
           joystick00.getRawAxis(1),
-          joystick00.getRawAxis(3)
+          joystick01.getRawAxis(1)
         ),
       driveTrainSubsystem)
     );
 
-    joystick00.button(2).whileTrue(autobalanceCommand);
-    joystick00.button(3).whileTrue(indexerFowardCommand);
-    joystick00.button(4).whileTrue(indexerBackwardCommand);
-    joystick00.button(5).whileTrue(intakeForwardcommand);
-    joystick00.button(6).whileTrue(intakeBackwardcommand);
+    controller00.button(2).whileTrue(autobalanceCommand);
+    controller00.button(3).whileTrue(indexerFowardCommand);
+    controller00.button(4).whileTrue(indexerBackwardCommand);
+    controller00.button(5).whileTrue(intakeForwardcommand);
+    controller00.button(6).whileTrue(intakeBackwardcommand);
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

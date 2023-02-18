@@ -5,21 +5,27 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.indexer.IndexerFoward;
+import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
+import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Auto01 extends SequentialCommandGroup {
   /** Creates a new Auto01. */
-  public Auto01(DriveTrainSubsystems driveTrainSubsystems) {
+  public Auto01(DriveTrainSubsystems driveTrainSubsystems, IndexerSubsystem indexersubsystem, IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-       new MoveForward(driveTrainSubsystems, 56.55, 0.1).withTimeout(1),
-       new TurnLeft(driveTrainSubsystems, 45, 0.1).withTimeout(1),
-       new MoveBackward(driveTrainSubsystems, 56.55, 0.1).withTimeout(1),
-       new TurnRight(driveTrainSubsystems, 45, 0.1).withTimeout(1)
+       new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
+       new IntakeForward(intakeSubsystem),
+       new MoveBackward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
+       new IndexerFoward(indexersubsystem).withTimeout(1),
+       new TurnLeft(driveTrainSubsystems, 65, 0.3).withTimeout(1),
+       new MoveForward(driveTrainSubsystems, 36, .2).withTimeout(1)
     );
   }
 }

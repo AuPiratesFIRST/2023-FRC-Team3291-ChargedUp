@@ -43,13 +43,13 @@ public final class Constants {
 
     public final static int canMotorDeviceId05 = 9;
     public final static int canMotorDeviceId06 = 11;
-    public final static double wheelPower = 0.5;
+    public final static double wheelPower = 0.3;
 
   }
 
   public final class Joystick {
-    public final static int tankLeftPort    = 0;
-    public final static int tankRightPort   = 1;
+    public final static int tankLeftPort    = 1;
+    public final static int tankRightPort   = 2;
   }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
