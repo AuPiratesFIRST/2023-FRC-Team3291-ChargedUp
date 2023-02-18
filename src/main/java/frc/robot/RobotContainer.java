@@ -8,6 +8,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.autonomous.Auto01;
+import frc.robot.commands.autonomous.Auto02;
+import frc.robot.commands.autonomous.Auto03;
 import frc.robot.commands.indexer.IndexerBackward;
 import frc.robot.commands.indexer.IndexerFoward;
 import frc.robot.commands.intake.IntakeBackward;
@@ -53,6 +55,8 @@ public class RobotContainer {
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
   private Auto01 auto01 = new Auto01(driveTrainSubsystem);
+  private Auto02 auto02 = new Auto02(driveTrainSubsystem, indexsubsystem);
+  private Auto03 auto03 = new Auto03(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
 
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
 
@@ -74,7 +78,8 @@ public class RobotContainer {
   private void configureBindings() {
   
     m_Chooser.setDefaultOption("Autonomous 01", auto01);
-    //m_Chooser.addOption("Autonomous 2 boogaloo", auto02);
+    m_Chooser.addOption("Autonomous 02", auto02);
+    m_Chooser.addOption("Autonomous 03", auto03);
     SmartDashboard.putData("Auto choices", m_Chooser);
 
     driveTrainSubsystem.setDefaultCommand(
