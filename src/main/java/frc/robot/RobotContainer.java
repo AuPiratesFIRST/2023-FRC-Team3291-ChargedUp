@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.autonomous.Auto01;
 import frc.robot.commands.autonomous.Auto02;
 import frc.robot.commands.autonomous.Auto03;
@@ -15,9 +14,7 @@ import frc.robot.commands.indexer.IndexerFoward;
 import frc.robot.commands.intake.IntakeBackward;
 import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LightingSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -37,7 +34,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   private static final Command AutoBalanceCommand = null;
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrainSubsystems driveTrainSubsystem = new DriveTrainSubsystems();
   private IndexerSubsystem indexsubsystem = new IndexerSubsystem();
   private IntakeSubsystem intakeSubsytstem = new IntakeSubsystem();
@@ -83,7 +79,7 @@ public class RobotContainer {
     m_Chooser.addOption("Autonomous 02", auto02);
     m_Chooser.addOption("Autonomous 03", auto03);
     SmartDashboard.putData("Auto choices", m_Chooser);
-/*
+
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () ->
@@ -93,8 +89,8 @@ public class RobotContainer {
         ),
       driveTrainSubsystem)
     );
-    */
-
+  
+/* 
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () ->
@@ -104,6 +100,7 @@ public class RobotContainer {
         ),
       driveTrainSubsystem)
     );
+    */
 
     controller00.button(2).whileTrue(autobalanceCommand);
     controller00.button(3).whileTrue(indexerFowardCommand);
