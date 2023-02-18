@@ -9,14 +9,14 @@ import frc.robot.commands.intake.IntakeBackward;
 import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsytstem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Auto03 extends SequentialCommandGroup {
   /** Creates a new Auto03. */
-  public Auto03(DriveTrainSubsystems drivetrain, IndexerSubsystem indexer, IntakeSubsytstem intake ) {
+  public Auto03(DriveTrainSubsystems drivetrain, IndexerSubsystem indexer, IntakeSubsystem intake ) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
