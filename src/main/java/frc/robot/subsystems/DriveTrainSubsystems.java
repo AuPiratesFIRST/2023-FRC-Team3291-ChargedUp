@@ -11,6 +11,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,6 +53,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
   
   double breakAdj = 0.05;
 
+  PIDController pidDrive;
+
 
 
     /*
@@ -92,6 +95,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
   public RelativeEncoder encoder2 = motorController02.getEncoder();
 
   public SparkMaxPIDController pidController00;
+  public SparkMaxPIDController pidController01;
 
   /** Creates a new DriveTrainSubsystems. */
   public DriveTrainSubsystems() {
@@ -144,6 +148,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     rotationsInitRight = encoder2.getPosition();
     SmartDashboard.putNumber("Left init position", rotationsInitLeft);
     SmartDashboard.putNumber("Right init position", rotationsInitRight);
+    pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
   }
 
   public void autoBalance() {
@@ -186,6 +191,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
         SmartDashboard.putNumber("rotationinitRight", rotationsInitRight);
         SmartDashboard.putNumber("Difference left", differenceLeft);
         SmartDashboard.putNumber("Difference right", differenceRight);
+
+        differenceLeft = pidDrive.calculate(getDistance(), rotationsToBalance);
+        differenceRight = differenceLeft;
 
         double leftSpeed;
         if (Math.abs(differenceLeft) >= rotationsToBalance) {
@@ -264,6 +272,12 @@ public class DriveTrainSubsystems extends SubsystemBase {
   
       motorController00.set(0.0);
       motorController02.set(0.0);
+    }
+
+    public double getDistance(){
+
+      return ((encoder0.getPosition() + encoder2.getPosition())/2);
+
     }
 
   }

@@ -20,6 +20,10 @@ public final class Constants {
     public final static int canMotorDeviceId03 = 6; //Front rgiht
     public final static int canMotorDeviceId04 = 5; //Back right
 
+    public final static double kPDrive = 1.0;
+    public final static double kIDrive = 1.0;
+    public final static double kDDrive = 0.0;
+
     /*****
      * Custom DriveTrain
      */
