@@ -15,10 +15,17 @@ package frc.robot;
 public final class Constants {
   
   public final class DriveTrain {
-    public final static int canMotorDeviceId01 = 7; //Front left
+    public final static int canMotorDeviceId01 = 11; //Front left
+    public final static int canMotorDeviceId02 = 13; //Back left
+    public final static int canMotorDeviceId03 = 14; //Front rgiht
+    public final static int canMotorDeviceId04 = 12; //Back right
+
+    
+   /*  public final static int canMotorDeviceId01 = 7; //Front left
     public final static int canMotorDeviceId02 = 8; //Back left
     public final static int canMotorDeviceId03 = 6; //Front rgiht
-    public final static int canMotorDeviceId04 = 5; //Back right
+    public final static int canMotorDeviceId04 = 5; //Back right*/
+
 
     public final static double kPDrive = 1.0;
     public final static double kIDrive = 1.0;
@@ -45,8 +52,8 @@ public final class Constants {
 
   public final class Intake {
 
-    public final static int canMotorDeviceId05 = 9;
-    public final static int canMotorDeviceId06 = 11;
+    public final static int canMotorDeviceId05 = 10;
+    //public final static int canMotorDeviceId06 = 11;
     public final static double wheelPower = 0.3;
 
   }
