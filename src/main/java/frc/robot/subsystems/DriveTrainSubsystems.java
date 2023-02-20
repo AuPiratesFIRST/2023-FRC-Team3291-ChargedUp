@@ -131,7 +131,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     leftSpeed = MathUtil.clamp(leftSpeed, -1.0, 1.0);
     rightSpeed = MathUtil.clamp(rightSpeed, -1.0, 1.0);
 
-    double speedModifier = SmartDashboard.getNumber("speedModifier", 1.0);
+    double speedModifier = SmartDashboard.getNumber("speedModifier", 0.1);
 
     leftSpeed = leftSpeed * speedModifier;
     rightSpeed = rightSpeed * speedModifier;
@@ -163,8 +163,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
     double differenceLeft = encoder0.getPosition() - rotationsInitLeft;
     double differenceRight = encoder2.getPosition() - rotationsInitRight;
 
-    SmartDashboard.putNumber("differenceLeft", differenceLeft);
-    SmartDashboard.putNumber("differenceRight", differenceRight);
+    SmartDashboard.putNumber("differenceLeft1", differenceLeft);
+    SmartDashboard.putNumber("differenceRight1", differenceRight);
     
     if (rollAngleDegrees != 0.0) {
       double radiansPerAngle = slope * rollAngleDegrees;
@@ -194,6 +194,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
         differenceLeft = pidDrive.calculate(getDistance(), rotationsToBalance);
         differenceRight = differenceLeft;
+        SmartDashboard.putNumber("differenceLeft2", differenceLeft);
+        SmartDashboard.putNumber("differenceRight2", differenceRight);
 
         double leftSpeed;
         if (Math.abs(differenceLeft) >= rotationsToBalance) {
