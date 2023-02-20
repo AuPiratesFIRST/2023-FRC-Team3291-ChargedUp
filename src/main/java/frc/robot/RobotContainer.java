@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
+import frc.robot.commands.IntakeAndIndexer;
 import frc.robot.commands.autonomous.Auto01;
 import frc.robot.commands.autonomous.Auto02;
 import frc.robot.commands.autonomous.Auto03;
@@ -13,6 +14,7 @@ import frc.robot.commands.indexer.IndexerBackward;
 import frc.robot.commands.indexer.IndexerFoward;
 import frc.robot.commands.intake.IntakeBackward;
 import frc.robot.commands.intake.IntakeForward;
+import frc.robot.commands.IntakeAndIndexer;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -51,6 +53,8 @@ public class RobotContainer {
   private IntakeForward intakeForwardcommand = new IntakeForward(intakeSubsytstem);
   private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
+  
+  private IntakeAndIndexer intakeAndIndexer = new IntakeAndIndexer(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
 
   private Auto01 auto01 = new Auto01(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
   private Auto02 auto02 = new Auto02(driveTrainSubsystem, indexsubsystem);
@@ -102,6 +106,7 @@ public class RobotContainer {
     );
     */
 
+    controller00.button(1).whileTrue(intakeAndIndexer);
     controller00.button(2).whileTrue(autobalanceCommand);
     controller00.button(3).whileTrue(indexerFowardCommand);
     controller00.button(4).whileTrue(indexerBackwardCommand);
