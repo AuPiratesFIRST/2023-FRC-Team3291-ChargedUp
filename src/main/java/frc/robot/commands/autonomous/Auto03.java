@@ -20,12 +20,11 @@ public class Auto03 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveForward(drivetrain, 112, 0.3),
-      new IntakeForward(intake),
-      new MoveBackward(drivetrain, 112, 0.3),
+      new MoveForward(drivetrain, 112, 0.3).withTimeout(1),
+      new IntakeForward(intake).withTimeout(1),
+      new MoveBackward(drivetrain, 112, 0.3).withTimeout(1),
       new IntakeBackward(intake).withTimeout(1),
-      new TurnRight(drivetrain, 0.3, 65)   
-
+      new TurnRight(drivetrain, 0.3, 65).withTimeout(1)   
     );
   }
 }

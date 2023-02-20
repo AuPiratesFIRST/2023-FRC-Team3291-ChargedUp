@@ -10,6 +10,7 @@ import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.autonomous.TurnRight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -25,7 +26,8 @@ public class Auto01 extends SequentialCommandGroup {
        new MoveBackward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
        new IndexerFoward(indexersubsystem).withTimeout(1),
        new TurnLeft(driveTrainSubsystems, 90, 0.3).withTimeout(1),
-       new MoveForward(driveTrainSubsystems, 36, .2).withTimeout(1)
+       new MoveForward(driveTrainSubsystems, 36, .2).withTimeout(1),
+       new TurnRight(driveTrainSubsystems, 0.3, 65).withTimeout(1) 
     );
   }
 }

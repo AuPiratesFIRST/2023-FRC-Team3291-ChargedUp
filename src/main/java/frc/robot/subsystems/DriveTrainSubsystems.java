@@ -194,6 +194,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
         differenceLeft = pidDrive.calculate(getDistance(), rotationsToBalance);
         differenceRight = differenceLeft;
+
         SmartDashboard.putNumber("differenceLeft2", differenceLeft);
         SmartDashboard.putNumber("differenceRight2", differenceRight);
 
@@ -235,12 +236,20 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
   public void moveForwardOrBack(double distanceInInches, double speed){
+    pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
+
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
     double movement = distanceInInches * movementPerInch;
 
     double leftDifference = motorController0Position - motorController0Position;
     double rightDifference = motorController2Position - motorController2Position;
+
+    leftDifference = pidDrive.calculate(getDistance(), distanceInInches);
+    rightDifference = leftDifference;
+
+    SmartDashboard.putNumber("left Difference", leftDifference);
+    SmartDashboard.putNumber("right Difference", rightDifference);
 
     motorController00.set(speed);
     motorController02.set(speed);
@@ -256,7 +265,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
 
     public void rotateLeftOrRight (double rotateAngle, double speed) { 
-      
+      pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
+
       double motorController0Position = encoder0.getPosition();
       double motorController2Position = encoder2.getPosition();
       double movement = rotateAngle * robotPerDegree;
@@ -266,6 +276,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
   
       motorController00.set(speed);
       motorController02.set(-1 * speed);
+
+      leftDifference = pidDrive.calculate(getDistance(), rotateAngle);
+      rightDifference = leftDifference;
   
       while(Math.abs(leftDifference) <= movement && Math.abs(rightDifference) <= movement){
         leftDifference = encoder0.getPosition() - motorController0Position;
@@ -277,6 +290,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
     }
 
     public double getDistance(){
+
+      encoder0.setPosition(0);
+      encoder2.setPosition(0);
 
       return ((encoder0.getPosition() + encoder2.getPosition())/2);
 
