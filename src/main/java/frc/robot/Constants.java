@@ -75,7 +75,7 @@ public final class Constants {
       // DARKRED   ("Dark Red", 0.59),
       RED       ("Red", 0.61),
       // REDORANGE ("Red Orange", 0.63),
-      // ORANGE    ("Orange", 0.65),
+       // ORANGE    ("Orange", 0.65),
       // GOLD      ("Gold", 0.67),
       // YELLOW    ("Yellow", 0.69),
       // LAWNGREEN ("Lawn Green", 0.71),
