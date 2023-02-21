@@ -236,20 +236,25 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
   public void moveForwardOrBack(double distanceInInches, double speed){
+
     pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
 
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
-    double movement = distanceInInches * movementPerInch;
+    //double movement = distanceInInches * movementPerInch;
+
+    double movement = 50;
+
+    SmartDashboard.putNumber("movement", movement);
+
+    //double leftDifference = pidDrive.calculate(getDistance(), distanceInInches);
+    //double rightDifference = leftDifference;
 
     double leftDifference = motorController0Position - motorController0Position;
     double rightDifference = motorController2Position - motorController2Position;
 
-    leftDifference = pidDrive.calculate(getDistance(), distanceInInches);
-    rightDifference = leftDifference;
-
-    SmartDashboard.putNumber("left Difference", leftDifference);
-    SmartDashboard.putNumber("right Difference", rightDifference);
+    SmartDashboard.putNumber("Motorcontroller 0 position", motorController0Position);
+    SmartDashboard.putNumber("Motorcontroller 2 position", motorController2Position);
 
     motorController00.set(speed);
     motorController02.set(speed);
@@ -257,6 +262,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
     while(Math.abs(leftDifference) <= movement && Math.abs(rightDifference) <= movement){
       leftDifference = encoder0.getPosition() - motorController0Position;
       rightDifference = encoder2.getPosition() - motorController2Position;
+      SmartDashboard.putNumber("left Difference", leftDifference);
+      SmartDashboard.putNumber("right Difference", rightDifference);
     }
 
     motorController00.set(0.0);
@@ -265,11 +272,18 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
 
     public void rotateLeftOrRight (double rotateAngle, double speed) { 
-      pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
+
+      encoder0.setPosition(0);
+      encoder2.setPosition(0);
+      //pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
 
       double motorController0Position = encoder0.getPosition();
       double motorController2Position = encoder2.getPosition();
-      double movement = rotateAngle * robotPerDegree;
+      //double movement = rotateAngle * robotPerDegree;
+      double movement = (((rotateAngle -8.57143)/(15/7))*robotPerDegree);
+
+      SmartDashboard.putNumber("Movement", movement);
+      SmartDashboard.putNumber("Rotations of the angle", rotateAngle);
   
       double leftDifference = motorController0Position - motorController0Position;
       double rightDifference = motorController2Position - motorController2Position;
@@ -277,12 +291,14 @@ public class DriveTrainSubsystems extends SubsystemBase {
       motorController00.set(speed);
       motorController02.set(-1 * speed);
 
-      leftDifference = pidDrive.calculate(getDistance(), rotateAngle);
-      rightDifference = leftDifference;
+      //leftDifference = pidDrive.calculate(getDistance(), rotateAngle);
+      //rightDifference = leftDifference;
   
       while(Math.abs(leftDifference) <= movement && Math.abs(rightDifference) <= movement){
         leftDifference = encoder0.getPosition() - motorController0Position;
         rightDifference = encoder2.getPosition() - motorController2Position;
+        SmartDashboard.putNumber("left Difference", leftDifference);
+        SmartDashboard.putNumber("right Difference", rightDifference);
       }
   
       motorController00.set(0.0);
@@ -291,8 +307,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     public double getDistance(){
 
-      encoder0.setPosition(0);
-      encoder2.setPosition(0);
+      //encoder0.setPosition(0);
+      //encoder2.setPosition(0);
 
       return ((encoder0.getPosition() + encoder2.getPosition())/2);
 
