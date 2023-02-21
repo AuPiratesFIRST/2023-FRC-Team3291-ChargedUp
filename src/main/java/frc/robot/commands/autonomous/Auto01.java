@@ -20,12 +20,15 @@ public class Auto01 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      // make sure the robot gets put 36.19 inches away from the right wall
        new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
        new IntakeForward(intakeSubsystem),
        new MoveBackward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
        new IndexerFoward(indexersubsystem).withTimeout(1),
        new TurnLeft(driveTrainSubsystems, 65, 0.3).withTimeout(1),
-       new MoveForward(driveTrainSubsystems, 36, .2).withTimeout(1)
+       new MoveForward(driveTrainSubsystems, 20, .35).withTimeout(1),
+       new TurnRight(driveTrainSubsystems, 90, .3),
+       new MoveForward(driveTrainSubsystems, 14, .35)
     );
   }
 }
