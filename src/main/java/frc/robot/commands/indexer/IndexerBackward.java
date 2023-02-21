@@ -5,14 +5,18 @@
 package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.Lighting;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.LightingSubsystem;
 
 public class IndexerBackward extends CommandBase {
     public IndexerSubsystem indexersubsystem;
+    public LightingSubsystem lightingSubsystem;
   /** Creates a new IndexerBackward. */
- public IndexerBackward(IndexerSubsystem indexer) {
+ public IndexerBackward(IndexerSubsystem indexer, LightingSubsystem light) {
     // Use addRequirements() here to declare subsystem dependencies.
   indexersubsystem = indexer;
+  lightingSubsystem = light;
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +27,9 @@ public class IndexerBackward extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    lightingSubsystem.blink();
+  }
 
   // Called once the command ends or is interrupted.
   @Override

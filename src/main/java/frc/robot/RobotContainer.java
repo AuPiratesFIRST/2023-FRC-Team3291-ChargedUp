@@ -48,7 +48,7 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   private IndexerFoward indexerFowardCommand = new IndexerFoward(indexsubsystem);
-  private IndexerBackward indexerBackwardCommand = new IndexerBackward(indexsubsystem);
+  private IndexerBackward indexerBackwardCommand = new IndexerBackward(indexsubsystem, lightingSubsystem);
   private IntakeForward intakeForwardcommand = new IntakeForward(intakeSubsytstem);
   private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);

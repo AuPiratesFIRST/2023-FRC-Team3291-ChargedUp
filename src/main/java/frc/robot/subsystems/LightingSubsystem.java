@@ -32,6 +32,14 @@ public class LightingSubsystem extends SubsystemBase {
     SmartDashboard.putData("Alliance", lighting_chooser);
   }
 
+  public void blink(){
+    Colors selectedColor = lighting_chooser.getSelected();
+
+    lighting.set(selectedColor.getColorValue());
+    lighting.set(0.99);
+    
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
