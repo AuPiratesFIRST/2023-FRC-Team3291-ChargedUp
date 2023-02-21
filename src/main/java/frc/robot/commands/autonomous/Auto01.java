@@ -10,7 +10,6 @@ import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.commands.autonomous.TurnRight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
