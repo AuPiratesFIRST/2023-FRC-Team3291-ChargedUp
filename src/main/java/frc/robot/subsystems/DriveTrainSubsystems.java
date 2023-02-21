@@ -131,7 +131,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     leftSpeed = MathUtil.clamp(leftSpeed, -1.0, 1.0);
     rightSpeed = MathUtil.clamp(rightSpeed, -1.0, 1.0);
 
-    double speedModifier = SmartDashboard.getNumber("speedModifier", 1.0);
+    double speedModifier = SmartDashboard.getNumber("speedModifier", 0.1);
 
     leftSpeed = leftSpeed * speedModifier;
     rightSpeed = rightSpeed * speedModifier;
@@ -163,8 +163,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
     double differenceLeft = encoder0.getPosition() - rotationsInitLeft;
     double differenceRight = encoder2.getPosition() - rotationsInitRight;
 
-    SmartDashboard.putNumber("differenceLeft", differenceLeft);
-    SmartDashboard.putNumber("differenceRight", differenceRight);
+    SmartDashboard.putNumber("differenceLeft1", differenceLeft);
+    SmartDashboard.putNumber("differenceRight1", differenceRight);
     
     if (rollAngleDegrees != 0.0) {
       double radiansPerAngle = slope * rollAngleDegrees;
@@ -194,6 +194,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
         differenceLeft = pidDrive.calculate(getDistance(), rotationsToBalance);
         differenceRight = differenceLeft;
+
+        SmartDashboard.putNumber("differenceLeft2", differenceLeft);
+        SmartDashboard.putNumber("differenceRight2", differenceRight);
 
         double leftSpeed;
         if (Math.abs(differenceLeft) >= rotationsToBalance) {
@@ -233,12 +236,20 @@ public class DriveTrainSubsystems extends SubsystemBase {
   }
 
   public void moveForwardOrBack(double distanceInInches, double speed){
+    pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
+
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
     double movement = distanceInInches * movementPerInch;
 
     double leftDifference = motorController0Position - motorController0Position;
     double rightDifference = motorController2Position - motorController2Position;
+
+    leftDifference = pidDrive.calculate(getDistance(), distanceInInches);
+    rightDifference = leftDifference;
+
+    SmartDashboard.putNumber("left Difference", leftDifference);
+    SmartDashboard.putNumber("right Difference", rightDifference);
 
     motorController00.set(speed);
     motorController02.set(speed);
@@ -254,7 +265,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
 
     public void rotateLeftOrRight (double rotateAngle, double speed) { 
-      
+      pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
+
       double motorController0Position = encoder0.getPosition();
       double motorController2Position = encoder2.getPosition();
       double movement = rotateAngle * robotPerDegree;
@@ -264,6 +276,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
   
       motorController00.set(speed);
       motorController02.set(-1 * speed);
+
+      leftDifference = pidDrive.calculate(getDistance(), rotateAngle);
+      rightDifference = leftDifference;
   
       while(Math.abs(leftDifference) <= movement && Math.abs(rightDifference) <= movement){
         leftDifference = encoder0.getPosition() - motorController0Position;
@@ -275,6 +290,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
     }
 
     public double getDistance(){
+
+      encoder0.setPosition(0);
+      encoder2.setPosition(0);
 
       return ((encoder0.getPosition() + encoder2.getPosition())/2);
 

@@ -10,6 +10,7 @@ import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.autonomous.TurnRight;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -22,7 +23,7 @@ public class Auto01 extends SequentialCommandGroup {
     addCommands(
       // make sure the robot gets put 36.19 inches away from the right wall
        new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
-       new IntakeForward(intakeSubsystem),
+       new IntakeForward(intakeSubsystem).withTimeout(0),
        new MoveBackward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
        new IndexerFoward(indexersubsystem).withTimeout(1),
        new TurnLeft(driveTrainSubsystems, 65, 0.3).withTimeout(1),

@@ -15,27 +15,27 @@ package frc.robot;
 public final class Constants {
   
   public final class DriveTrain {
-    public final static int canMotorDeviceId01 = 11; //Front left
+   /*public final static int canMotorDeviceId01 = 11; //Front left
     public final static int canMotorDeviceId02 = 13; //Back left
     public final static int canMotorDeviceId03 = 14; //Front rgiht
-    public final static int canMotorDeviceId04 = 12; //Back right
+    public final static int canMotorDeviceId04 = 12; //Back right*/
 
     
-   /*  public final static int canMotorDeviceId01 = 7; //Front left
+    public final static int canMotorDeviceId01 = 7; //Front left
     public final static int canMotorDeviceId02 = 8; //Back left
     public final static int canMotorDeviceId03 = 6; //Front rgiht
-    public final static int canMotorDeviceId04 = 5; //Back right*/
+    public final static int canMotorDeviceId04 = 5; //Back right
 
 
-    public final static double kPDrive = 1.0;
-    public final static double kIDrive = 1.0;
+    public final static double kPDrive = 5.0;
+    public final static double kIDrive = 0.0;
     public final static double kDDrive = 0.0;
 
     /*****
      * Custom DriveTrain
      */
     public static final double kDefaultDeadband = 0.05;
-    public static final double kDefaultMaxOutput = 1.0;
+    public static final double kDefaultMaxOutput = 0.55;
 
     /******
      * Autobalance
@@ -75,7 +75,7 @@ public final class Constants {
       // DARKRED   ("Dark Red", 0.59),
       RED       ("Red", 0.61),
       // REDORANGE ("Red Orange", 0.63),
-      // ORANGE    ("Orange", 0.65),
+       // ORANGE    ("Orange", 0.65),
       // GOLD      ("Gold", 0.67),
       // YELLOW    ("Yellow", 0.69),
       // LAWNGREEN ("Lawn Green", 0.71),
