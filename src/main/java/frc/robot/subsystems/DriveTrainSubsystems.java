@@ -13,6 +13,7 @@ import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -99,6 +100,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
   /** Creates a new DriveTrainSubsystems. */
   public DriveTrainSubsystems() {
+    navx_device = new AHRS(SerialPort.Port.kUSB);
 
     motorController01.follow(motorController00);
     motorController03.follow(motorController02);

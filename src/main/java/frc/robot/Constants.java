@@ -27,7 +27,7 @@ public final class Constants {
     public final static int canMotorDeviceId04 = 5; //Back right
 
 
-    public final static double kPDrive = 5.0;
+    public final static double kPDrive = 1.0;
     public final static double kIDrive = 0.0;
     public final static double kDDrive = 0.0;
 
