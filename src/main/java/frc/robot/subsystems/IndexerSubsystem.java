@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -14,15 +15,18 @@ public class IndexerSubsystem extends SubsystemBase {
   public TalonFX indexercontroller;
   /** Creates a new Indexer. */ 
 
+  double indexerSpeed = Constants.Indexer.indexerSpeed;
+
   public IndexerSubsystem() {
     indexercontroller = new TalonFX(Constants.Indexer.canMotorPort);
+    SmartDashboard.putNumber("Indexer speed", indexerSpeed);
   }
 
   public void forward (){
-    indexercontroller.set(ControlMode.PercentOutput, 0.5);
+    indexercontroller.set(ControlMode.PercentOutput, SmartDashboard.getNumber("Indexer Speed", indexerSpeed));
   }
   public void backward (){
-indexercontroller.set(ControlMode.PercentOutput, -0.5);
+    indexercontroller.set(ControlMode.PercentOutput, -SmartDashboard.getNumber("Indexer Speed", indexerSpeed));
   }
 
   public void stop (){

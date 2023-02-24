@@ -54,17 +54,20 @@ public final class Constants {
 
     public final static int canMotorDeviceId05 = 10;
     //public final static int canMotorDeviceId06 = 11;
-    public final static double wheelPower = 0.3;
+    public final static double intakeSpeed = 0.3;
 
   }
 
   public final class Indexer {
 
     public final static int canMotorPort = 44;
+    public final static double indexerSpeed = 0.5;
   }
   public final class Joystick {
-    public final static int tankLeftPort    = 1;
-    public final static int tankRightPort   = 2;
+    public final static int tankLeftPort = 1;
+    public final static int tankRightPort = 2;
+    public final static int secondDriver = 3;
+    public final static double deadband = 0.1;
   }
 
   public final static class Lighting {

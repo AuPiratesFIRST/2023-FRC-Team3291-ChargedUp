@@ -18,6 +18,7 @@ import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LightingSubsystem;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,6 +44,7 @@ public class RobotContainer {
   public CommandJoystick controller00 = new CommandJoystick(0);
   public CommandJoystick joystick00 = new CommandJoystick(Constants.Joystick.tankLeftPort);
   public CommandJoystick joystick01 = new CommandJoystick(Constants.Joystick.tankRightPort);
+  public CommandJoystick joystick02 = new CommandJoystick(Constants.Joystick.secondDriver);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -105,12 +107,24 @@ public class RobotContainer {
       driveTrainSubsystem)
     );
 
-    controller00.button(1).whileTrue(intakeAndIndexer);
-    controller00.button(2).whileTrue(autobalanceCommand);
-    controller00.button(3).whileTrue(indexerFowardCommand);
-    controller00.button(4).whileTrue(indexerBackwardCommand);
-    controller00.button(5).whileTrue(intakeForwardcommand);
-    controller00.button(6).whileTrue(intakeBackwardcommand);
+    joystick02.button(1).whileTrue(intakeAndIndexer);
+    joystick00.button(1).whileTrue(autobalanceCommand);
+    joystick02.button(7).whileTrue(indexerFowardCommand);
+    joystick02.button(9).whileTrue(indexerBackwardCommand);
+    /*controller00.button(5).whileTrue(intakeForwardcommand);
+    controller00.button(6).whileTrue(intakeBackwardcommand);*/
+
+    if (MathUtil.applyDeadband(joystick02.getRawAxis(1), Constants.Joystick.deadband)>0){
+      intakeBackwardcommand.schedule();
+    } else {
+      indexerBackwardCommand.cancel();
+    }
+
+    if (MathUtil.applyDeadband(joystick02.getRawAxis(1), Constants.Joystick.deadband)<0){
+      intakeBackwardcommand.schedule();
+    } else {
+      indexerBackwardCommand.cancel();
+    }
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

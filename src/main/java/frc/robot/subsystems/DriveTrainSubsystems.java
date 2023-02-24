@@ -243,9 +243,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     double motorController0Position = encoder0.getPosition();
     double motorController2Position = encoder2.getPosition();
-    //double movement = distanceInInches * movementPerInch;
+    double movement = distanceInInches * movementPerInch;
 
-    double movement = 50;
+    //double movement = 50;
 
     SmartDashboard.putNumber("movement", movement);
 
@@ -275,7 +275,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     public void rotateLeftOrRight (double rotateAngle, double speed) { 
 
-      encoder0.setPosition(0);
+      /*encoder0.setPosition(0);
       encoder2.setPosition(0);
       //pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
 
@@ -288,10 +288,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
       SmartDashboard.putNumber("Rotations of the angle", rotateAngle);
   
       double leftDifference = motorController0Position - motorController0Position;
-      double rightDifference = motorController2Position - motorController2Position;
-  
-      motorController00.set(speed);
-      motorController02.set(-1 * speed);
+      double rightDifference = motorController2Position - motorController2Position;*/
 
       //leftDifference = pidDrive.calculate(getDistance(), rotateAngle);
       //rightDifference = leftDifference;
@@ -302,11 +299,9 @@ public class DriveTrainSubsystems extends SubsystemBase {
       double initialAngle = navx_device.getAngle();
       double angleDifference = 0;
   
-      while(Math.abs(leftDifference) <= movement || Math.abs(rightDifference) <= movement){
-        leftDifference = encoder0.getPosition(); // - motorController0Position;
-        rightDifference = encoder2.getPosition(); // - motorController2Position;
-        SmartDashboard.putNumber("left Difference", leftDifference);
-        SmartDashboard.putNumber("right Difference", rightDifference);
+      while(Math.abs(angleDifference) <= rotateAngle){
+        angleDifference = navx_device.getAngle() - initialAngle; // - motorController2Position;
+        SmartDashboard.putNumber("angle Difference", angleDifference);
       }
   
       motorController00.set(0.0);
