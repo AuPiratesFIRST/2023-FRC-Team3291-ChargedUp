@@ -83,6 +83,7 @@ public class RobotContainer {
     m_Chooser.addOption("Autonomous 03", auto03);
     SmartDashboard.putData("Auto choices", m_Chooser);
 
+    /*
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () ->
@@ -92,8 +93,8 @@ public class RobotContainer {
         ),
       driveTrainSubsystem)
     );
+    */
   
-/* 
     driveTrainSubsystem.setDefaultCommand(
       new RunCommand(
         () ->
@@ -103,7 +104,6 @@ public class RobotContainer {
         ),
       driveTrainSubsystem)
     );
-    */
 
     controller00.button(1).whileTrue(intakeAndIndexer);
     controller00.button(2).whileTrue(autobalanceCommand);

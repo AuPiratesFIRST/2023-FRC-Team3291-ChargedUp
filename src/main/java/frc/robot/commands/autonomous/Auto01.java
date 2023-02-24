@@ -16,18 +16,12 @@ import frc.robot.commands.autonomous.TurnRight;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Auto01 extends SequentialCommandGroup {
-  /** Creates a new Auto01. */
+  // Creates a new Auto01.
   public Auto01(DriveTrainSubsystems driveTrainSubsystems, IndexerSubsystem indexersubsystem, IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-       new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
-       new IntakeForward(intakeSubsystem).withTimeout(0),
-       new MoveBackward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
-       new IndexerFoward(indexersubsystem).withTimeout(1),
-       new TurnLeft(driveTrainSubsystems, 90, 0.3).withTimeout(1),
-       new MoveForward(driveTrainSubsystems, 36, .2).withTimeout(1),
-       new TurnRight(driveTrainSubsystems, 0.3, 65).withTimeout(1) 
+      new TurnRight(driveTrainSubsystems, 270, 0.1)
     );
   }
 }
