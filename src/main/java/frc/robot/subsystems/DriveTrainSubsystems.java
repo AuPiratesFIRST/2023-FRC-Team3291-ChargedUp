@@ -273,7 +273,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     public void rotateLeftOrRight (double rotateAngle, double speed) { 
 
-      /*encoder0.setPosition(0);
+      encoder0.setPosition(0);
       encoder2.setPosition(0);
       //pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
 
