@@ -16,21 +16,22 @@ import frc.robot.commands.AutobalanceCommand;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Auto6 extends SequentialCommandGroup {
   /** Creates a new Auto6. */
-  public Auto6(DriveTrainSubsystems driveTrainSubsystems, IndexerSubsystem indexersubsystem, IntakeSubsystem intakeSubsystem) {
+  public Auto6(DriveTrainSubsystems driveTrainSubsystems, IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IntakeForward(intakeSubsystem).withTimeout(0.5),
-      new IndexerBackward(indexersubsystem,null).withTimeout(0.5),
       new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(0.5),
       new MoveBackward(driveTrainSubsystems, 112, 0.5).withTimeout(0.5),
-      new IndexerBackward(indexersubsystem,null).withTimeout(0.5),
+      new IndexerBackward(indexerSubsystem,null).withTimeout(0.5),
       new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
       new TurnLeft(driveTrainSubsystems, 90, 0.3).withTimeout(1),
-      new MoveForward(driveTrainSubsystems, 36, 0.2).withTimeout(1),
-      new TurnRight(driveTrainSubsystems, 90, 0.3).withTimeout(1),
-      new AutobalanceCommand(driveTrainSubsystems)
+      new MoveForward(driveTrainSubsystems, 48, 0.2).withTimeout(1),
+      new IntakeForward(intakeSubsystem).withTimeout(1),
+      new MoveBackward(driveTrainSubsystems, 48, .25).withTimeout(1),
+      new TurnRight(driveTrainSubsystems, 90, .25).withTimeout(1),
+      new MoveBackward(driveTrainSubsystems, 112, .3).withTimeout(1),
+      new IndexerBackward(indexerSubsystem)
     );
   }
 }
