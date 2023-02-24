@@ -5,7 +5,6 @@
 package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.Lighting;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LightingSubsystem;
 

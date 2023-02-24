@@ -42,7 +42,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
   public double slope = (maxMovementSpeed - minMovementSpeed) / (maxAngle - minAngle);
   public double robotPerDegree = (( robotRadius / (wheelDiameter / 2 )) * cpr) / 360;
 
-  public double radiansPerAngle;
+  public double radiansPerAngle; 
 
   public double rotationsInitRight;
   public double rotationsInitLeft;
@@ -273,7 +273,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
     public void rotateLeftOrRight (double rotateAngle, double speed) { 
 
-      encoder0.setPosition(0);
+      /*encoder0.setPosition(0);
       encoder2.setPosition(0);
       //pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
 
@@ -285,14 +285,20 @@ public class DriveTrainSubsystems extends SubsystemBase {
       SmartDashboard.putNumber("Movement", movement);
       SmartDashboard.putNumber("Rotations of the angle", rotateAngle);
   
-      double leftDifference = motorController0Position; // - motorController0Position;
-      double rightDifference = motorController2Position; // - motorController2Position;
+      double leftDifference = motorController0Position - motorController0Position;
+      double rightDifference = motorController2Position - motorController2Position;
   
       motorController00.set(speed);
       motorController02.set(-1 * speed);
 
       //leftDifference = pidDrive.calculate(getDistance(), rotateAngle);
       //rightDifference = leftDifference;
+
+      motorController00.set(speed);
+      motorController02.set(-1 * speed);
+
+      double initialAngle = navx_device.getAngle();
+      double angleDifference = 0;
   
       while(Math.abs(leftDifference) <= movement || Math.abs(rightDifference) <= movement){
         leftDifference = encoder0.getPosition(); // - motorController0Position;
