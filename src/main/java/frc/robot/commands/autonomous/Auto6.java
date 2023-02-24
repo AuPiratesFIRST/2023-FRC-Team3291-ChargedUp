@@ -9,7 +9,6 @@ import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.commands.AutobalanceCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -31,7 +30,7 @@ public class Auto6 extends SequentialCommandGroup {
       new MoveBackward(driveTrainSubsystems, 48, .25).withTimeout(1),
       new TurnRight(driveTrainSubsystems, 90, .25).withTimeout(1),
       new MoveBackward(driveTrainSubsystems, 112, .3).withTimeout(1),
-      new IndexerBackward(indexerSubsystem)
+      new IndexerBackward(indexerSubsystem, null)
     );
   }
 }

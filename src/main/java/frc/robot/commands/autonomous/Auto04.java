@@ -23,7 +23,7 @@ public class Auto04 extends SequentialCommandGroup {
       new MoveForward(drivetrian, 112, .35).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(1),
       new MoveBackward(drivetrian, 112, .35).withTimeout(1),
-      //new IndexerBackward(indexersubsystem).withTimeout(1),
+      new IndexerBackward(indexersubsystem, null).withTimeout(1),
       new MoveForward(drivetrian, 112, .35).withTimeout(1),
       new TurnRight(drivetrian, 90, .3).withTimeout(1),
       new MoveForward(drivetrian, 48, .35).withTimeout(1),
