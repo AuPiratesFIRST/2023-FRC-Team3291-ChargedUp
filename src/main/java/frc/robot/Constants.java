@@ -64,8 +64,8 @@ public final class Constants {
     public final static double indexerSpeed = 0.5;
   }
   public final class Joystick {
-    public final static int tankLeftPort = 0;
-    public final static int tankRightPort = 1;
+    public final static int tankLeftPort = 1;
+    public final static int tankRightPort = 0;
     public final static int secondDriver = 2;
     public final static double deadband = 0.1;
   }
