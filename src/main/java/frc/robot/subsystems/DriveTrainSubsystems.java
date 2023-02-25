@@ -98,6 +98,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
   public SparkMaxPIDController pidController00;
   public SparkMaxPIDController pidController01;
 
+
   /** Creates a new DriveTrainSubsystems. */
   public DriveTrainSubsystems() {
     navx_device = new AHRS(SerialPort.Port.kUSB);
@@ -153,8 +154,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
     pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
   }
 
-  public void autoBalance() {
-    double brakeAdjustment = Constants.DriveTrain.brakeAdjustment;
+  //public void autoBalance() {
+    /* double brakeAdjustment = Constants.DriveTrain.brakeAdjustment;
 
     double rollAngleDegrees = navx_device.getRoll();
 
@@ -235,7 +236,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
       Timer.delay(0.005);
     }
-  }
+  } */
 
   public void moveForwardOrBack(double distanceInInches, double speed){
 

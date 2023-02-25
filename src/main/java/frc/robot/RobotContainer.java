@@ -67,6 +67,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    //driveTrainSubsystem.setDefaultCommand(new Drive(driveTrainSubsystem, () -> joystick00.getX(), () ->  joystick01.getX()));
   }
 
   /**
