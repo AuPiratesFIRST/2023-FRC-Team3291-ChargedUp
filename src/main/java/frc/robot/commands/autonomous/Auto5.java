@@ -5,18 +5,25 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.indexer.IndexerBackward;
+import frc.robot.commands.indexer.IndexerFoward;
+import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
+import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Auto5 extends SequentialCommandGroup {
   /** Creates a new Auto5. */
-  public Auto5(DriveTrainSubsystems driveTrainSubsystems) {
+  public Auto5(DriveTrainSubsystems driveTrainSubsystems, IndexerSubsystem indexersubsystem, IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new TurnRight(driveTrainSubsystems, 90, 0.2)
+    new IndexerBackward(indexersubsystem, null),
+    new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
+    new MoveBackward(driveTrainSubsystems, 112, 0.3)
     );
   }
 }
