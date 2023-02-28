@@ -26,7 +26,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
   double cpr = 10.53;
   double robotRadius = 21.5;
-  double wheelDiameter = 6;
+  double wheelDiameter = 8;
   double platformWidth = 48;
   double robotLength = 28;
   double minAngle = 0;
