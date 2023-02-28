@@ -61,7 +61,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     /*
    * Auto-balancing taken from: https://github.com/kauailabs/navxmxp/blob/master/roborio/java/navXMXP_Java_AutoBalance/src/org/usfirst/frc/team2465/robot/Robot.java
    */
-  private AHRS navx_device;
+  //private AHRS navx_device;
   boolean autoBalanceXMode;
   boolean autoBalanceYMode; 
     
@@ -101,7 +101,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
   /** Creates a new DriveTrainSubsystems. */
   public DriveTrainSubsystems() {
-    navx_device = new AHRS(SerialPort.Port.kUSB);
+    //navx_device = new AHRS(SerialPort.Port.kUSB);
 
     motorController01.follow(motorController00);
     motorController03.follow(motorController02);
@@ -143,7 +143,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
    motorController02.set(rightSpeed * m_maxOutput);
   }
 
-  public void autoBalanceInitialize() {
+ /* public void autoBalanceInitialize() {
     navx_device.reset();
     //encoder0.setPosition(0.0);
     //encoder2.setPosition(0.0);
@@ -152,7 +152,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     SmartDashboard.putNumber("Left init position", rotationsInitLeft);
     SmartDashboard.putNumber("Right init position", rotationsInitRight);
     pidDrive = new PIDController(Constants.DriveTrain.kPDrive, Constants.DriveTrain.kIDrive, Constants.DriveTrain.kDDrive);
-  }
+  }*/
 
   //public void autoBalance() {
     /* double brakeAdjustment = Constants.DriveTrain.brakeAdjustment;
@@ -297,11 +297,11 @@ public class DriveTrainSubsystems extends SubsystemBase {
       motorController00.set(speed);
       motorController02.set(-1 * speed);
 
-      double initialAngle = navx_device.getAngle();
+      //double initialAngle = navx_device.getAngle();
       double angleDifference = 0;
   
       while(Math.abs(angleDifference) <= rotateAngle){
-        angleDifference = navx_device.getAngle() - initialAngle; // - motorController2Position;
+       // angleDifference = navx_device.getAngle() - initialAngle; // - motorController2Position;
         SmartDashboard.putNumber("angle Difference", angleDifference);
       }
   

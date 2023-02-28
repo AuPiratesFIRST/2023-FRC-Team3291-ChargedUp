@@ -15,16 +15,16 @@ package frc.robot;
 public final class Constants {
   
   public final class DriveTrain {
-   public final static int canMotorDeviceId01 = 11; //Front left
+   /*public final static int canMotorDeviceId01 = 11; //Front left
     public final static int canMotorDeviceId02 = 13; //Back left
     public final static int canMotorDeviceId03 = 14; //Front rgiht
-    public final static int canMotorDeviceId04 = 12; //Back right
+    public final static int canMotorDeviceId04 = 12; //Back right*/
 
     
-    // public final static int canMotorDeviceId01 = 7; //Front left
-    // public final static int canMotorDeviceId02 = 8; //Back left
-    // public final static int canMotorDeviceId03 = 6; //Front rgiht
-    // public final static int canMotorDeviceId04 = 5; //Back right
+    public final static int canMotorDeviceId01 = 7; //Front left
+    public final static int canMotorDeviceId02 = 8; //Back left
+    public final static int canMotorDeviceId03 = 6; //Front rgiht
+    public final static int canMotorDeviceId04 = 5; //Back right
 
 
     public final static double kPDrive = 1.0;
