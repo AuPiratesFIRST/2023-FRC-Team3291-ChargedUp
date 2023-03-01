@@ -108,14 +108,13 @@ public class RobotContainer {
       driveTrainSubsystem)
     );
 
-    joystick02.button(1).whileTrue(intakeAndIndexer);
-    joystick00.button(1).whileTrue(autobalanceCommand);
+    joystick00.button(10).whileTrue(autobalanceCommand);
     joystick02.button(7).whileTrue(indexerFowardCommand);
     joystick02.button(9).whileTrue(indexerBackwardCommand);
-    /*controller00.button(5).whileTrue(intakeForwardcommand);
-    controller00.button(6).whileTrue(intakeBackwardcommand);*/
+    joystick02.button(1).whileTrue(intakeForwardcommand);
+    joystick02.button(2).whileTrue(intakeBackwardcommand);
 
-    if (MathUtil.applyDeadband(joystick02.getRawAxis(1), Constants.Joystick.deadband)>0){
+    /*if (MathUtil.applyDeadband(joystick02.getRawAxis(1), Constants.Joystick.deadband)>0){
       intakeBackwardcommand.schedule();
     } else {
       indexerBackwardCommand.cancel();
@@ -126,7 +125,7 @@ public class RobotContainer {
     } else {
       indexerBackwardCommand.cancel();
     }
-
+    */
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

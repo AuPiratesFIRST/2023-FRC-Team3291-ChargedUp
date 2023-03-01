@@ -20,8 +20,8 @@ public class IntakeAndIndexer extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-       new IntakeForward(intakeSubsystem).withTimeout(0.25),
-       new IndexerFoward(indexersubsystem).withTimeout(1)  
+       new IntakeForward(intakeSubsystem),
+       new IndexerFoward(indexersubsystem) 
     );
   }
 }

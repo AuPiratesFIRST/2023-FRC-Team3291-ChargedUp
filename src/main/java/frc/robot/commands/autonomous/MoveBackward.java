@@ -4,9 +4,11 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystems;
+
 
 public class MoveBackward extends CommandBase {
   public DriveTrainSubsystems driveTrainSubsystems;
@@ -24,6 +26,7 @@ public class MoveBackward extends CommandBase {
   @Override
   public void initialize() {
     driveTrainSubsystems.moveForwardOrBack(distanceInInches, speed);
+    SmartDashboard.putBoolean("Move Backward", isFinished()); 
   }
 
   // Called every time the scheduler runs while the command is scheduled.

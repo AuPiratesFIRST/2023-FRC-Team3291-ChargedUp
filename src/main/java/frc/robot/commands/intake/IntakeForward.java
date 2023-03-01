@@ -4,6 +4,7 @@
 
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -19,6 +20,8 @@ public class IntakeForward extends CommandBase {
   @Override
   public void initialize() {
     intakesubsystem.forward();
+    SmartDashboard.putBoolean("Intake Forward", isFinished()); 
+
   }
 
 

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.intake;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -19,6 +20,8 @@ public class IntakeBackward extends CommandBase {
   @Override
   public void initialize() {
     intakeSubsytstem.backward();
+    SmartDashboard.putBoolean("Intake Backward", isFinished()); 
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

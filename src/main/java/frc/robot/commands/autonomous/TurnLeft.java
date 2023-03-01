@@ -4,6 +4,7 @@
 
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystems;
@@ -24,6 +25,8 @@ public class TurnLeft extends CommandBase {
   @Override
   public void initialize() {
     driveTrainSubsystems.rotateLeftOrRight(rotateAngle, speed);
+    SmartDashboard.putBoolean("Turn Left", isFinished()); 
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.indexer;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LightingSubsystem;
@@ -22,6 +23,8 @@ public class IndexerBackward extends CommandBase {
   @Override
   public void initialize() {
     indexersubsystem.backward();
+    SmartDashboard.putBoolean("Indexer Backward", isFinished()); 
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
