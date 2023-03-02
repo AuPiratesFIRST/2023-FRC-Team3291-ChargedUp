@@ -14,9 +14,9 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Auto04 extends SequentialCommandGroup {
+public class Auto4 extends SequentialCommandGroup {
   /** Creates a new Auto04. */
-  public Auto04(DriveTrainSubsystems drivetrian,IndexerSubsystem indexer, IntakeSubsystem intakeSubsystem) {
+  public Auto4(DriveTrainSubsystems drivetrian,IndexerSubsystem indexer, IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(

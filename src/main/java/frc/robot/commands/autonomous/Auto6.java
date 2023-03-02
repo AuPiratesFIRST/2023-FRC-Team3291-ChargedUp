@@ -19,7 +19,8 @@ public class Auto6 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
+      new IndexerBackward(indexerSubsystem,null).withTimeout(0.5)
+      /*new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(0.5),
       new MoveBackward(driveTrainSubsystems, 112, 0.5).withTimeout(0.5),
       new IndexerBackward(indexerSubsystem,null).withTimeout(0.5),
@@ -27,10 +28,10 @@ public class Auto6 extends SequentialCommandGroup {
       new TurnLeft(driveTrainSubsystems, 90, 0.3).withTimeout(1),
       new MoveForward(driveTrainSubsystems, 48, 0.2).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(1),
-      new MoveBackward(driveTrainSubsystems, 48, .25).withTimeout(1),
+      new MoveBackward(driveTrainSubsystems, 48, 0.25).withTimeout(1),
       new TurnRight(driveTrainSubsystems, 90, .25).withTimeout(1),
-      new MoveBackward(driveTrainSubsystems, 112, .3).withTimeout(1),
-      new IndexerBackward(indexerSubsystem, null)
+      new MoveBackward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
+      new IndexerBackward(indexerSubsystem, null)*/
     );
   }
 }

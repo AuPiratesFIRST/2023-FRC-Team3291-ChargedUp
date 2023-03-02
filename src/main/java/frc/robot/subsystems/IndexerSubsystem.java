@@ -19,13 +19,30 @@ public class IndexerSubsystem extends SubsystemBase {
 
   public IndexerSubsystem() {
     indexercontroller = new TalonFX(Constants.Indexer.canMotorPort);
-    SmartDashboard.putNumber("Indexer Speed", indexerSpeed);
+    //SmartDashboard.putNumber("Indexer Speed", indexerSpeed);
   }
 
-  public void forward (){
+  public void forwardCone(){
+    indexercontroller.set(ControlMode.PercentOutput, 0.5);
+  }
+
+  public void backwardCone(){
+    indexercontroller.set(ControlMode.PercentOutput, -0.5);
+  }
+
+  public void backwardCube(){
+    indexercontroller.set(ControlMode.PercentOutput, -0.1);
+  }
+
+  public void forwardCube(){
+    indexercontroller.set(ControlMode.PercentOutput, 0.1);
+  }
+
+  public void chooseSpeedForward(){
     indexercontroller.set(ControlMode.PercentOutput, SmartDashboard.getNumber("Indexer Speed", indexerSpeed));
   }
-  public void backward (){
+
+  public void chooseSpeedBackward(){
     indexercontroller.set(ControlMode.PercentOutput, -SmartDashboard.getNumber("Indexer Speed", indexerSpeed));
   }
 

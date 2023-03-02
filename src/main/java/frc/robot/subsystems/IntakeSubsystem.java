@@ -17,6 +17,8 @@ public class IntakeSubsystem extends SubsystemBase {
   public CANSparkMax intakeController1;
   
   double IntakeSpeed = Constants.Intake.intakeSpeed;
+  double intakeSpeedCone = Constants.Intake.intakeSpeedCone;
+  double intakeSpeedCube = Constants.Intake.intakeSpeedCube;
 
   //public CANSparkMax intakeController0;
 
@@ -36,20 +38,34 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Intake Speed", IntakeSpeed);
   }
 
-  public void forward() {
-    intakeController0.set(SmartDashboard.getNumber("Intake Speed", IntakeSpeed));
-    intakeController1.set(-SmartDashboard.getNumber("Intake Speed", IntakeSpeed));
+  public void forwardCube() {
+    intakeController0.set(0.2);
+    intakeController1.set(-0.2);
   }
 
-  public void backward() {
-    intakeController0.set(-SmartDashboard.getNumber("Intake Speed", IntakeSpeed));
-    intakeController1.set(SmartDashboard.getNumber("Intake Speed", IntakeSpeed));
+  public void backwardCube() {
+    intakeController0.set(intakeSpeedCube);
+    intakeController1.set(intakeSpeedCube);
   }
+
+  public void backwardCone() {
+    intakeController0.set(-intakeSpeedCone);
+    intakeController1.set(intakeSpeedCone);
+  }
+
+  public void ForwardCone() {
+    intakeController0.set(-intakeSpeedCone);
+    intakeController1.set(intakeSpeedCone);
+  }
+
+  /*public void forward(){
+    intakeController0 = SmartDashboard.getNumber("intake", IntakeSpeed)
+  }*/
 
   public void stop(){
     intakeController0.set(Constants.STOPPOWER);
   }
-  
+
   /*public void flip2(){
 
     if(objectSwitch.get()){
