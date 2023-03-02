@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.intake.IntakeBackward;
 import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
+import frc.robot.commands.indexer.IndexerBackward;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -20,6 +21,7 @@ public class Auto03 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new IndexerBackward(indexer,null).withTimeout(1),
       new MoveForward(drivetrain, 112, 0.3).withTimeout(1),
       new IntakeForward(intake).withTimeout(1),
       new MoveBackward(drivetrain, 112, 0.3).withTimeout(1),

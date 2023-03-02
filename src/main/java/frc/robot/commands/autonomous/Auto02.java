@@ -6,6 +6,7 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AutobalanceCommand;
+import frc.robot.commands.indexer.IndexerBackward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 
@@ -18,6 +19,7 @@ public class Auto02 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new IndexerBackward(indexer,null).withTimeout(1),
       new MoveForward(driveTrain, 30, 0.3),
       new AutobalanceCommand(driveTrain)
       );

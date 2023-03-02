@@ -14,6 +14,7 @@ import frc.robot.Constants;
 public class IntakeSubsystem extends SubsystemBase {
 
   public CANSparkMax intakeController0;
+  public CANSparkMax intakeController1;
   
   double IntakeSpeed = Constants.Intake.intakeSpeed;
 
@@ -27,24 +28,28 @@ public class IntakeSubsystem extends SubsystemBase {
       MotorType.kBrushless
     );
 
+    intakeController1 = new CANSparkMax(
+      Constants.Intake.canMotorDeviceId05,
+      MotorType.kBrushless
+    );
+
     SmartDashboard.putNumber("Intake Speed", IntakeSpeed);
   }
 
   public void forward() {
     intakeController0.set(SmartDashboard.getNumber("Intake Speed", IntakeSpeed));
+    intakeController1.set(-SmartDashboard.getNumber("Intake Speed", IntakeSpeed));
   }
 
   public void backward() {
     intakeController0.set(-SmartDashboard.getNumber("Intake Speed", IntakeSpeed));
+    intakeController1.set(SmartDashboard.getNumber("Intake Speed", IntakeSpeed));
   }
 
   public void stop(){
     intakeController0.set(Constants.STOPPOWER);
   }
-
-
-
-
+  
   /*public void flip2(){
 
     if(objectSwitch.get()){
