@@ -7,8 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
 import frc.robot.commands.IntakeAndIndexer;
-import frc.robot.commands.autonomous.Auto01;
-import frc.robot.commands.autonomous.Auto02;
+import frc.robot.commands.autonomous.Auto1;
+import frc.robot.commands.autonomous.Auto2;
 import frc.robot.commands.autonomous.Auto03;
 import frc.robot.commands.indexer.IndexerBackward;
 import frc.robot.commands.indexer.IndexerFoward;
@@ -57,8 +57,8 @@ public class RobotContainer {
   
   private IntakeAndIndexer intakeAndIndexer = new IntakeAndIndexer(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
 
-  private Auto01 auto01 = new Auto01(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
-  private Auto02 auto02 = new Auto02(driveTrainSubsystem, indexsubsystem);
+  private Auto1 auto01 = new Auto1(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
+  private Auto2 auto02 = new Auto2(driveTrainSubsystem, indexsubsystem);
   private Auto03 auto03 = new Auto03(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
 
   SendableChooser<Command> m_Chooser = new SendableChooser<>();

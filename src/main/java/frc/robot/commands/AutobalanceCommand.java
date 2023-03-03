@@ -12,19 +12,20 @@ public class AutobalanceCommand extends CommandBase {
   /** Creates a new AutobalanceCommand. */
   public AutobalanceCommand(DriveTrainSubsystems drivetrainsubsystems) {
     driveTrainSubsystems = drivetrainsubsystems;
+    addRequirements(drivetrainsubsystems);
     // Use addRequirements() here to declare subsystem dedpendencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //driveTrainSubsystems.autoBalanceInitialize();
+    driveTrainSubsystems.autoBalanceInitialize();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   // driveTrainSubsystems.autoBalance();
+   driveTrainSubsystems.autoBalance();
   }
 
   // Called once the command ends or is interrupted.

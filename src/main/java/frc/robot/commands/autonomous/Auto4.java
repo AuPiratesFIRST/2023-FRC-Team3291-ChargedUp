@@ -14,23 +14,23 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Auto04 extends SequentialCommandGroup {
+public class Auto4 extends SequentialCommandGroup {
   /** Creates a new Auto04. */
-  public Auto04(DriveTrainSubsystems drivetrian,IndexerSubsystem indexersubsystem, IntakeSubsystem intakeSubsystem) {
+  public Auto4(DriveTrainSubsystems drivetrian,IndexerSubsystem indexer, IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveForward(drivetrian, 112, .45).withTimeout(1),
+      new IndexerBackward(indexer,null).withTimeout(1),
+      new MoveForward(drivetrian, 112, 0.35).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(1),
-      new MoveBackward(drivetrian, 112, .5).withTimeout(1),
-      new IndexerBackward(indexersubsystem, null).withTimeout(1),
-      new MoveForward(drivetrian, 112, .5).withTimeout(1),
-      new TurnRight(drivetrian, 90, .5).withTimeout(1),
-      new MoveForward(drivetrian, 48, .5).withTimeout(1),
+      new MoveBackward(drivetrian, 112, 0.35).withTimeout(1),
+      new IndexerBackward(indexer, null).withTimeout(1),
+      new MoveForward(drivetrian, 112, 0.35).withTimeout(1),
+      new TurnRight(drivetrian, 90, .3).withTimeout(1),
+      new MoveForward(drivetrian, 48, 0.35).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(1),
-      new MoveBackward(drivetrian, 48, .5).withTimeout(1),
-      new TurnRight(drivetrian, 90, .5).withTimeout(1),
-      new MoveBackward(drivetrian, 112, .45)
+      new MoveBackward(drivetrian, 48, 0.35).withTimeout(1),
+      new TurnLeft(drivetrian, 90, 0.35).withTimeout(1)
     );
   }
 }
