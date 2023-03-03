@@ -273,21 +273,13 @@ public class DriveTrainSubsystems extends SubsystemBase {
     motorController00.set(speed);
     motorController02.set(speed);
 
-    double duration = 0;
-
-    Timer timerObj = new Timer();
-    timerObj.start();
 
     while(Math.abs(leftDifference) <= movement && Math.abs(rightDifference) <= movement){
       leftDifference = encoder0.getPosition() - motorController0Position;
       rightDifference = encoder2.getPosition() - motorController2Position;
       SmartDashboard.putNumber("left Difference", leftDifference);
       SmartDashboard.putNumber("right Difference", rightDifference);
-      duration = timerObj.get();
-
-      if (duration > 30) {
-        break;
-      }
+      
     }
 
     motorController00.set(0.0);
@@ -320,19 +312,11 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
       double initialAngle = navx_device.getAngle();
       double angleDifference = 0;
-      double duration = 0;
-
-      Timer timerObj = new Timer();
-      timerObj.start();
-  
+      
       while(Math.abs(angleDifference) <= rotateAngle){
         angleDifference = navx_device.getAngle() - initialAngle; // - motorController2Position;
         SmartDashboard.putNumber("angle Difference", angleDifference);
-        duration = timerObj.get();
-
-        if (duration > 30) {
-          break;
-        }
+       
       }
   
       motorController00.set(0.0);
