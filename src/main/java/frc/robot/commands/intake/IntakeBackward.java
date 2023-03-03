@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeBackward extends CommandBase {/* 
+public class IntakeBackward extends CommandBase { 
   public IntakeSubsystem intakeSubsytstem;
   /** Creates a new IntakeBackward. */
   public IntakeBackward(IntakeSubsystem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-  //intakeSubsytstem = intake;
+    intakeSubsytstem = intake;
   }
 
   // Called when the command is initially scheduled.

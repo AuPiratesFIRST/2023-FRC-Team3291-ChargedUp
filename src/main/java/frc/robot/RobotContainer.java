@@ -15,7 +15,6 @@ import frc.robot.commands.autonomous.Auto6;
 import frc.robot.commands.indexer.IndexerBackward;
 import frc.robot.commands.indexer.IndexerFoward;
 import frc.robot.commands.intake.IntakeBackward;
-import frc.robot.commands.intake.IntakeBackwardsCone;
 import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -52,10 +51,8 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  //private IndexerFoward indexerFowardCommand = new IndexerFoward(indexsubsystem);
-  //private IndexerBackward indexerBackwardCommand = new IndexerBackward(indexsubsystem, lightingSubsystem);
- // private IntakeForward intakeForwardcommand = new IntakeForward(intakeSubsytstem);
- // private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
+  private IntakeForward intakeForward = new IntakeForward(intakeSubsytstem);
+
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
   private IndexerFoward indexerFowardConeCommand = new IndexerFoward(indexsubsystem);
@@ -138,15 +135,16 @@ public class RobotContainer {
     );
 
     joystick02.button(1).whileTrue(autobalanceCommand);
-    joystick02.button(7).whileTrue(intakeForwardConecommand);
+
+    joystick02.button(7).whileTrue(intakeForward);
     joystick02.button(8).whileTrue(intakeBackwardConecommand);
     joystick02.button(9).whileTrue(indexerFowardConeCommand);
     joystick02.button(10).whileTrue(indexerBackwardConeCommand);
    
     joystick02.button(11).whileTrue(indexerFowardCubeCommand);
     joystick02.button(12).whileTrue(indexerBackwardCubeCommand);
-    joystick02.button(13).whileTrue(intakeForwardCubecommand);
-    joystick02.button(14).whileTrue(intakeBackwardCubecommand);
+    joystick02.button(3).whileTrue(intakeForwardCubecommand);
+    joystick02.button(4).whileTrue(intakeBackwardCubecommand);
 
     /*if (MathUtil.applyDeadband(joystick02.getRawAxis(1), Constants.Joystick.deadband)>0){
       intakeBackwardcommand.schedule();

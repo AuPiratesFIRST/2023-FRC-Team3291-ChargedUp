@@ -35,12 +35,16 @@ public class IntakeSubsystem extends SubsystemBase {
       MotorType.kBrushless
     );
 
+    intakeController0.setInverted(true);
+    intakeController1.setInverted(true);
+
+
     SmartDashboard.putNumber("Intake Speed", IntakeSpeed);
   }
 
   public void forwardCube() {
-    intakeController0.set(0.2);
-    intakeController1.set(-0.2);
+    intakeController0.set(0.02);
+    intakeController1.set(-0.02);
   }
 
   public void backwardCube() {
@@ -49,21 +53,22 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void backwardCone() {
-    intakeController0.set(-intakeSpeedCone);
+    intakeController0.set(intakeSpeedCone);
     intakeController1.set(intakeSpeedCone);
   }
 
   public void ForwardCone() {
-    intakeController0.set(-intakeSpeedCone);
+    intakeController0.set(intakeSpeedCone);
     intakeController1.set(intakeSpeedCone);
   }
 
-  /*public void forward(){
-    intakeController0 = SmartDashboard.getNumber("intake", IntakeSpeed)
-  }*/
+  public void forward(){
+    //intakeController0 = SmartDashboard.getNumber("intake", IntakeSpeed);
+  }
 
   public void stop(){
     intakeController0.set(Constants.STOPPOWER);
+    intakeController1.set(Constants.STOPPOWER);
   }
 
   @Override

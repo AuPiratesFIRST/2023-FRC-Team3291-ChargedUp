@@ -22,7 +22,7 @@ public class IntakeBackwardsCone extends CommandBase {
   @Override
   public void initialize() {
     intakesubsystem.backwardCone();
-    SmartDashboard.putBoolean("Intake Forward Cone", isFinished()); 
+    SmartDashboard.putBoolean("Intake backward Cone", isFinished()); 
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -34,11 +34,11 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void backwardCube(){
-    indexercontroller.set(ControlMode.PercentOutput, -0.1);
+    indexercontroller.set(ControlMode.PercentOutput, -0.05);
   }
 
   public void forwardCube(){
-    indexercontroller.set(ControlMode.PercentOutput, 0.1);
+    indexercontroller.set(ControlMode.PercentOutput, 0.05);
   }
 
   public void backward(){

@@ -5,9 +5,6 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.indexer.IndexerBackward;
-import frc.robot.commands.indexer.IndexerFoward;
-import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -22,7 +19,7 @@ public class Auto5 extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     //new IndexerBackward(indexersubsystem, null),
-    new MoveForward(driveTrainSubsystems, 112, 0.3)
+    new MoveForward(driveTrainSubsystems, 112, 0.3)//.withTimeout(4)
     //new MoveBackward(driveTrainSubsystems, 112, 0.3)
     );
   }
