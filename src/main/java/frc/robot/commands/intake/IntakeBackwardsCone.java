@@ -9,14 +9,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeBackwardsCone extends CommandBase {
+  public IntakeSubsystem intakeSubsystem;
   /** Creates a new IntakeBackwardsCone. */
-  public IntakeBackwardsCone() {
+  public IntakeBackwardsCone(IntakeSubsystem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
+  intakeSubsystem = intake;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    SmartDashboard.putBoolean("Intake Backward", isFinished());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -24,7 +28,9 @@ public class IntakeBackwardsCone extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intakeSubsystem.stop();
+  }
 
   // Returns true when the command should end.
   @Override

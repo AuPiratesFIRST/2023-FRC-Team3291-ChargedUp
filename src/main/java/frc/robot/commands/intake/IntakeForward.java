@@ -21,9 +21,7 @@ public class IntakeForward extends CommandBase {
   public void initialize() {
     //intakesubsystem.forward();
     SmartDashboard.putBoolean("Intake Forward", isFinished()); 
-
   }
-
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
