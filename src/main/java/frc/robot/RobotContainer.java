@@ -6,12 +6,16 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
+import frc.robot.commands.autonomous.Auto00;
 import frc.robot.commands.autonomous.Auto1;
 import frc.robot.commands.autonomous.Auto2;
-import frc.robot.commands.autonomous.Auto03;
+import frc.robot.commands.autonomous.Auto4;
+import frc.robot.commands.autonomous.Auto5;
+import frc.robot.commands.autonomous.Auto6;
 import frc.robot.commands.indexer.IndexerBackward;
 import frc.robot.commands.indexer.IndexerFoward;
 import frc.robot.commands.intake.IntakeBackward;
+import frc.robot.commands.intake.IntakeBackwardsCone;
 import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -48,10 +52,10 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  private IndexerFoward indexerFowardCommand = new IndexerFoward(indexsubsystem);
-  private IndexerBackward indexerBackwardCommand = new IndexerBackward(indexsubsystem, lightingSubsystem);
-  private IntakeForward intakeForwardcommand = new IntakeForward(intakeSubsytstem);
-  private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
+  //private IndexerFoward indexerFowardCommand = new IndexerFoward(indexsubsystem);
+  //private IndexerBackward indexerBackwardCommand = new IndexerBackward(indexsubsystem, lightingSubsystem);
+ // private IntakeForward intakeForwardcommand = new IntakeForward(intakeSubsytstem);
+ // private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
   private IndexerFoward indexerFowardConeCommand = new IndexerFoward(indexsubsystem);
@@ -64,11 +68,26 @@ public class RobotContainer {
   private IntakeForward intakeForwardCubecommand = new IntakeForward(intakeSubsytstem);
   private IntakeBackward intakeBackwardCubecommand = new IntakeBackward(intakeSubsytstem);
   
+  //private IntakeAndIndexer intakeAndIndexer = new IntakeAndIndexer(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
+
+  private Auto00 auto00 = new Auto00();
   private Auto1 auto01 = new Auto1(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
   private Auto2 auto02 = new Auto2(driveTrainSubsystem, indexsubsystem);
-  private Auto03 auto03 = new Auto03(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
+  private Auto4 auto04 = new Auto4(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
+  private Auto5 auto05 = new Auto5(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
+  private Auto6 auto06 = new Auto6(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
 
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
+
+  /*private Command IndexerBackwardCone;
+  private Command IndexerForwardCone;
+  private Command IndexerBackwardCube;
+  private Command IndexerForwardCube;
+
+  private Command intakeBackwardCone;
+  private Command intakeBackwardCube;
+  private Command intakeForwardCone;
+  private Command intakeForwardCube;*/
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -88,9 +107,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
   
-    m_Chooser.setDefaultOption("Autonomous 01", auto01);
+    m_Chooser.setDefaultOption("Autonomous 00", auto00);
+    m_Chooser.addOption("Autonomous 01", auto01);
     m_Chooser.addOption("Autonomous 02", auto02);
-    m_Chooser.addOption("Autonomous 03", auto03);
+    m_Chooser.addOption("Autonomous 04", auto04);
+    m_Chooser.addOption("Autonomous 05", auto05);
+    m_Chooser.addOption("Autonomous 06", auto06);
     SmartDashboard.putData("Auto choices", m_Chooser);
 
     /*
@@ -115,11 +137,16 @@ public class RobotContainer {
       driveTrainSubsystem)
     );
 
-    joystick00.button(10).whileTrue(autobalanceCommand);
-    joystick02.button(7).whileTrue(indexerFowardCommand);
-    joystick02.button(9).whileTrue(indexerBackwardCommand);
-    joystick02.button(1).whileTrue(intakeForwardcommand);
-    joystick02.button(2).whileTrue(intakeBackwardcommand);
+    joystick02.button(1).whileTrue(autobalanceCommand);
+    joystick02.button(7).whileTrue(intakeForwardConecommand);
+    joystick02.button(8).whileTrue(intakeBackwardConecommand);
+    joystick02.button(9).whileTrue(indexerFowardConeCommand);
+    joystick02.button(10).whileTrue(indexerBackwardConeCommand);
+   
+    joystick02.button(11).whileTrue(indexerFowardCubeCommand);
+    joystick02.button(12).whileTrue(indexerBackwardCubeCommand);
+    joystick02.button(13).whileTrue(intakeForwardCubecommand);
+    joystick02.button(14).whileTrue(intakeBackwardCubecommand);
 
     /*if (MathUtil.applyDeadband(joystick02.getRawAxis(1), Constants.Joystick.deadband)>0){
       intakeBackwardcommand.schedule();

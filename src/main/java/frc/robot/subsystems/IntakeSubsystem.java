@@ -31,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
     );
 
     intakeController1 = new CANSparkMax(
-      Constants.Intake.canMotorDeviceId05,
+      Constants.Intake.canMotorDeviceId06,
       MotorType.kBrushless
     );
 
