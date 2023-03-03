@@ -20,16 +20,17 @@ public class Auto04 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new MoveForward(drivetrian, 112, .35).withTimeout(1),
+      new MoveForward(drivetrian, 112, .45).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(1),
-      new MoveBackward(drivetrian, 112, .35).withTimeout(1),
+      new MoveBackward(drivetrian, 112, .5).withTimeout(1),
       new IndexerBackward(indexersubsystem, null).withTimeout(1),
-      new MoveForward(drivetrian, 112, .35).withTimeout(1),
-      new TurnRight(drivetrian, 90, .3).withTimeout(1),
-      new MoveForward(drivetrian, 48, .35).withTimeout(1),
+      new MoveForward(drivetrian, 112, .5).withTimeout(1),
+      new TurnRight(drivetrian, 90, .5).withTimeout(1),
+      new MoveForward(drivetrian, 48, .5).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(1),
-      new MoveBackward(drivetrian, 48, .35).withTimeout(1),
-      new TurnLeft(drivetrian, 90, .35).withTimeout(1)
+      new MoveBackward(drivetrian, 48, .5).withTimeout(1),
+      new TurnRight(drivetrian, 90, .5).withTimeout(1),
+      new MoveBackward(drivetrian, 112, .45)
     );
   }
 }

@@ -23,8 +23,7 @@ public class Auto03 extends SequentialCommandGroup {
       new MoveForward(drivetrain, 112, 0.3).withTimeout(1),
       new IntakeForward(intake).withTimeout(1),
       new MoveBackward(drivetrain, 112, 0.3).withTimeout(1),
-      new IntakeBackward(intake).withTimeout(1),
-      new TurnRight(drivetrain, 0.3, 65).withTimeout(1)   
-    );
+      new IntakeBackward(intake).withTimeout(1)
+    ); 
   }
 }
