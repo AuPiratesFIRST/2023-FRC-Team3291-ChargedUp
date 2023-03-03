@@ -6,7 +6,6 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
-import frc.robot.commands.IntakeAndIndexer;
 import frc.robot.commands.autonomous.Auto1;
 import frc.robot.commands.autonomous.Auto2;
 import frc.robot.commands.autonomous.Auto03;
@@ -54,9 +53,17 @@ public class RobotContainer {
   private IntakeForward intakeForwardcommand = new IntakeForward(intakeSubsytstem);
   private IntakeBackward intakeBackwardcommand = new IntakeBackward(intakeSubsytstem);
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
-  
-  private IntakeAndIndexer intakeAndIndexer = new IntakeAndIndexer(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
 
+  private IndexerFoward indexerFowardConeCommand = new IndexerFoward(indexsubsystem);
+  private IndexerBackward indexerBackwardConeCommand = new IndexerBackward(indexsubsystem, lightingSubsystem);
+  private IntakeForward intakeForwardConecommand = new IntakeForward(intakeSubsytstem);
+  private IntakeBackward intakeBackwardConecommand = new IntakeBackward(intakeSubsytstem);
+
+  private IndexerFoward indexerFowardCubeCommand = new IndexerFoward(indexsubsystem);
+  private IndexerBackward indexerBackwardCubeCommand = new IndexerBackward(indexsubsystem, lightingSubsystem);
+  private IntakeForward intakeForwardCubecommand = new IntakeForward(intakeSubsytstem);
+  private IntakeBackward intakeBackwardCubecommand = new IntakeBackward(intakeSubsytstem);
+  
   private Auto1 auto01 = new Auto1(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
   private Auto2 auto02 = new Auto2(driveTrainSubsystem, indexsubsystem);
   private Auto03 auto03 = new Auto03(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);

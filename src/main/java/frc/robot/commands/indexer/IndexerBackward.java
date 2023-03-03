@@ -22,7 +22,7 @@ public class IndexerBackward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //indexersubsystem.backward();
+    indexersubsystem.backward();
     SmartDashboard.putBoolean("Indexer Backward", isFinished()); 
 
   }

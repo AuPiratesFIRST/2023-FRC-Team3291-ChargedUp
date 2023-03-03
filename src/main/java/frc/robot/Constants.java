@@ -56,13 +56,15 @@ public final class Constants {
     //public final static int canMotorDeviceId06 = 11;
     public final static double intakeSpeed = 0.3;
     public final static double intakeSpeedCone = 0.5;
-    public final static double intakeSpeedCube = 0.2;
+    public final static double intakeSpeedCube = 0.1;
   }
 
   public final class Indexer {
 
     public final static int canMotorPort = 44;
     public final static double indexerSpeed = 0.5;
+    public final static double indexerConeSpeed = 0.5;
+    public final static double indexerCubeSpeed = 0.1;
   }
   public final class Joystick {
     public final static int tankLeftPort = 0;

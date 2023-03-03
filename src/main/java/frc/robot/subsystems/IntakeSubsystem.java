@@ -66,31 +66,6 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeController0.set(Constants.STOPPOWER);
   }
 
-  /*public void flip2(){
-
-    if(objectSwitch.get()){
-
-      flipper.set(ControlMode.Position, position0);
-      flipper.set(VictorSPXControlMode.PercentOutput, 0.5);
-
-      if(flipSwitch.get()){
-
-        intakeController0.set(-0.5);
-        intakeController1.set(0.5);
-        //find a way to make it continue for 1 second without throwing an error
-      
-        flipper.set(ControlMode.Position, position0);
-        flipper.set(VictorSPXControlMode.PercentOutput, 0.5);
-
-    }
-
-    } else {
-      flipper.set(ControlMode.Position, position0);
-      flipper.set(VictorSPXControlMode.PercentOutput, 0);
-    }
-
-  }*/
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

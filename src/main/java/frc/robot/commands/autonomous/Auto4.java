@@ -21,16 +21,16 @@ public class Auto4 extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new IndexerBackward(indexer,null).withTimeout(1),
-      new MoveForward(drivetrian, 112, 0.35).withTimeout(1),
+      new MoveForward(drivetrian, 112, 0.35),
       new IntakeForward(intakeSubsystem).withTimeout(1),
-      new MoveBackward(drivetrian, 112, 0.35).withTimeout(1),
+      new MoveBackward(drivetrian, 112, 0.35),
       new IndexerBackward(indexer, null).withTimeout(1),
-      new MoveForward(drivetrian, 112, 0.35).withTimeout(1),
-      new TurnRight(drivetrian, 90, .3).withTimeout(1),
-      new MoveForward(drivetrian, 48, 0.35).withTimeout(1),
+      new MoveForward(drivetrian, 112, 0.35),
+      new TurnRight(drivetrian, 90, .3),
+      new MoveForward(drivetrian, 48, 0.35),
       new IntakeForward(intakeSubsystem).withTimeout(1),
-      new MoveBackward(drivetrian, 48, 0.35).withTimeout(1),
-      new TurnLeft(drivetrian, 90, 0.35).withTimeout(1)
+      new MoveBackward(drivetrian, 48, 0.35),
+      new TurnLeft(drivetrian, 90, 0.35)
     );
   }
 }

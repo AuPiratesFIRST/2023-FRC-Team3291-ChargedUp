@@ -21,9 +21,9 @@ public class Auto5 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-    new IndexerBackward(indexersubsystem, null),
-    new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
-    new MoveBackward(driveTrainSubsystems, 112, 0.3)
+    //new IndexerBackward(indexersubsystem, null),
+    new MoveForward(driveTrainSubsystems, 112, 0.3)
+    //new MoveBackward(driveTrainSubsystems, 112, 0.3)
     );
   }
 }

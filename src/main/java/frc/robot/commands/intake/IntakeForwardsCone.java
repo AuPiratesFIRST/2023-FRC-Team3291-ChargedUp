@@ -10,9 +10,11 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeForwardsCone extends CommandBase {
   public IntakeSubsystem intakesubsystem;
+  public boolean status;
   /** Creates a new IntakeForwardsCone. */
   public IntakeForwardsCone(IntakeSubsystem intake) {
     // Use addRequirements() here to declare subsystem dependencies.
+    status = false;
     intakesubsystem = intake; 
   }
 
@@ -30,12 +32,13 @@ public class IntakeForwardsCone extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    status = true;
     intakesubsystem.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return status;
   }
 }

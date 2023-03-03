@@ -23,9 +23,9 @@ public class Auto1 extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
        new IndexerBackward(indexersubsystem,null).withTimeout(1),
-       new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
+       new MoveForward(driveTrainSubsystems, 112, 0.3),
        new IntakeForward(intakeSubsystem).withTimeout(0),
-       new MoveBackward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
+       new MoveBackward(driveTrainSubsystems, 112, 0.3),
        new IndexerBackward(indexersubsystem,null).withTimeout(1)
        /*new TurnLeft(driveTrainSubsystems, 90, 0.3).withTimeout(1),
        new MoveForward(driveTrainSubsystems, 36, 0.2).withTimeout(1),
