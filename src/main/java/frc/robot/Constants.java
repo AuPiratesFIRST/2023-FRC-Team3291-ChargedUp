@@ -29,7 +29,7 @@ public final class Constants {
 
     public final static double kPDrive = 0.05;
     public final static double kIDrive = 0.0;
-    public final static double kDDrive = 0.0;
+    public final static double kDDrive = 0.005;
 
     /*****
      * Custom DriveTrain

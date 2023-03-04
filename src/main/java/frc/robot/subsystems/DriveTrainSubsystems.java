@@ -28,7 +28,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
   double robotRadius = 21.5;
   double wheelDiameter = 8;
   double platformWidth = 48;
-  double robotLength = 28;
+  double robotLength = 35;
   double minAngle = 0;
   double minMovementSpeed = 0.1;
   double maxAngle = 15;
@@ -147,8 +147,8 @@ public class DriveTrainSubsystems extends SubsystemBase {
 
   public void autoBalanceInitialize() {
     navx_device.reset();
-    //encoder0.setPosition(0.0);
-    //encoder2.setPosition(0.0);
+    encoder0.setPosition(0.0);
+    encoder2.setPosition(0.0);
     rotationsInitLeft = encoder0.getPosition();
     rotationsInitRight = encoder2.getPosition();
     SmartDashboard.putNumber("Left init position", rotationsInitLeft);

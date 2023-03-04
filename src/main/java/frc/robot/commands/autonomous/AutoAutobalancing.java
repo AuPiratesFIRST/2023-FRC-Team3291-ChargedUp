@@ -5,15 +5,22 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.commands.AutobalanceCommand;
+import frc.robot.commands.indexer.IndexerBackward;
+import frc.robot.subsystems.DriveTrainSubsystems;
+import frc.robot.subsystems.IndexerSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoAutobalancing extends ParallelCommandGroup {
   /** Creates a new AutoAutobalancing. */
-  public AutoAutobalancing() {
+  public AutoAutobalancing(DriveTrainSubsystems driveTrain, IndexerSubsystem indexer) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(
+      new MoveForward(driveTrain, 30, 0.3),
+      new AutobalanceCommand(driveTrain)
+    );
   }
 }

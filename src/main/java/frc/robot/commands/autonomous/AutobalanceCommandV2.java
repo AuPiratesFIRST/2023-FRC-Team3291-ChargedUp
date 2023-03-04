@@ -12,6 +12,23 @@ import frc.robot.subsystems.DriveTrainSubsystems;
 public class AutobalanceCommandV2 extends CommandBase {
   public DriveTrainSubsystems driveTrainSubsystems;
   public boolean status;
+  public double platformWidth = 48;
+  public double robotLength = 35;
+  public double cpr = 10.53;
+  public double wheelDiameter = 8;
+
+  public double distanceToEdge =  (platformWidth - (platformWidth - robotLength)/2);
+  public double movementPerInch = cpr/(wheelDiameter * Math.PI);
+  public double rotationsToBalance =  (distanceToEdge * movementPerInch);
+
+  public double leftDifference;
+  public double rightDifference;
+
+  public double leftDifferenceInit;
+  public double rightDifferenceInit;
+
+  public double position1;
+  public double position2;
 
   /** Creates a new AutobalanceCommand. */
   public AutobalanceCommandV2(DriveTrainSubsystems drivetrainsubsystems) {
@@ -25,11 +42,19 @@ public class AutobalanceCommandV2 extends CommandBase {
   @Override
   public void initialize() {
     driveTrainSubsystems.autoBalanceInitialize();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    position1 = driveTrainSubsystems.encoder0.getPosition();
+    position2 = driveTrainSubsystems.encoder2.getPosition();
+    // Calculate left/right difference by getting current position - initial
+    leftDifference = position1 - leftDifferenceInit;
+    rightDifference = position2 - rightDifferenceInit;
+
     double rollAngleDegrees = driveTrainSubsystems.navx_device.getRoll();
 
     rollAngleDegrees = MathUtil.applyDeadband(rollAngleDegrees, 0.1);
@@ -48,6 +73,11 @@ public class AutobalanceCommandV2 extends CommandBase {
     driveTrainSubsystems.drive(-pidOut, -pidOut);
 
     if(Math.abs(pidOut) < 0.1){
+      status = true;
+    }
+
+    if(Math.abs(leftDifference) >= rotationsToBalance && Math.abs(rightDifference) >=rotationsToBalance){
+      // If reached destination set status = true
       status = true;
     }
 
