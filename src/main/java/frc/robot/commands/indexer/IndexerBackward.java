@@ -13,10 +13,9 @@ public class IndexerBackward extends CommandBase {
     public IndexerSubsystem indexersubsystem;
     public LightingSubsystem lightingSubsystem;
   /** Creates a new IndexerBackward. */
- public IndexerBackward(IndexerSubsystem indexer, LightingSubsystem light) {
+ public IndexerBackward(IndexerSubsystem indexer) {
     // Use addRequirements() here to declare subsystem dependencies.
   indexersubsystem = indexer;
-  lightingSubsystem = light;
   }
 
   // Called when the command is initially scheduled.
@@ -30,7 +29,6 @@ public class IndexerBackward extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lightingSubsystem.blink();
   }
 
   // Called once the command ends or is interrupted.

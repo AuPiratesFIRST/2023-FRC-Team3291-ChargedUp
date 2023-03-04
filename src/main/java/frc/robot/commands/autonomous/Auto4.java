@@ -20,11 +20,11 @@ public class Auto4 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IndexerBackward(indexer,null).withTimeout(1),
+      new IndexerBackward(indexer).withTimeout(1),
       new MoveForward(drivetrian, 112, 0.35),
       new IntakeForward(intakeSubsystem).withTimeout(1),
       new MoveBackward(drivetrian, 112, 0.35),
-      new IndexerBackward(indexer, null).withTimeout(1),
+      new IndexerBackward(indexer).withTimeout(1),
       new MoveForward(drivetrian, 112, 0.35),
       new TurnRight(drivetrian, 90, .3),
       new MoveForward(drivetrian, 48, 0.35),

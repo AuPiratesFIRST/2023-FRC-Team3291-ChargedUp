@@ -57,12 +57,12 @@ public class RobotContainer {
   private AutobalanceCommand autobalanceCommand = new AutobalanceCommand(driveTrainSubsystem);
 
   private IndexerFoward indexerFowardConeCommand = new IndexerFoward(indexsubsystem);
-  private IndexerBackward indexerBackwardConeCommand = new IndexerBackward(indexsubsystem, lightingSubsystem);
+  private IndexerBackward indexerBackwardConeCommand = new IndexerBackward(indexsubsystem);
   private IntakeForward intakeForwardConecommand = new IntakeForward(intakeSubsytstem);
   private IntakeBackward intakeBackwardConecommand = new IntakeBackward(intakeSubsytstem);
 
   private IndexerFoward indexerFowardCubeCommand = new IndexerFoward(indexsubsystem);
-  private IndexerBackward indexerBackwardCubeCommand = new IndexerBackward(indexsubsystem, lightingSubsystem);
+  private IndexerBackward indexerBackwardCubeCommand = new IndexerBackward(indexsubsystem);
   private IntakeForward intakeForwardCubecommand = new IntakeForward(intakeSubsytstem);
   private IntakeBackward intakeBackwardCubecommand = new IntakeBackward(intakeSubsytstem);
   

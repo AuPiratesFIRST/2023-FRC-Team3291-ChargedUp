@@ -19,7 +19,7 @@ public class Auto6 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IndexerBackward(indexerSubsystem,null).withTimeout(0.5)
+      new IndexerBackward(indexerSubsystem).withTimeout(7)
       /*new MoveForward(driveTrainSubsystems, 112, 0.3).withTimeout(1),
       new IntakeForward(intakeSubsystem).withTimeout(0.5),
       new MoveBackward(driveTrainSubsystems, 112, 0.5).withTimeout(0.5),

@@ -14,6 +14,7 @@ public class IndexerFoward extends CommandBase {
   public IndexerFoward(IndexerSubsystem indexer) {
     // Use addRequirements() here to declare subsystem dependencies.
   indexersubsystem = indexer;
+  addRequirements(indexersubsystem);
   }
 
   // Called when the command is initially scheduled.

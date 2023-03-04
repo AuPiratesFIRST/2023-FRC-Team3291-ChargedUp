@@ -2,19 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrainSubsystems;
 
-public class AutobalanceCommand extends CommandBase {
+public class AutobalanceCommandV2 extends CommandBase {
   public DriveTrainSubsystems driveTrainSubsystems;
   public boolean status;
 
   /** Creates a new AutobalanceCommand. */
-  public AutobalanceCommand(DriveTrainSubsystems drivetrainsubsystems) {
+  public AutobalanceCommandV2(DriveTrainSubsystems drivetrainsubsystems) {
     driveTrainSubsystems = drivetrainsubsystems;
     
     addRequirements(drivetrainsubsystems);
