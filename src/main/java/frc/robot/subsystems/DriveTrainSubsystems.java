@@ -54,14 +54,14 @@ public class DriveTrainSubsystems extends SubsystemBase {
   
   double breakAdj = 0.05;
 
-  PIDController pidDrive;
+  public PIDController pidDrive;
 
 
 
     /*
    * Auto-balancing taken from: https://github.com/kauailabs/navxmxp/blob/master/roborio/java/navXMXP_Java_AutoBalance/src/org/usfirst/frc/team2465/robot/Robot.java
    */
-  private AHRS navx_device;
+  public AHRS navx_device;
   boolean autoBalanceXMode;
   boolean autoBalanceYMode; 
     
@@ -116,7 +116,7 @@ public class DriveTrainSubsystems extends SubsystemBase {
     SmartDashboard.putNumber("rotationsToBalance", rotationsToBalance);
     SmartDashboard.putNumber("slope", slope);
     SmartDashboard.putNumber("robotPerDegre", robotPerDegree);
-    SmartDashboard.putNumber("speedModifier", 1.0);
+    //SmartDashboard.putNumber("speedModifier", 1.0);
   }
 
   @Override
@@ -134,11 +134,13 @@ public class DriveTrainSubsystems extends SubsystemBase {
     leftSpeed = MathUtil.clamp(leftSpeed, -1.0, 1.0);
     rightSpeed = MathUtil.clamp(rightSpeed, -1.0, 1.0);
 
-    double speedModifier = SmartDashboard.getNumber("speedModifier", 0.1);
+    //double speedModifier = SmartDashboard.getNumber("speedModifier", 0.1);
 
-    leftSpeed = leftSpeed * speedModifier;
-    rightSpeed = rightSpeed * speedModifier;
-
+    //leftSpeed = leftSpeed;//* speedModifier;
+    //rightSpeed = rightSpeed;// * speedModifier;
+    SmartDashboard.putNumber("Left Set", joystickLeftSpeed);
+    SmartDashboard.putNumber("Right Set", rightSpeed * m_maxOutput);
+     
    motorController00.set(leftSpeed * m_maxOutput);
    motorController02.set(rightSpeed * m_maxOutput);
   }
@@ -178,75 +180,77 @@ public class DriveTrainSubsystems extends SubsystemBase {
     else if (pidOut < -1) {pidOut = -1;}
 
     //applies the calulated error to the motors so they can move
-    drive(pidOut, pidOut);
+    drive(pidOut, -pidOut);
     
-    // if (rollAngleDegrees != 0.0) {
-    //   double radiansPerAngle = slope * rollAngleDegrees;
+    /* 
+    if (rollAngleDegrees != 0.0) {
+       double radiansPerAngle = slope * rollAngleDegrees;
 
-    //   SmartDashboard.putNumber("radiansPerAngle", radiansPerAngle);
+       SmartDashboard.putNumber("radiansPerAngle", radiansPerAngle);
 
-    //   double direction = 1.0;
-    //   if (rollAngleDegrees < 0.0) {
-    //     direction = -1.0;
-    //   }
+       double direction = 1.0;
+       if (rollAngleDegrees < 0.0) {
+         direction = -1.0;
+       }
 
-    //   SmartDashboard.putNumber("direction", direction);
+       SmartDashboard.putNumber("direction", direction);
 
-    //   radiansPerAngle = radiansPerAngle + (minMovementSpeed * direction);
+       radiansPerAngle = radiansPerAngle + (minMovementSpeed * direction);
 
-    //   SmartDashboard.putNumber("calcRadiansPerAngle", radiansPerAngle);
-    //   try {
-    //     double encoder0Position = encoder0.getPosition();
-    //     double encoder2Position = encoder2.getPosition();
+       SmartDashboard.putNumber("calcRadiansPerAngle", radiansPerAngle);
+       try {
+         double encoder0Position = encoder0.getPosition();
+         double encoder2Position = encoder2.getPosition();
 
-    //     SmartDashboard.putNumber("enc0Pos", encoder0Position);
-    //     SmartDashboard.putNumber("enc2Pos", encoder2Position);
-    //     SmartDashboard.putNumber("rotationsInitLeft", rotationsInitLeft);
-    //     SmartDashboard.putNumber("rotationinitRight", rotationsInitRight);
-    //     SmartDashboard.putNumber("Difference left", differenceLeft);
-    //     SmartDashboard.putNumber("Difference right", differenceRight);
+         SmartDashboard.putNumber("enc0Pos", encoder0Position);
+         SmartDashboard.putNumber("enc2Pos", encoder2Position);
+         SmartDashboard.putNumber("rotationsInitLeft", rotationsInitLeft);
+         SmartDashboard.putNumber("rotationinitRight", rotationsInitRight);
+         SmartDashboard.putNumber("Difference left", differenceLeft);
+         SmartDashboard.putNumber("Difference right", differenceRight);
 
-    //     differenceLeft = pidDrive.calculate(getDistance(), rotationsToBalance);
-    //     differenceRight = differenceLeft;
+         //differenceLeft = pidDrive.calculate(getDistance(), rotationsToBalance);
+         //differenceRight = differenceLeft;
 
-    //     SmartDashboard.putNumber("differenceLeft2", differenceLeft);
-    //     SmartDashboard.putNumber("differenceRight2", differenceRight);
+         SmartDashboard.putNumber("differenceLeft2", differenceLeft);
+         SmartDashboard.putNumber("differenceRight2", differenceRight);
 
-    //     double leftSpeed;
-    //     if (Math.abs(differenceLeft) >= rotationsToBalance) {
-    //       leftSpeed = radiansPerAngle - (brakeAdjustment * direction);
-    //     } else {
-    //       leftSpeed = radiansPerAngle;
-    //     }
+         double leftSpeed;
+         if (Math.abs(differenceLeft) >= rotationsToBalance) {
+           leftSpeed = radiansPerAngle - (brakeAdjustment * direction);
+         } else {
+           leftSpeed = radiansPerAngle;
+         }
 
-    //     double rightSpeed;
-    //     if (Math.abs(differenceRight) >= rotationsToBalance) {
-    //       rightSpeed = radiansPerAngle - (brakeAdjustment * direction);
-    //     } else {
-    //       rightSpeed = radiansPerAngle;
-    //     }
+         double rightSpeed;
+         if (Math.abs(differenceRight) >= rotationsToBalance) {
+           rightSpeed = radiansPerAngle - (brakeAdjustment * direction);
+         } else {
+           rightSpeed = radiansPerAngle;
+         }
 
-    //     SmartDashboard.putNumber("rightSpeed1", rightSpeed);
-    //     SmartDashboard.putNumber("leftSpeed1", leftSpeed);
+         SmartDashboard.putNumber("rightSpeed1", rightSpeed);
+         SmartDashboard.putNumber("leftSpeed1", leftSpeed);
 
-    //     leftSpeed = MathUtil.clamp(leftSpeed, -maxMovementSpeed, maxMovementSpeed);
-    //     rightSpeed = MathUtil.clamp(rightSpeed, -maxMovementSpeed, maxMovementSpeed);
+         leftSpeed = MathUtil.clamp(leftSpeed, -maxMovementSpeed, maxMovementSpeed);
+         rightSpeed = MathUtil.clamp(rightSpeed, -maxMovementSpeed, maxMovementSpeed);
 
-    //     drive(leftSpeed, rightSpeed);
+         drive(leftSpeed, rightSpeed);
 
-    //     SmartDashboard.putNumber("rightSpeed2", rightSpeed);
-    //     SmartDashboard.putNumber("leftSpeed2", leftSpeed);
+         SmartDashboard.putNumber("rightSpeed2", rightSpeed);
+         SmartDashboard.putNumber("leftSpeed2", leftSpeed);
 
-    //     SmartDashboard.putNumber("Encoder left position", encoder0.getPosition());
-    //     SmartDashboard.putNumber("Encoder right position", encoder2.getPosition());
+         SmartDashboard.putNumber("Encoder left position", encoder0.getPosition());
+         SmartDashboard.putNumber("Encoder right position", encoder2.getPosition());
       
-    //   } catch(RuntimeException ex) {
-    //     String err_string = "Drive system error: " + ex.getMessage();
-    //     DriverStation.reportError(err_string, true);
-    //   }
+       } catch(RuntimeException ex) {
+         String err_string = "Drive system error: " + ex.getMessage();
+         DriverStation.reportError(err_string, true);
+       }
 
     //   Timer.delay(0.005);
-    // }
+      }
+      */
   } 
 
   public void moveForwardOrBack(double distanceInInches, double speed){

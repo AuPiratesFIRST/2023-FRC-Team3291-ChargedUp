@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutobalanceCommand;
 import frc.robot.commands.autonomous.Auto00;
 import frc.robot.commands.autonomous.Auto1;
+import frc.robot.commands.autonomous.Auto1vr;
 import frc.robot.commands.autonomous.Auto2;
 import frc.robot.commands.autonomous.Auto4;
 import frc.robot.commands.autonomous.Auto5;
@@ -73,6 +74,7 @@ public class RobotContainer {
   private Auto4 auto04 = new Auto4(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
   private Auto5 auto05 = new Auto5(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
   private Auto6 auto06 = new Auto6(driveTrainSubsystem, indexsubsystem, intakeSubsytstem);
+  private Auto1vr auto1vr = new Auto1vr(driveTrainSubsystem);
 
   SendableChooser<Command> m_Chooser = new SendableChooser<>();
 
@@ -110,6 +112,7 @@ public class RobotContainer {
     m_Chooser.addOption("Autonomous 04", auto04);
     m_Chooser.addOption("Autonomous 05", auto05);
     m_Chooser.addOption("Autonomous 06", auto06);
+    m_Chooser.addOption("Autonomous 1vr", auto1vr);
     SmartDashboard.putData("Auto choices", m_Chooser);
 
     /*

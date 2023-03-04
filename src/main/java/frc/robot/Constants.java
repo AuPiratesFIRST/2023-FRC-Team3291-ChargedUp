@@ -35,7 +35,7 @@ public final class Constants {
      * Custom DriveTrain
      */
     public static final double kDefaultDeadband = 0.05;
-    public static final double kDefaultMaxOutput = 0.55;
+    public static final double kDefaultMaxOutput = 0.75;
 
     /******
      * Autobalance
@@ -56,7 +56,7 @@ public final class Constants {
     public final static int canMotorDeviceId06 = 15;
     public final static double intakeSpeed = 0.1;
     public final static double intakeSpeedCone = 0.5;
-    public final static double intakeSpeedCube = 0.1;
+    public final static double intakeSpeedCube = 0.3;
   }
 
   public final class Indexer {
