@@ -10,6 +10,7 @@ import frc.robot.commands.intake.IntakeForward;
 import frc.robot.subsystems.DriveTrainSubsystems;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.autonomous.MoveForwardV2;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -20,7 +21,8 @@ public class Auto4 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IndexerBackward(indexer).withTimeout(1),
+      new MoveForwardV2(drivetrian, 90, 0.2)
+      /*new IndexerBackward(indexer).withTimeout(1),
       new MoveForward(drivetrian, 112, 0.35),
       new IntakeForward(intakeSubsystem).withTimeout(1),
       new MoveBackward(drivetrian, 112, 0.35),
@@ -30,7 +32,7 @@ public class Auto4 extends SequentialCommandGroup {
       new MoveForward(drivetrian, 48, 0.35),
       new IntakeForward(intakeSubsystem).withTimeout(1),
       new MoveBackward(drivetrian, 48, 0.35),
-      new TurnLeft(drivetrian, 90, 0.35)
+      new TurnLeft(drivetrian, 90, 0.35)*/
     );
   }
 }

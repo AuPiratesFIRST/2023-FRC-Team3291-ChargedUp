@@ -22,16 +22,15 @@ public class Auto1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-       new IndexerBackward(indexersubsystem).withTimeout(1),
-       new MoveForward(driveTrainSubsystems, 112, 0.3),
-       new IntakeForward(intakeSubsystem).withTimeout(0),
-       new MoveBackward(driveTrainSubsystems, 112, 0.3),
-       new IndexerBackward(indexersubsystem).withTimeout(1)
+       new IndexerBackward(indexersubsystem).withTimeout(4),
+       new MoveForwardV2(driveTrainSubsystems, 200, 0.3),
+       new IntakeForward(intakeSubsystem).withTimeout(2),
+       new MoveBackwardV2(driveTrainSubsystems, 200, 0.3),
+       new IndexerBackward(indexersubsystem).withTimeout(4)
        /*new TurnLeft(driveTrainSubsystems, 90, 0.3).withTimeout(1),
        new MoveForward(driveTrainSubsystems, 36, 0.2).withTimeout(1),
        new TurnRight(driveTrainSubsystems, 90, 0.1).withTimeout(1),
        new AutobalanceCommand(driveTrainSubsystems)*/
-      
     );
   }
 };

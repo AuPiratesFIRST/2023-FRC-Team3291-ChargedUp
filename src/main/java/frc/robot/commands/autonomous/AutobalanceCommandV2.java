@@ -17,7 +17,7 @@ public class AutobalanceCommandV2 extends CommandBase {
   public double cpr = 10.53;
   public double wheelDiameter = 8;
 
-  public double distanceToEdge =  (platformWidth - (platformWidth - robotLength)/2);
+  public double distanceToEdge = (platformWidth - (platformWidth - robotLength)/2)+60;
   public double movementPerInch = cpr/(wheelDiameter * Math.PI);
   public double rotationsToBalance =  (distanceToEdge * movementPerInch);
 
@@ -57,7 +57,7 @@ public class AutobalanceCommandV2 extends CommandBase {
 
     double rollAngleDegrees = driveTrainSubsystems.navx_device.getRoll();
 
-    rollAngleDegrees = MathUtil.applyDeadband(rollAngleDegrees, 0.1);
+    rollAngleDegrees = MathUtil.applyDeadband(rollAngleDegrees, 0.5);
 
     SmartDashboard.putNumber("rollAngleDegress", rollAngleDegrees);
 
@@ -70,9 +70,9 @@ public class AutobalanceCommandV2 extends CommandBase {
     else if (pidOut < -1) {pidOut = -1;}
 
     //applies the calulated error to the motors so they can move
-    driveTrainSubsystems.drive(-pidOut, -pidOut);
+    driveTrainSubsystems.drive((-pidOut/3), -pidOut/3);
 
-    if(Math.abs(pidOut) < 0.1){
+    if(Math.abs(pidOut) < 0.01){
       status = true;
     }
 
@@ -80,7 +80,7 @@ public class AutobalanceCommandV2 extends CommandBase {
       // If reached destination set status = true
       status = true;
     }
-
+                                                                                                                                                                                                                                                                                                                                                                                            
   }
 
   // Called once the command ends or is interrupted.

@@ -27,15 +27,15 @@ public final class Constants {
     public final static int canMotorDeviceId04 = 5; //Back right*/
 
 
-    public final static double kPDrive = 0.05;
+    public final static double kPDrive = 0.009;
     public final static double kIDrive = 0.0;
-    public final static double kDDrive = 0.005;
+    public final static double kDDrive = 0.09;
 
     /*****
      * Custom DriveTrain
      */
-    public static final double kDefaultDeadband = 0.05;
-    public static final double kDefaultMaxOutput = 0.75;
+    public static final double kDefaultDeadband = 0.1;
+    public static final double kDefaultMaxOutput = 0.3;
 
     /******
      * Autobalance

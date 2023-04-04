@@ -20,7 +20,7 @@ public class Auto5 extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
     new IndexerBackward(indexersubsystem).withTimeout(4),
-    new MoveForward(driveTrainSubsystems, 100, 0.3)//.withTimeout(4)
+    new MoveForwardV2(driveTrainSubsystems, 200, 0.3)//.withTimeout(4)
     //new MoveBackward(driveTrainSubsystems, 112, 0.3)
     );
   }
